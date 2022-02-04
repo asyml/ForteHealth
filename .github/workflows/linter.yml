@@ -18,6 +18,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
+        pip install flake8
     - name: Analysing the code with pylint
       run: |
         pylint forte_medical/
+    - name: Analysing the code with flake8
+      run: |
+        flake8 forte_medical/ forte_medical_cli/ examples/ 
