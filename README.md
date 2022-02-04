@@ -70,10 +70,21 @@ trainer.fit(dataset=mimiciii, hparams=xxx)
 
 ## Package Structure
 ```
-forte_medical
+forte_medical/
 ├── annotate.py
-├── annotators
-│   ├── annotator_base.py
+├── evaluate.py
+├── evaluators
+│   ├── evaluator_base.py
+│   ├── icd_coding_evaluator.py
+│   └── ner_evaluator.py
+├── models
+│   ├── bert.py
+│   └── model_base.py
+├── ontology_specs
+│   ├── icd_coding.json
+│   ├── master.json
+│   └── ner.json
+├── processors
 │   ├── chunker.py
 │   ├── constituency_parser.py
 │   ├── context_detector.py
@@ -84,23 +95,9 @@ forte_medical
 │   ├── pos_tagger.py
 │   ├── temporal_relation_annotator.py
 │   └── umls_entity_linker.py
-├── datasets
-│   ├── dataset_base.py
-│   └── mimic_iii.py
-├── evaluate.py
-├── evaluators
-│   ├── evaluator_base.py
-│   ├── icd_coding_evaluator.py
-│   └── ner_evaluator.py
-├── models
-│   ├── bert.py
-│   └── model_base.py
-├── ontologies
-│   ├── base_ontology.py
-│   ├── icd_coding_ontology.py
-│   └── pos_tagging_ontology.py
 ├── readers
 │   ├── jdbc_reader.py
+│   ├── mimic_iii.py
 │   ├── reader_base.py
 │   ├── text_reader.py
 │   └── xmi_reader.py
