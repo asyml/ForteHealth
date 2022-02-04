@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint forte_medical/ forte_medical_cli/ examples/ 
+        pylint forte_medical/
