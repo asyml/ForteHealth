@@ -19,16 +19,16 @@ from ft.onto.base_ontology import (
     EntityMention,
 )
 
+
 def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: bool = True):
     pl = Pipeline[DataPack]()
 
-    if singlePack == True:
+    if singlePack is True:
         pl.set_reader(StringReader())
     else:
         pl.set_reader(
             Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs}
         )
-    
     configSpacy = {
         "processors": ["sentence", "tokenize", "pos", "ner", "umls_link"],
         "lang": "en_ner_bionlp13cg_md",
@@ -55,7 +55,7 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
         "Medical Nutrition Therapy for Hyperlipidemia. "
         "Referral from: Julie Tester, RD, LD, CNSD "
         "Diet: General "
-        "Daily Calorie needs (kcals): 1500 calories, assessed as HB + 20\% \for activity. "
+        "Daily Calorie needs (kcals): 1500 calories, assessed as HB + 20 for activity. "
         "Daily Protein needs: 40 grams, assessed as 1.0 g/kg. "
         "Pt has been on a 3-day calorie count and has had an average intake of 1100 calories. "
         "She was instructed to drink 2-3 cans of liquid supplement to help promote weight gain. "
@@ -63,13 +63,14 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
         "Metabolic Rate as well. She takes an aspirin a day for knee pain."
     )
 
-    if singlePack == True:
+    if singlePack is True:
         pack = pl.process(text)
         showData(pack)
     else:
         packs = pl.process_dataset(input_path)
         for pack in packs:
             showData(pack)
+
 
 def showData(pack: DataPack):
     for sentence in pack.get(Sentence):
@@ -95,5 +96,5 @@ def showData(pack: DataPack):
 
         input(colored("Press ENTER to continue...\n", "green"))
 
-main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])
 
+main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])

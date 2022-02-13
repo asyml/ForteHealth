@@ -78,4 +78,3 @@ class Mimic3DischargeNoteReader(PackReader):
         # the number specified.
         config["max_num_notes"] = -1
         return config
-
