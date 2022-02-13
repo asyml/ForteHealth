@@ -1,8 +1,7 @@
 import sys
-import time
 from termcolor import colored
 
-from mimic3_note_reader import Mimic3DischargeNoteReader
+from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader

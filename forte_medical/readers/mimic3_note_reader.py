@@ -19,7 +19,7 @@ from typing import Any, Iterator, Union, List
 
 from smart_open import open
 
-from demo.clinical import Description, Body
+from forte_medical.ontology_specs.demo.clinical import Description, Body
 from forte.data.data_pack import DataPack
 from forte.data.base_reader import PackReader
 
