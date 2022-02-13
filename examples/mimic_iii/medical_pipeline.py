@@ -1,22 +1,21 @@
 import sys
 from termcolor import colored
 
-from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
-
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
 from ftx.medical import MedicalEntityMention
 
-from fortex.spacy import SpacyProcessor
-from fortex.elastic import ElasticSearchPackIndexProcessor
-
 from ft.onto.base_ontology import (
     Token,
     Sentence,
     EntityMention,
 )
+from fortex.spacy import SpacyProcessor
+from fortex.elastic import ElasticSearchPackIndexProcessor
+
+from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 
 
 def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: bool = True):
