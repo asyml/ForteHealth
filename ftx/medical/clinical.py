@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:../../../../casl/forte-medical/examples/mimic_iii/clinical_onto.json***
+# ***source json:../forte-medical/ftx/medical/clinical_onto.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
