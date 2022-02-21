@@ -4,21 +4,21 @@
         "base_ontology.json"
       ],
       "additional_prefixes": [
-        "ftx.medical"
+        "demo.clinical_ontology"
       ],
     "definitions": [
       {
-        "entry_name": "ftx.medical.clinical_ontology.FrequencyAnnotation",
+        "entry_name": "demo.clinical_ontology.FrequencyAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The frequency determination for the Drug NER profile."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.DurationAnnotation",
+        "entry_name": "demo.clinical_ontology.DurationAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The duration determination for the Drug NER profile."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.RouteAnnotation",
+        "entry_name": "demo.clinical_ontology.RouteAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The route determination for the Drug NER profile.",
         "attributes": [
@@ -29,27 +29,27 @@
         ]
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.SuffixStrengthAnnotation",
+        "entry_name": "demo.clinical_ontology.SuffixStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The suffix portion of dosage strength determination for the Drug NER profile."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.FractionStrengthAnnotation",
+        "entry_name": "demo.clinical_ontology.FractionStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The fraction portion of dosages strength determination for the Drug NER profile."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.RangeStrengthAnnotation",
+        "entry_name": "demo.clinical_ontology.RangeStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The range portion of dosages stength determination for the Drug NER profile."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.DecimalStrengthAnnotation",
+        "entry_name": "demo.clinical_ontology.DecimalStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The decimal portion of dosages stength determination for the Drug NER profile"
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.DrugChangeStatusAnnotation",
+        "entry_name": "demo.clinical_ontology.DrugChangeStatusAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The change status of dosages determination for the Drug NER profile.",
         "attributes": [
@@ -61,22 +61,22 @@
         ]
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.DosagesAnnotation",
+        "entry_name": "demo.clinical_ontology.DosagesAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The dosage determination for the Drug NER profile."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.StrengthAnnotation",
+        "entry_name": "demo.clinical_ontology.StrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "Holds the value representing the unit of the drug dosage."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.StrengthUnitAnnotation",
+        "entry_name": "demo.clinical_ontology.StrengthUnitAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": ""
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.FrequencyUnitAnnotation",
+        "entry_name": "demo.clinical_ontology.FrequencyUnitAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The value represents the unit portion of the drug frequency.",
         "attributes": [
@@ -88,12 +88,12 @@
         ]
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.FormAnnotation",
+        "entry_name": "demo.clinical_ontology.FormAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The value represents the form portion of the drug mention."
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.SubSectionAnnotation",
+        "entry_name": "demo.clinical_ontology.SubSectionAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "",
         "attributes": [
@@ -130,7 +130,7 @@
         ]
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.DrugMentionAnnotation",
+        "entry_name": "demo.clinical_ontology.DrugMentionAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "",
         "attributes": [
@@ -293,7 +293,7 @@
         ]
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.ChunkAnnotation",
+        "entry_name": "demo.clinical_ontology.ChunkAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The value represents the unit portion of the drug frequency.",
         "attributes": [
@@ -305,7 +305,7 @@
         ]
       },
       {
-        "entry_name": "ftx.medical.clinical_ontology.DrugLookupWindowAnnotation",
+        "entry_name": "demo.clinical_ontology.DrugLookupWindowAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "Similar to LookupWindowAnnotation however, these annotations are restricted to the segments/sections specified in the parameter - sectionOverrideSet - in DrugCNP2LookupWindow"
       }
