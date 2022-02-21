@@ -1,8 +1,5 @@
 {
     "name": "clinical_ontology",
-    "imports": [
-        "base_ontology.json"
-      ],
       "additional_prefixes": [
         "demo.clinical_ontology"
       ],
