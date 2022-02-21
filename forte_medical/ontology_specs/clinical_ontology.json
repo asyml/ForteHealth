@@ -298,7 +298,7 @@
         "description": "The value represents the unit portion of the drug frequency.",
         "attributes": [
             {
-                "name": "sentence_iD",
+                "name": "sentence_id",
                 "type": "str",
                 "description": ""
             }
