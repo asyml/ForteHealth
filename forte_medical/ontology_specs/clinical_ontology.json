@@ -1,79 +1,82 @@
 {
     "name": "clinical_ontology",
+    "imports": [
+        "base_ontology.json"
+      ],
       "additional_prefixes": [
-        "demo.clinical_ontology"
+        "ftx.medical.clinical_ontology"
       ],
     "definitions": [
       {
-        "entry_name": "demo.clinical_ontology.FrequencyAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.FrequencyAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The frequency determination for the Drug NER profile."
       },
       {
-        "entry_name": "demo.clinical_ontology.DurationAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.DurationAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The duration determination for the Drug NER profile."
       },
       {
-        "entry_name": "demo.clinical_ontology.RouteAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.RouteAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The route determination for the Drug NER profile.",
         "attributes": [
             {
-                "name": "intakeMethod",
+                "name": "in_take_method",
                 "type": "str"
             }
         ]
       },
       {
-        "entry_name": "demo.clinical_ontology.SuffixStrengthAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.SuffixStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The suffix portion of dosage strength determination for the Drug NER profile."
       },
       {
-        "entry_name": "demo.clinical_ontology.FractionStrengthAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.FractionStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The fraction portion of dosages strength determination for the Drug NER profile."
       },
       {
-        "entry_name": "demo.clinical_ontology.RangeStrengthAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.RangeStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The range portion of dosages stength determination for the Drug NER profile."
       },
       {
-        "entry_name": "demo.clinical_ontology.DecimalStrengthAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.DecimalStrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The decimal portion of dosages stength determination for the Drug NER profile"
       },
       {
-        "entry_name": "demo.clinical_ontology.DrugChangeStatusAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.DrugChangeStatusAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The change status of dosages determination for the Drug NER profile.",
         "attributes": [
             {
-                "name": "changeStatus",
+                "name": "change_status",
                 "type": "str",
                 "description": "Indicates the drug change status of 'stop', 'start', 'increase', 'decrease', or 'noChange'."
             }
         ]
       },
       {
-        "entry_name": "demo.clinical_ontology.DosagesAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.DosagesAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The dosage determination for the Drug NER profile."
       },
       {
-        "entry_name": "demo.clinical_ontology.StrengthAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.StrengthAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "Holds the value representing the unit of the drug dosage."
       },
       {
-        "entry_name": "demo.clinical_ontology.StrengthUnitAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.StrengthUnitAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": ""
       },
       {
-        "entry_name": "demo.clinical_ontology.FrequencyUnitAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.FrequencyUnitAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The value represents the unit portion of the drug frequency.",
         "attributes": [
@@ -85,22 +88,22 @@
         ]
       },
       {
-        "entry_name": "demo.clinical_ontology.FormAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.FormAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The value represents the form portion of the drug mention."
       },
       {
-        "entry_name": "demo.clinical_ontology.SubSectionAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.SubSectionAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "",
         "attributes": [
             {
-                "name": "subSectionBodyBegin",
+                "name": "sub_ssection_body_begin",
                 "type": "int",
                 "description": "Sub-section body begin offset."
             },
             {
-                "name": "subSectionBodyEnd",
+                "name": "sub_section_body_end",
                 "type": "int",
                 "description": "Sub-section body end offset."
             },
@@ -110,24 +113,24 @@
                 "description": "Status of 'possible', 'history of', or 'family history of'."
             },
             {
-                "name": "subSectionHeaderBegin",
+                "name": "sub_section_header_begin",
                 "type": "int",
                 "description": "Begin offset of subSection header"
             },
             {
-                "name": "subSectionHeaderEnd",
+                "name": "sub_section_header_end",
                 "type": "int",
                 "description": "Ending offset of subsection header"
             },
             {
-                "name": "parentSectionId",
+                "name": "parent_section_id",
                 "type": "str",
                 "description": "The section in which the subsection was found."
             }
         ]
       },
       {
-        "entry_name": "demo.clinical_ontology.DrugMentionAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.DrugMentionAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "",
         "attributes": [
@@ -147,12 +150,12 @@
                 "description": "Frequency refers to how often the patient needs to take the drug. Frequency is divided into frequency number and frequency unit. E.g. twice daily"
             },
             {
-                "name": "frequencyBegin",
+                "name": "frequency_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "frequencyEnd",
+                "name": "frequency_end",
                 "type": "int",
                 "description": ""
             },
@@ -162,12 +165,12 @@
                 "description": "Duration refers to for how long the patient is expected to take the drug. E.g. 'for 2 weeks' Strongly encouraged to use bold text"
             },
             {
-                "name": "durationBegin",
+                "name": "duration_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "durationEnd",
+                "name": "duration_end",
                 "type": "int",
                 "description": ""
             },
@@ -177,17 +180,17 @@
                 "description": "Medication route refers to the way that a drug is introduced into the body. E.g oral Strongly encouraged to use bold text"
             },
             {
-                "name": "routeBegin",
+                "name": "route_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "routeEnd",
+                "name": "route_end",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "drugChangeStatus",
+                "name": "drug_change_status",
                 "type": "str",
                 "description": "Status refers to the whether the medication is currently being taken or not."
             },
@@ -197,12 +200,12 @@
                 "description": "Dosage refers to how many of each drug the patient is taking. E.g. 5 mg"
             },
             {
-                "name": "dosageBegin",
+                "name": "dosage_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "dosageEnd",
+                "name": "dosage_end",
                 "type": "int",
                 "description": ""
             },
@@ -212,27 +215,27 @@
                 "description": ""
             },
             {
-                "name": "strengthBegin",
+                "name": "strength_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "strengthEnd",
+                "name": "strength_end",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "strengthUnit",
+                "name": "strength_unit",
                 "type": "str",
                 "description": ""
             },
             {
-                "name": "suBegin",
+                "name": "su_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "suEnd",
+                "name": "su_end",
                 "type": "int",
                 "description": ""
             },
@@ -242,32 +245,32 @@
                 "description": "Form refers to the physical appearance of the drug. E.g. cream"
             },
             {
-                "name": "formBegin",
+                "name": "form_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "formEnd",
+                "name": "form_end",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "frequencyUnit",
+                "name": "frequency_unit",
                 "type": "str",
                 "description": ""
             },
             {
-                "name": "fuBegin",
+                "name": "fu_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "fuEnd",
+                "name": "fu_end",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "startDate",
+                "name": "start_date",
                 "type": "str",
                 "description": ""
             },
@@ -278,31 +281,31 @@
                 "value_type": "int"
             },
             {
-                "name": "changeStatusBegin",
+                "name": "change_status_begin",
                 "type": "int",
                 "description": ""
             },
             {
-                "name": "changeStatusEnd",
+                "name": "change_status_end",
                 "type": "int",
                 "description": ""
             }
         ]
       },
       {
-        "entry_name": "demo.clinical_ontology.ChunkAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.ChunkAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "The value represents the unit portion of the drug frequency.",
         "attributes": [
             {
-                "name": "sentenceID",
+                "name": "sentence_iD",
                 "type": "str",
                 "description": ""
             }
         ]
       },
       {
-        "entry_name": "demo.clinical_ontology.DrugLookupWindowAnnotation",
+        "entry_name": "ftx.medical.clinical_ontology.DrugLookupWindowAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "Similar to LookupWindowAnnotation however, these annotations are restricted to the segments/sections specified in the parameter - sectionOverrideSet - in DrugCNP2LookupWindow"
       }
