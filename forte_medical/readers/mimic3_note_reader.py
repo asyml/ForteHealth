@@ -21,7 +21,7 @@ from smart_open import open
 
 from forte.data.data_pack import DataPack
 from forte.data.base_reader import PackReader
-from forte_medical.ontology_specs.demo.clinical import Description, Body
+from ftx.medical.clinical import Description, Body
 
 
 class Mimic3DischargeNoteReader(PackReader):
