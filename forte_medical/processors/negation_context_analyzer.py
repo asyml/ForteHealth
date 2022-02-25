@@ -205,7 +205,7 @@ class NegationContextAnalyzer(PackProcessor):
         the pipeline.
         """
         return {
-            "ft.onto.base_ontology.EntityMention" : {"ner_type"},
+            "ft.onto.base_ontology.EntityMention": {"ner_type"},
         }
 
     def record(self, record_meta: Dict[str, Set[str]]):

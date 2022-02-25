@@ -5,7 +5,8 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
-from ftx.medical.clinical import MedicalEntityMention
+from ftx.onto.clinical import MedicalEntityMention
+from ftx.medical.clinical_ontology import NegationContext
 
 from ft.onto.base_ontology import (
     Token,
@@ -16,7 +17,7 @@ from fortex.spacy import SpacyProcessor
 from fortex.elastic import ElasticSearchPackIndexProcessor
 
 from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
-
+from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
 
 def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: bool = True):
     pl = Pipeline[DataPack]()
@@ -32,8 +33,13 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
         "lang": "en_ner_bionlp13cg_md",
     }
 
+    configNegation = {
+        "negation_rules_path": "negex_triggers.txt",
+    }
+
     pl.add(SpacyProcessor(), configSpacy)
     pl.add(ElasticSearchPackIndexProcessor())
+    pl.add(NegationContextAnalyzer(), configNegation)
 
     pl.add(
         PackIdJsonPackWriter(),
@@ -87,6 +93,9 @@ def showData(pack: DataPack):
         for entity in pack.get(MedicalEntityMention, sentence):
             for ent in entity.umls_entities:
                 medical_entities.append(ent)
+
+        for negation_context in pack.get(NegationContext, sentence):
+            print (negation_context.text, negation_context.polarity)
 
         print(colored("Tokens:", "red"), tokens, "\n")
         print(colored("EntityMentions:", "red"), entities, "\n")
