@@ -69,7 +69,7 @@ class NegationContextAnalyzer(PackProcessor):
         return sorted_list
 
     def set_up(self, configs: Config):
-        if len(configs.negatin_rules_path) > 0:
+        if len(configs.negation_rules_path) > 0:
             with open(configs.negation_rules_path, 'r', encoding='utf8') as rules_file:
                 self.__rules = self.__sort_rules(rules_file.readlines())
         else:
