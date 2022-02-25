@@ -19,6 +19,7 @@ from fortex.elastic import ElasticSearchPackIndexProcessor
 from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
 
+
 def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: bool = True):
     pl = Pipeline[DataPack]()
 
@@ -94,12 +95,14 @@ def showData(pack: DataPack):
             for ent in entity.umls_entities:
                 medical_entities.append(ent)
 
-        for negation_context in pack.get(NegationContext, sentence):
-            print (negation_context.text, negation_context.polarity)
+        negation_contexts = [
+            (negation_context.text, negation_context.polarity) 
+            for negation_context in pack.get(NegationContext, sentence)]
 
         print(colored("Tokens:", "red"), tokens, "\n")
         print(colored("EntityMentions:", "red"), entities, "\n")
         print(colored("Medical Entity Mentions:", "cyan"), medical_entities, "\n")
+        print(colored("Entity Negation Contexts:", "cyan"), negation_contexts, "\n")
 
         input(colored("Press ENTER to continue...\n", "green"))
 
