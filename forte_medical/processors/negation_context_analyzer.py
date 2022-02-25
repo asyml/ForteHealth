@@ -15,7 +15,7 @@
 Negation Context Analyser
 """
 import re
-from typing import Dict, Set
+from typing import Dict, List, Set
 
 from ft.onto.base_ontology import Sentence
 from forte.common import Resources
@@ -41,7 +41,7 @@ class NegationContextAnalyzer(PackProcessor):
         super().__init__()
         self.__rules = None
 
-    def __sort_rules(self, rule_list: list[str]) -> list:
+    def __sort_rules(self, rule_list: List[str]) -> List:
         r"""Return sorted list of rules.
 
         Rules should be in a tab-delimited format: 'rule_phrase\t\t[Tag]'

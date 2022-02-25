@@ -96,7 +96,7 @@ def showData(pack: DataPack):
                 medical_entities.append(ent)
 
         negation_contexts = [
-            (negation_context.text, negation_context.polarity) 
+            (negation_context.text, negation_context.polarity)
             for negation_context in pack.get(NegationContext, sentence)]
 
         print(colored("Tokens:", "red"), tokens, "\n")
