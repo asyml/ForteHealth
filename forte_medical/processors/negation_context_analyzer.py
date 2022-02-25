@@ -14,18 +14,17 @@
 """
 Negation Context Analyser
 """
-import importlib
 import re
-from typing import Dict, List, Set
+from typing import Dict, Set
 
-from ft.onto.base_ontology import Phrase, Sentence
-from ftx.medical.clinical_ontology import NegationContext
-from ftx.onto.clinical import MedicalEntityMention
-
+from ft.onto.base_ontology import Sentence
 from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
+
+from ftx.medical.clinical_ontology import NegationContext
+from ftx.onto.clinical import MedicalEntityMention
 
 __all__ = [
     "NegationContextAnalyzer",
@@ -42,7 +41,7 @@ class NegationContextAnalyzer(PackProcessor):
         super().__init__()
         self.__rules = None
 
-    def __sort_rules__ (rule_list: list[str]) -> list:
+    def __sort_rules__ (self, rule_list: list[str]) -> list:
         r"""Return sorted list of rules.
         
         Rules should be in a tab-delimited format: 'rule_phrase\t\t[Tag]'
@@ -71,11 +70,10 @@ class NegationContextAnalyzer(PackProcessor):
 
     def set_up(self, configs: Config):
         if len(configs.negatin_rules_path) > 0:
-            rules_file = open(configs.negation_rules_path)
+            with open(configs.negation_rules_path, 'r') as rules_file:
+                self.__rules = self.__sort_rules__(rules_file.readlines())
         else:
-            raise ValueError("Please provide a file path for the negation rules to be used by the processor.")
-
-        self.__rules = self.__sort_rules__(rules_file.readlines())
+            raise ValueError("Please provide a file path for the negation rules to be used by the processor.")        
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
@@ -87,7 +85,7 @@ class NegationContextAnalyzer(PackProcessor):
         Because PRENEGATION [PREN} is checked first, it takes precedence over
         POSTNEGATION [POST].
         '''
-        
+
         for sentence in input_pack.get(Sentence):
             filler = '_'
             
@@ -147,17 +145,17 @@ class NegationContextAnalyzer(PackProcessor):
             sentence_tokens.reverse()
             tagged_sentence = ' '.join(sentence_tokens)
 
-            r = re.compile('(\[NEGATED\]\w*\[NEGATED\])')
+            r = re.compile(r'(\[NEGATED\]\w*\[NEGATED\])')
             neg_matches = r.findall(tagged_sentence)
             # print (neg_matches)
-            r = re.compile('(\[PHRASE\]\w*\[PHRASE\])')
+            r = re.compile(r'(\[PHRASE\]\w*\[PHRASE\])')
             pos_matches = r.findall(tagged_sentence)
             # print (pos_matches)
 
-            tagged_sentence = re.sub('(\[\w*\])', '', tagged_sentence)
+            tagged_sentence = re.sub(r'(\[\w*\])', '', tagged_sentence)
 
             for match in pos_matches:
-                substring = re.sub('(\[\w*\])', '', match)
+                substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
                 result = re.search(pattern, tagged_sentence)                
                 print ("pos", result.span())
@@ -165,7 +163,7 @@ class NegationContextAnalyzer(PackProcessor):
                 negation_context.polarity = False
 
             for match in neg_matches:
-                substring = re.sub('(\[\w*\])', '', match)
+                substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
                 result = re.search(pattern, tagged_sentence)                
                 print ("neg", result.span())
