@@ -308,6 +308,17 @@
         "entry_name": "ftx.medical.clinical_ontology.DrugLookupWindowAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "Similar to LookupWindowAnnotation however, these annotations are restricted to the segments/sections specified in the parameter - sectionOverrideSet - in DrugCNP2LookupWindow"
+      },
+      {
+        "entry_name": "ftx.medical.clinical_ontology.NegationContext",
+        "parent_entry": "forte.data.ontology.top.Annotation",
+        "description": "A span based annotation `NegationContext`, used to represent the negation context of a named entity.",
+        "attributes": [
+          {
+            "name": "polarity",
+            "type": "bool"
+          }
+        ]
       }
     ]
   }
