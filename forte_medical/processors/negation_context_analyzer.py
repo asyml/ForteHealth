@@ -32,7 +32,7 @@ __all__ = [
 
 
 class NegationContextAnalyzer(PackProcessor):
-    r"""Implementation of NegationContextAnalyzer has been adapted from thge 
+    r"""Implementation of NegationContextAnalyzer has been adapted from the
     NegEx algorithm, originally published by ....
     Paper link
     """
@@ -43,18 +43,18 @@ class NegationContextAnalyzer(PackProcessor):
 
     def __sort_rules__ (self, rule_list: list[str]) -> list:
         r"""Return sorted list of rules.
-        
+
         Rules should be in a tab-delimited format: 'rule_phrase\t\t[Tag]'
-        Sorts list of rules descending based on length of the rule, 
+        Sorts list of rules descending based on length of the rule,
         splits each rule into components, converts pattern to regular expression,
-        and appends it to the end of the rule. 
+        and appends it to the end of the rule.
 
         Types of Tags:
         [PREN] - Pre Negation rule
         [POST] - Post Negation rule
         [CONJ] - Conjunction phrase
         """
-        
+
         rule_list.sort(key = len, reverse = True)
         sorted_list = []
 
@@ -70,17 +70,18 @@ class NegationContextAnalyzer(PackProcessor):
 
     def set_up(self, configs: Config):
         if len(configs.negatin_rules_path) > 0:
-            with open(configs.negation_rules_path, 'r') as rules_file:
+            with open(configs.negation_rules_path, 'r', encoding='utf8') as rules_file:
                 self.__rules = self.__sort_rules__(rules_file.readlines())
         else:
-            raise ValueError("Please provide a file path for the negation rules to be used by the processor.")        
+            raise ValueError("Please provide a file path for the negation rules"
+                            + "to be used by the processor.")
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
         self.set_up(configs)
 
     def _process(self, input_pack: DataPack):
-        r'''Exchanges the [PHRASE] ... [PHRASE] tags for [NEGATED] ... [NEGATED] 
+        r'''Exchanges the [PHRASE] ... [PHRASE] tags for [NEGATED] ... [NEGATED]
         based on PREN, POST rules.
         Because PRENEGATION [PREN} is checked first, it takes precedence over
         POSTNEGATION [POST].
@@ -88,12 +89,12 @@ class NegationContextAnalyzer(PackProcessor):
 
         for sentence in input_pack.get(Sentence):
             filler = '_'
-            
+
             for rule in self.__rules:
                 reformat_rule = re.sub(r'\s+', filler, rule[0].strip())
                 tagged_sentence = rule[3].sub (' ' + rule[2].strip()
                                                     + reformat_rule
-                                                    + rule[2].strip() + ' ', 
+                                                    + rule[2].strip() + ' ',
                                                 sentence)
 
             for medical_entity in input_pack.get(MedicalEntityMention, sentence):
@@ -109,39 +110,39 @@ class NegationContextAnalyzer(PackProcessor):
                     if m:
                         print (m.span())
                         tagged_sentence = tagged_sentence.replace(m.group(0), '[PHRASE]'
-                                                                + re.sub(r'\s+', filler, m.group(0).strip())
-                                                                + '[PHRASE]')
+                                            + re.sub(r'\s+', filler, m.group(0).strip())
+                                            + '[PHRASE]')
 
             overlap_flag = 0
             pre_negation_flag = 0
             post_negation_flag = 0
-            
+
             sentence_tokens = tagged_sentence.split()
             #check for [PREN]
-            for i in range(len(sentence_tokens)):
+            for i, _ in enumerate(sentence_tokens):
                 if sentence_tokens[i][:6] == '[PREN]':
                     pre_negation_flag = 1
                     overlap_flag = 0
 
                 if sentence_tokens[i][:6] in ['[CONJ]', '[POST]']:
                     overlap_flag = 1
-                
+
                 if pre_negation_flag == 1 and overlap_flag == 0:
                     sentence_tokens[i] = sentence_tokens[i].replace('[PHRASE]', '[NEGATED]')
-            
+
             sentence_tokens.reverse()
             # Check for [POST]
-            for i in range(len(sentence_tokens)):
+            for i, _ in enumerate(sentence_tokens):
                 if sentence_tokens[i][:6] == '[POST]':
                     post_negation_flag = 1
                     overlap_flag = 0
 
                 if sentence_tokens[i][:6] in ['[CONJ]', '[PREN]']:
                     overlap_flag = 1
-                
+
                 if post_negation_flag == 1 and overlap_flag == 0:
                     sentence_tokens[i] = sentence_tokens[i].replace('[PHRASE]', '[NEGATED]')
-            
+
             sentence_tokens.reverse()
             tagged_sentence = ' '.join(sentence_tokens)
 
@@ -157,7 +158,7 @@ class NegationContextAnalyzer(PackProcessor):
             for match in pos_matches:
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
-                result = re.search(pattern, tagged_sentence)                
+                result = re.search(pattern, tagged_sentence)
                 print ("pos", result.span())
                 negation_context = NegationContext(input_pack, result.span()[0], result.span()[1])
                 negation_context.polarity = False
@@ -165,7 +166,7 @@ class NegationContextAnalyzer(PackProcessor):
             for match in neg_matches:
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
-                result = re.search(pattern, tagged_sentence)                
+                result = re.search(pattern, tagged_sentence)
                 print ("neg", result.span())
                 negation_context = NegationContext(input_pack, result.span()[0], result.span()[1])
                 negation_context.polarity = True
