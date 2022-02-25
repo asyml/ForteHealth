@@ -41,7 +41,7 @@ class NegationContextAnalyzer(PackProcessor):
         super().__init__()
         self.__rules = None
 
-    def __sort_rules__ (self, rule_list: list[str]) -> list:
+    def __sort_rules(self, rule_list: list[str]) -> list:
         r"""Return sorted list of rules.
 
         Rules should be in a tab-delimited format: 'rule_phrase\t\t[Tag]'
@@ -55,7 +55,7 @@ class NegationContextAnalyzer(PackProcessor):
         [CONJ] - Conjunction phrase
         """
 
-        rule_list.sort(key = len, reverse = True)
+        rule_list.sort(key=len, reverse=True)
         sorted_list = []
 
         for rule in rule_list:
@@ -71,7 +71,7 @@ class NegationContextAnalyzer(PackProcessor):
     def set_up(self, configs: Config):
         if len(configs.negatin_rules_path) > 0:
             with open(configs.negation_rules_path, 'r', encoding='utf8') as rules_file:
-                self.__rules = self.__sort_rules__(rules_file.readlines())
+                self.__rules = self.__sort_rules(rules_file.readlines())
         else:
             raise ValueError("Please provide a file path for the negation rules"
                             + "to be used by the processor.")
@@ -92,7 +92,7 @@ class NegationContextAnalyzer(PackProcessor):
 
             for rule in self.__rules:
                 reformat_rule = re.sub(r'\s+', filler, rule[0].strip())
-                tagged_sentence = rule[3].sub (' ' + rule[2].strip()
+                tagged_sentence = rule[3].sub(' ' + rule[2].strip()
                                                     + reformat_rule
                                                     + rule[2].strip() + ' ',
                                                 sentence)
@@ -104,11 +104,11 @@ class NegationContextAnalyzer(PackProcessor):
                     split_phrase = phrase.split()
                     joiner = r'\W+'
                     # To check for consecutive entities
-                    joined_pattern = r'\b' + joiner.join(split_phrase) +  r'\b'
+                    joined_pattern = r'\b' + joiner.join(split_phrase) + r'\b'
                     reP = re.compile(joined_pattern, re.IGNORECASE)
                     m = reP.search(tagged_sentence)
                     if m:
-                        print (m.span())
+                        # print (m.span())
                         tagged_sentence = tagged_sentence.replace(m.group(0), '[PHRASE]'
                                             + re.sub(r'\s+', filler, m.group(0).strip())
                                             + '[PHRASE]')
@@ -118,7 +118,7 @@ class NegationContextAnalyzer(PackProcessor):
             post_negation_flag = 0
 
             sentence_tokens = tagged_sentence.split()
-            #check for [PREN]
+            # Check for [PREN]
             for i, _ in enumerate(sentence_tokens):
                 if sentence_tokens[i][:6] == '[PREN]':
                     pre_negation_flag = 1
@@ -159,7 +159,7 @@ class NegationContextAnalyzer(PackProcessor):
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
                 result = re.search(pattern, tagged_sentence)
-                print ("pos", result.span())
+                # print ("pos", result.span())
                 negation_context = NegationContext(input_pack, result.span()[0], result.span()[1])
                 negation_context.polarity = False
 
@@ -167,7 +167,7 @@ class NegationContextAnalyzer(PackProcessor):
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
                 result = re.search(pattern, tagged_sentence)
-                print ("neg", result.span())
+                # print ("neg", result.span())
                 negation_context = NegationContext(input_pack, result.span()[0], result.span()[1])
                 negation_context.polarity = True
 
