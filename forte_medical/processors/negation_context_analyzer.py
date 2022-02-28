@@ -17,15 +17,13 @@ Negation Context Analyser
 import re
 from typing import Dict, List, Set
 
-from ft.onto.base_ontology import Sentence
+from ft.onto.base_ontology import Sentence, EntityMention
 from forte.common import Resources, ProcessExecutionException
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
 from ftx.medical.clinical_ontology import NegationContext
-from ftx.onto.clinical import MedicalEntityMention
-from ft.onto.base_ontology import EntityMention
 
 __all__ = [
     "NegationContextAnalyzer",
@@ -35,7 +33,7 @@ __all__ = [
 class NegationContextAnalyzer(PackProcessor):
     r"""
     Implementation of this NegationContextAnalyzer has been adapted from the
-    NegEx algorithm, originally proposed in the paper 'A simple algorithm for identifying 
+    NegEx algorithm, originally proposed in the paper 'A simple algorithm for identifying
     negated findings and diseases in discharge summaries', written by W.W. Chapman and others.
     A rendition of it that exists on github has been referred to as well.
 
@@ -99,12 +97,12 @@ class NegationContextAnalyzer(PackProcessor):
 
         "CT scan shows xyz but absence of lesions."
         Our implementation would set negation polarity for 'xyz' as False, but won't carry it to
-        'lesions' because we detect 'but' as a conjunction in the sentence. Hence, we decide polarity
-        for 'lesions' independently as True given the presence of 'absence' phrase before 'lesions'.
-
-        All rule phrases are tagged in the sentence as [PREN]..[PREN], [POST]..[POST] or [CONJ]..[CONJ],
-        depending on how they are defined in the rules' file. All entity mentions are first annotated
-        with the [ENTITY]..[ENTITY] tags. 
+        'lesions' because we detect 'but' as a conjunction in the sentence. Hence, we decide 
+        polarity for 'lesions' independently as True given the presence of 'absence' phrase before
+        'lesions'.
+        All rule phrases are tagged in the sentence as [PREN]..[PREN], [POST]..[POST] or 
+        [CONJ]..[CONJ], depending on how they are defined in the rules' file. All entity mentions
+         are first annotated with the [ENTITY]..[ENTITY] tags.
         On negation detection, we replace those with [NEGATED]..[NEGATED].
         These tags are then used to define NegationContext annotations in the `input_pack` with
         corresponding polarity.
@@ -123,14 +121,13 @@ class NegationContextAnalyzer(PackProcessor):
             entities = [em.text for em in input_pack.get(EntityMention, sentence)]
             entities = set(entities)
 
-            if len(entities) == 0: 
+            if len(entities) == 0:
                 break
 
             for entity in entities:
-                r"""
-                Precede all ].,?+(){^* with a '\' so the special characters dont interfere
-                with the regex execution.
-                """
+
+                # Precede all ].,?+(){^* with a '\' so the special characters dont interfere
+                # with the regex execution.
                 entity = re.sub(r'([.^$*+?{\\|()[\]])', r'\\\1', entity)
                 split_entity = entity.split()
                 joiner = r'\W+'
@@ -186,8 +183,8 @@ class NegationContextAnalyzer(PackProcessor):
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
                 result = re.search(pattern, sentence.text)
-                negation_context = NegationContext(input_pack, 
-                                        sentence.span.begin + result.span()[0], 
+                negation_context = NegationContext(input_pack,
+                                        sentence.span.begin + result.span()[0],
                                         sentence.span.begin + result.span()[1])
                 negation_context.polarity = False
 
@@ -195,8 +192,8 @@ class NegationContextAnalyzer(PackProcessor):
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
                 result = re.search(pattern, sentence.text)
-                negation_context = NegationContext(input_pack, 
-                                        sentence.span.begin + result.span()[0], 
+                negation_context = NegationContext(input_pack,
+                                        sentence.span.begin + result.span()[0],
                                         sentence.span.begin + result.span()[1])
                 negation_context.polarity = True
 
