@@ -25,6 +25,7 @@ from forte.processors.base import PackProcessor
 
 from ftx.medical.clinical_ontology import NegationContext
 from ftx.onto.clinical import MedicalEntityMention
+from ft.onto.base_ontology import EntityMention
 
 __all__ = [
     "NegationContextAnalyzer",
@@ -62,8 +63,8 @@ class NegationContextAnalyzer(PackProcessor):
             rule_tokens = rule.strip().split('\t')
             rule_phrase_tokens = rule_tokens[0].split()
             rule_phrase = r'\s+'.join(rule_phrase_tokens)
-            pattern = r'\b(' + rule_phrase + r')\b'
-            rule_tokens.append(re.compile(pattern, re.IGNORECASE))
+            pattern = r'\b' + '(' + rule_phrase + ')' + r'\b'
+            rule_tokens.append(pattern)
             sorted_list.append(rule_tokens)
 
         return sorted_list
@@ -87,32 +88,44 @@ class NegationContextAnalyzer(PackProcessor):
         POSTNEGATION [POST].
         '''
 
+        c = True
+        txt = input_pack.text
+        print(txt)
         for sentence in input_pack.get(Sentence):
+            print("Txt:", txt[sentence.span.begin:sentence.span.end])
             filler = '_'
-
+            print("\n\nSentence: ", sentence.text)
+            tagged_sentence = sentence.text
             for rule in self.__rules:
                 reformat_rule = re.sub(r'\s+', filler, rule[0].strip())
-                tagged_sentence = rule[3].sub(' ' + rule[2].strip()
+                #print("Rule: ", rule[3], " ** ", sentence.text, " ** ", rule[0])
+                tagged_sentence = re.sub(rule[3], rule[2].strip()
                                                     + reformat_rule
-                                                    + rule[2].strip() + ' ',
-                                                sentence)
-
-            for medical_entity in input_pack.get(MedicalEntityMention, sentence):
-                for phrase in medical_entity.umls_entities:
+                                                    + rule[2].strip(),
+                                                tagged_sentence)
+            c = False
+            print("TaggedSentence1: ", tagged_sentence, tagged_sentence.find('no'))
+            phrases = [em.text for em in input_pack.get(EntityMention, sentence)]
+            phrases = set(phrases)
+            for phrase in phrases:
+                #for phrase in medical_entity.umls_entities:
                     # Precede all .,?+(){^* with a '\'
-                    phrase = re.sub(r'([.^$*+?{\\|()[\]])', r'\\\1', phrase)
-                    split_phrase = phrase.split()
-                    joiner = r'\W+'
-                    # To check for consecutive entities
-                    joined_pattern = r'\b' + joiner.join(split_phrase) + r'\b'
-                    reP = re.compile(joined_pattern, re.IGNORECASE)
-                    m = reP.search(tagged_sentence)
-                    if m:
-                        # print (m.span())
-                        tagged_sentence = tagged_sentence.replace(m.group(0), '[PHRASE]'
-                                            + re.sub(r'\s+', filler, m.group(0).strip())
-                                            + '[PHRASE]')
+                phrase = re.sub(r'([.^$*+?{\\|()[\]])', r'\\\1', phrase)
+                print("Phrase: ", phrase)
+                split_phrase = phrase.split()
+                joiner = r'\W+'
+                # To check for consecutive entities
+                joined_pattern = r'\b' + joiner.join(split_phrase) + r'\b'
+                reP = re.compile(joined_pattern, re.IGNORECASE)
+                m = reP.search(tagged_sentence)
+                if m:
+                    # print (m.span())
+                    tagged_sentence = tagged_sentence.replace(m.group(0), '[PHRASE]'
+                                        + re.sub(r'\s+', filler, m.group(0).strip())
+                                        + '[PHRASE]')
+                print("taggedSent2: ", tagged_sentence)
 
+            print("TaggedSent3: ", tagged_sentence)
             overlap_flag = 0
             pre_negation_flag = 0
             post_negation_flag = 0
@@ -146,32 +159,38 @@ class NegationContextAnalyzer(PackProcessor):
             sentence_tokens.reverse()
             tagged_sentence = ' '.join(sentence_tokens)
 
-            r = re.compile(r'(\[NEGATED\]\w*\[NEGATED\])')
+            print("TaggedSentence: ", tagged_sentence)
+            tagged_sentence = tagged_sentence.replace(filler, ' ')
+
+            print("Pre-matching sentence: ", tagged_sentence)
+            r = re.compile(r'(\[NEGATED\][\w|\s]*\[NEGATED\])')
             neg_matches = r.findall(tagged_sentence)
-            # print (neg_matches)
-            r = re.compile(r'(\[PHRASE\]\w*\[PHRASE\])')
+            print ("NEGMATCHES: ", neg_matches)
+            r = re.compile(r'(\[PHRASE\][\w|\s]*\[PHRASE\])')
             pos_matches = r.findall(tagged_sentence)
-            # print (pos_matches)
+            print ("POSMATCHES: ", pos_matches)
 
             tagged_sentence = re.sub(r'(\[\w*\])', '', tagged_sentence)
 
             for match in pos_matches:
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
-                result = re.search(pattern, tagged_sentence)
+                result = re.search(pattern, sentence.text)
                 # print ("pos", result.span())
-                negation_context = NegationContext(input_pack, result.span()[0], result.span()[1])
+                print("Pos: ", result.group(), result.span(), sentence.span.begin, tagged_sentence[:3])
+                negation_context = NegationContext(input_pack, sentence.span.begin + result.span()[0], sentence.span.begin + result.span()[1])
+                print("NegContext: ", negation_context.text)
                 negation_context.polarity = False
 
             for match in neg_matches:
                 substring = re.sub(r'(\[\w*\])', '', match)
                 pattern = r'\b' + substring + r'\b'
-                result = re.search(pattern, tagged_sentence)
+                result = re.search(pattern, sentence.text)
+                print("Neg: ", result.group(), result.span(), sentence.span.begin, sentence.text[:3])
                 # print ("neg", result.span())
-                negation_context = NegationContext(input_pack, result.span()[0], result.span()[1])
+                negation_context = NegationContext(input_pack, sentence.span.begin + result.span()[0], sentence.span.begin + result.span()[1])
                 negation_context.polarity = True
 
-            tagged_sentence = tagged_sentence.replace(filler, ' ')
 
     @classmethod
     def default_configs(cls):

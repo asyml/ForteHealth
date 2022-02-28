@@ -23,9 +23,11 @@ from forte_medical.processors.negation_context_analyzer import NegationContextAn
 def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: bool = True):
     pl = Pipeline[DataPack]()
 
-    if singlePack is True:
+    if singlePack == "True":
         pl.set_reader(StringReader())
+        print("SinglePack")
     else:
+        print("Multipack", singlePack, type(singlePack), singlePack is True, singlePack == True, singlePack == "True")
         pl.set_reader(
             Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs}
         )
@@ -39,7 +41,7 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
     }
 
     pl.add(SpacyProcessor(), configSpacy)
-    pl.add(ElasticSearchPackIndexProcessor())
+#    pl.add(ElasticSearchPackIndexProcessor())
     pl.add(NegationContextAnalyzer(), configNegation)
 
     pl.add(
@@ -56,8 +58,21 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
     pl.initialize()
 
     text = (
-        "Dr. Amanda, "
-        "Medical Nutrition Therapy for Hyperlipidemia. "
+        "ADDENDUM:"
+        "RADIOLOGIC STUDIES:  Radiologic studies also included a chest "
+        "CT, which confirmed cavitary lesions in the left lung apex "
+        "consistent with infectious process/tuberculosis.  This also "
+        "moderate-sized left pleural effusion. "
+        "HEAD CT:  Head CT showed no intracranial hemorrhage and no mass "
+        "effect, but old infarction consistent with past medical history. "
+        "ABDOMINAL CT:  Abdominal CT showed no lesions of "
+        "T10 and sacrum most likely secondary to osteoporosis. These can "
+        "be followed by repeat imaging as an outpatient. "
+    )
+
+    '''
+    "Dr. Amanda, "
+        "Medical Nutrition Therapy for Hyperlipidemia."
         "Referral from: Julie Tester, RD, LD, CNSD "
         "Diet: General "
         "Daily Calorie needs (kcals): 1500 calories, assessed as HB + 20 for activity. "
@@ -67,8 +82,9 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
         "She agrees with the plan and has my number for further assessment. May want a Resting "
         "Metabolic Rate as well. She takes an aspirin a day for knee pain."
     )
+    '''
 
-    if singlePack is True:
+    if singlePack == "True":
         pack = pl.process(text)
         showData(pack)
     else:
