@@ -97,10 +97,10 @@ class NegationContextAnalyzer(PackProcessor):
 
         "CT scan shows xyz but absence of lesions."
         Our implementation would set negation polarity for 'xyz' as False, but won't carry it to
-        'lesions' because we detect 'but' as a conjunction in the sentence. Hence, we decide 
+        'lesions' because we detect 'but' as a conjunction in the sentence. Hence, we decide
         polarity for 'lesions' independently as True given the presence of 'absence' phrase before
         'lesions'.
-        All rule phrases are tagged in the sentence as [PREN]..[PREN], [POST]..[POST] or 
+        All rule phrases are tagged in the sentence as [PREN]..[PREN], [POST]..[POST] or
         [CONJ]..[CONJ], depending on how they are defined in the rules' file. All entity mentions
          are first annotated with the [ENTITY]..[ENTITY] tags.
         On negation detection, we replace those with [NEGATED]..[NEGATED].
