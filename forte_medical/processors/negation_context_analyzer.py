@@ -197,7 +197,6 @@ class NegationContextAnalyzer(PackProcessor):
                                         sentence.span.begin + result.span()[1])
                 negation_context.polarity = True
 
-
     @classmethod
     def default_configs(cls):
         r"""
