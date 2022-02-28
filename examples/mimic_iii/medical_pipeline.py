@@ -14,23 +14,21 @@ from ft.onto.base_ontology import (
     EntityMention,
 )
 from fortex.spacy import SpacyProcessor
-from fortex.elastic import ElasticSearchPackIndexProcessor
 
 from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
 
 
-def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: bool = True):
+def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: str = "True"):
     pl = Pipeline[DataPack]()
 
     if singlePack == "True":
         pl.set_reader(StringReader())
-        print("SinglePack")
     else:
-        print("Multipack", singlePack, type(singlePack), singlePack is True, singlePack == True, singlePack == "True")
         pl.set_reader(
             Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs}
         )
+
     configSpacy = {
         "processors": ["sentence", "tokenize", "pos", "ner", "umls_link"],
         "lang": "en_ner_bionlp13cg_md",
@@ -41,7 +39,6 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
     }
 
     pl.add(SpacyProcessor(), configSpacy)
-#    pl.add(ElasticSearchPackIndexProcessor())
     pl.add(NegationContextAnalyzer(), configNegation)
 
     pl.add(
@@ -69,20 +66,6 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: boo
         "T10 and sacrum most likely secondary to osteoporosis. These can "
         "be followed by repeat imaging as an outpatient. "
     )
-
-    '''
-    "Dr. Amanda, "
-        "Medical Nutrition Therapy for Hyperlipidemia."
-        "Referral from: Julie Tester, RD, LD, CNSD "
-        "Diet: General "
-        "Daily Calorie needs (kcals): 1500 calories, assessed as HB + 20 for activity. "
-        "Daily Protein needs: 40 grams, assessed as 1.0 g/kg. "
-        "Pt has been on a 3-day calorie count and has had an average intake of 1100 calories. "
-        "She was instructed to drink 2-3 cans of liquid supplement to help promote weight gain. "
-        "She agrees with the plan and has my number for further assessment. May want a Resting "
-        "Metabolic Rate as well. She takes an aspirin a day for knee pain."
-    )
-    '''
 
     if singlePack == "True":
         pack = pl.process(text)
@@ -116,8 +99,8 @@ def showData(pack: DataPack):
             for negation_context in pack.get(NegationContext, sentence)]
 
         print(colored("Tokens:", "red"), tokens, "\n")
-        print(colored("EntityMentions:", "red"), entities, "\n")
-        print(colored("Medical Entity Mentions:", "cyan"), medical_entities, "\n")
+        print(colored("Entity Mentions:", "red"), entities, "\n")
+        print(colored("UMLS Entity Mentions detected:", "cyan"), medical_entities, "\n")
         print(colored("Entity Negation Contexts:", "cyan"), negation_contexts, "\n")
 
         input(colored("Press ENTER to continue...\n", "green"))
