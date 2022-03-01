@@ -1,8 +1,10 @@
 import sys
+import yaml
 from termcolor import colored
 
+from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
-from forte.data.readers import StringReader
+from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
 from ftx.onto.clinical import MedicalEntityMention
@@ -19,27 +21,19 @@ from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
 
 
-def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: str = "True"):
+def main(input_path: str, output_path: str, max_packs: int = -1, use_mimic3_reader: bool = False):
     pl = Pipeline[DataPack]()
 
-    if singlePack == "True":
-        pl.set_reader(StringReader())
+    if use_mimic3_reader is False:
+        pl.set_reader(PlainTextReader())
     else:
         pl.set_reader(
             Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs}
         )
 
-    configSpacy = {
-        "processors": ["sentence", "tokenize", "pos", "ner", "umls_link"],
-        "lang": "en_ner_bionlp13cg_md",
-    }
-
-    configNegation = {
-        "negation_rules_path": "negex_triggers.txt",
-    }
-
-    pl.add(SpacyProcessor(), configSpacy)
-    pl.add(NegationContextAnalyzer(), configNegation)
+    config = Config(yaml.safe_load(open("config.yml", "r")), None)
+    pl.add(SpacyProcessor(), config.Spacy)
+    pl.add(NegationContextAnalyzer(), config.Negation)
 
     pl.add(
         PackIdJsonPackWriter(),
@@ -54,26 +48,9 @@ def main(input_path: str, output_path: str, max_packs: int = -1, singlePack: str
 
     pl.initialize()
 
-    text = (
-        "ADDENDUM:"
-        "RADIOLOGIC STUDIES:  Radiologic studies also included a chest "
-        "CT, which confirmed cavitary lesions in the left lung apex "
-        "consistent with infectious process/tuberculosis.  This also "
-        "moderate-sized left pleural effusion. "
-        "HEAD CT:  Head CT showed no intracranial hemorrhage and no mass "
-        "effect, but old infarction consistent with past medical history. "
-        "ABDOMINAL CT:  Abdominal CT showed no lesions of "
-        "T10 and sacrum most likely secondary to osteoporosis. These can "
-        "be followed by repeat imaging as an outpatient. "
-    )
-
-    if singlePack == "True":
-        pack = pl.process(text)
+    packs = pl.process_dataset(input_path)
+    for pack in packs:
         showData(pack)
-    else:
-        packs = pl.process_dataset(input_path)
-        for pack in packs:
-            showData(pack)
 
 
 def showData(pack: DataPack):

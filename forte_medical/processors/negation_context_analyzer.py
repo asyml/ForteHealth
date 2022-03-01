@@ -1,4 +1,4 @@
-# Copyright 2021 The Forte Authors. All Rights Reserved.
+# Copyright 2022 The Forte Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -219,6 +219,7 @@ class NegationContextAnalyzer(PackProcessor):
         :meth:`~forte.pipeline.Pipeline.enforce_consistency` was enabled for the pipeline.
         """
         return {
+            "ft.onto.base_ontology.Sentence": set(),
             "ft.onto.base_ontology.EntityMention": {"ner_type"},
         }
 
