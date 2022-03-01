@@ -22,7 +22,7 @@ from forte.common import ProcessExecutionException
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
-from ft.onto.base_ontology import Sentence
+from ft.onto.base_ontology import Sentence, EntityMention
 from fortex.spacy import SpacyProcessor
 from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
 from ftx.medical.clinical_ontology import NegationContext
@@ -31,10 +31,9 @@ from ftx.medical.clinical_ontology import NegationContext
 @ddt
 class TestNegationContextAnalyzer(unittest.TestCase):
     @data(
-        "ADDENDUM:"
-         "ABDOMINAL CT:  Abdominal CT showed no lesions of "
-         "T10 and sacrum most likely secondary to osteoporosis. These can "
-         "be followed by repeat imaging as an outpatient."
+        "Abdominal CT showed no lesions of "
+        "T10 and sacrum most likely secondary to osteoporosis. These can "
+        "be followed by repeat imaging as an outpatient."
     )
     def test_pre_negation_detection(self, input_data):
         self.pl = (
@@ -59,18 +58,18 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.poalrity) 
+                negationContexts = [(negations.text, negations.polarity) 
                         for negations in pack.get(NegationContext, sentence)]
                 
                 check = [('lesions', True), ('T10', True), ('sacrum', True)]
 
                 assert negationContexts == check
+                break
 
     @data(
-        "ADDENDUM:"
-         "ABDOMINAL CT:  Abdominal CT shows lesions are absent "
-         "most likely secondary to osteoporosis. These can "
-         "be followed by repeat imaging as an outpatient."
+        "Abdominal CT shows lesions are absent "
+        "most likely secondary to osteoporosis. These can "
+        "be followed by repeat imaging as an outpatient."
     )
     def test_post_negation_detection(self, input_data):
         self.pl = (
@@ -95,18 +94,18 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.poalrity) 
+                negationContexts = [(negations.text, negations.polarity) 
                         for negations in pack.get(NegationContext, sentence)]
                 
                 check = [('lesions', True)]
 
                 assert negationContexts == check
+                break
     
     @data(
-        "ADDENDUM:"
-         "ABDOMINAL CT:  Abdominal CT shows lesions but "
-         "no sacrum most likely secondary to osteoporosis. These can "
-         "be followed by repeat imaging as an outpatient."
+        "Abdominal CT shows lesions exist but "
+        "no sacrum most likely secondary to osteoporosis. These can "
+        "be followed by repeat imaging as an outpatient."
     )
     def test_negation_with_conj_detection(self, input_data):
         self.pl = (
@@ -131,18 +130,21 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.poalrity) 
+                e = [ent.text for ent in pack.get(EntityMention, sentence)]
+                print (e)
+                negationContexts = [(negations.text, negations.polarity) 
                         for negations in pack.get(NegationContext, sentence)]
                 
                 check = [('lesions', False), ('sacrum', True)]
 
                 assert negationContexts == check
+                break
     
     @data(
         "ADDENDUM:"
-         "ABDOMINAL CT:  Abdominal CT shows lesions but "
-         "no sacrum most likely secondary to osteoporosis. These can "
-         "be followed by repeat imaging as an outpatient."
+        "ABDOMINAL CT:  Abdominal CT shows lesions but "
+        "no sacrum most likely secondary to osteoporosis. These can "
+        "be followed by repeat imaging as an outpatient."
     )
     def test_processing_error(self, input_data):
         self.pl = (
@@ -159,9 +161,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 config={
                     "negation_rules_path": "",
                     }
-            )
-            .initialize()
-        )
+            ))
 
         with self.assertRaises(ProcessExecutionException) as context:
-            self.pl.process_dataset(input_data)
+            self.pl.initialize()
