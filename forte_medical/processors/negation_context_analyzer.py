@@ -62,8 +62,8 @@ class NegationContextAnalyzer(PackProcessor):
         if len(configs.negation_rules_path) > 0:
             with open(configs.negation_rules_path, 'r', encoding='utf8') as rules_file:
                 all_rules = rules_file.readlines()
-                all_rules.append(configs.pre_negation_rules)
-                all_rules.append(configs.post_negation_rules)
+                all_rules.extend(configs.pre_negation_rules)
+                all_rules.extend(configs.post_negation_rules)
                 self.__rules = self.__sort_rules(all_rules)
         else:
             raise ProcessExecutionException("Please provide a file path in config as "
