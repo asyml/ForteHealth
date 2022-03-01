@@ -49,7 +49,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": "../../../../examples/mimic_iii/negex_triggers.txt",
+                    "negation_rules_path": "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -85,7 +85,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": "../../../../examples/mimic_iii/negex_triggers.txt",
+                    "negation_rules_path": "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -121,7 +121,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": "../../../../examples/mimic_iii/negex_triggers.txt",
+                    "negation_rules_path": "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }

@@ -67,7 +67,7 @@ class NegationContextAnalyzer(PackProcessor):
                 self.__rules = self.__sort_rules(all_rules)
         else:
             raise ProcessExecutionException("Please provide a file path in config as "
-                            + "config.negation_rules_pathfor the negation rules that will"
+                            + "config.negation_rules_path, for negation rules that will "
                             + "be used by the processor.")
 
     def initialize(self, resources: Resources, configs: Config):
