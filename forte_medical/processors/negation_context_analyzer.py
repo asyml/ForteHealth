@@ -52,7 +52,7 @@ class NegationContextAnalyzer(PackProcessor):
             rule_tokens = rule.strip().split('\t')
             rule_phrase_tokens = rule_tokens[0].split()
             rule_phrase = r'\s+'.join(rule_phrase_tokens)
-            pattern = r'\b' + '(' + rule_phrase + ')' + r'\b'
+            pattern = r'\b' + '(' + rule_phrase + ')' + r'(?!(\[PREN\])|(\[POST\]))\b'
             rule_tokens.append(pattern)
             sorted_rules.append(rule_tokens)
 
@@ -61,7 +61,10 @@ class NegationContextAnalyzer(PackProcessor):
     def set_up(self, configs: Config):
         if len(configs.negation_rules_path) > 0:
             with open(configs.negation_rules_path, 'r', encoding='utf8') as rules_file:
-                self.__rules = self.__sort_rules(rules_file.readlines())
+                all_rules = rules_file.readlines()
+                all_rules.append(configs.pre_negation_rules)
+                all_rules.append(configs.post_negation_rules)
+                self.__rules = self.__sort_rules(all_rules)
         else:
             raise ProcessExecutionException("Please provide a file path in config as "
                             + "config.negation_rules_pathfor the negation rules that will"
@@ -206,10 +209,20 @@ class NegationContextAnalyzer(PackProcessor):
             - `negation_rules_path`: provides the location of a rule phrases file, which would be
             used as triggers to detect negation context in sentences.
 
+            - `pre_negation_rules`: an additional set of pre negation rules that are to be
+            considered along with the default rules that processor uses.
+            Example: `"pre_negation_rules": ["absence of", "no"]`
+
+            - `post_negation_rules`: an additional set of post negation rules that are to be 
+            consdiered along with the default rules that processor uses.
+            Example: `"post_negation_rules": ["is absent", "not present"]"`
+
         Returns: A dictionary with the default config for this processor.
         """
         return {
             "negation_rules_path": "",
+            "pre_negation_rules": [],
+            "post_negation_rules": [],
         }
 
     def expected_types_and_attributes(self):
