@@ -71,9 +71,7 @@ class NegationContextAnalyzer(PackProcessor):
             )
             negation_rules_path = dir_path
 
-        with open(
-            negation_rules_path, "r", encoding="utf8"
-        ) as rules_file:
+        with open(negation_rules_path, "r", encoding="utf8") as rules_file:
             all_rules = rules_file.readlines()
             all_rules.extend(configs.pre_negation_rules)
             all_rules.extend(configs.post_negation_rules)
