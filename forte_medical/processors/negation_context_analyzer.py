@@ -19,7 +19,6 @@ import re
 from typing import Dict, List, Set
 
 from ft.onto.base_ontology import Sentence, EntityMention
-from forte.common import Resources, ProcessExecutionException
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
@@ -72,12 +71,12 @@ class NegationContextAnalyzer(PackProcessor):
             negation_rules_path = dir_path
         
         with open(
-                negation_rules_path, "r", encoding="utf8"
-            ) as rules_file:
-                all_rules = rules_file.readlines()
-                all_rules.extend(configs.pre_negation_rules)
-                all_rules.extend(configs.post_negation_rules)
-                self.__rules = self.__sort_rules(all_rules)
+            negation_rules_path, "r", encoding="utf8"
+        ) as rules_file:
+            all_rules = rules_file.readlines()
+            all_rules.extend(configs.pre_negation_rules)
+            all_rules.extend(configs.post_negation_rules)
+            self.__rules = self.__sort_rules(all_rules)
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
