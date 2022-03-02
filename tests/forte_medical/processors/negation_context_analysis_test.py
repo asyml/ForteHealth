@@ -24,7 +24,8 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 from ft.onto.base_ontology import Sentence, EntityMention
 from fortex.spacy import SpacyProcessor
-from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
+from forte_medical.processors.negation_context_analyzer \
+    import NegationContextAnalyzer
 from ftx.medical.clinical_ontology import NegationContext
 
 
@@ -48,7 +49,8 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": "../../../examples/mimic_iii/negex_triggers.txt",
+                    "negation_rules_path": 
+                        "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -84,7 +86,8 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": "../../../examples/mimic_iii/negex_triggers.txt",
+                    "negation_rules_path": 
+                        "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -120,7 +123,8 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": "../../../examples/mimic_iii/negex_triggers.txt",
+                    "negation_rules_path": 
+                        "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }

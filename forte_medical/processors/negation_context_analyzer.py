@@ -33,9 +33,10 @@ __all__ = [
 class NegationContextAnalyzer(PackProcessor):
     r"""
     Implementation of this NegationContextAnalyzer has been adapted from the
-    NegEx algorithm, originally proposed in the paper 'A simple algorithm for identifying
-    negated findings and diseases in discharge summaries', written by W.W. Chapman and others.
-    A rendition of it that exists on github has been referred to as well.
+    NegEx algorithm, originally proposed in the paper 'A simple algorithm for
+    identifying negated findings and diseases in discharge summaries', written
+    by W.W. Chapman and others. A rendition of it that exists on github has
+    been referred to as well.
 
     Paper link: https://pubmed.ncbi.nlm.nih.gov/12123149/
     """
