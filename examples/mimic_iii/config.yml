@@ -3,6 +3,4 @@ Spacy:
   lang: "en_ner_bionlp13cg_md"
 
 Negation:
-  negation_rules_path: "negex_triggers.txt"
-  pre_negation_rules: []
-  post_negation_rules: []
+  negation_rules_path: ""

@@ -10,35 +10,19 @@ In command line, we run
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte-wrappers[elastic,spacy]
 ```
 
-## Run indexer
-First, you should start an Elastic Indexer backend.
-
-Second, you can run the following command to parse some files and index them.
+## Run demo
+You can run the following command to parse some files like the MIMIC3 discharge notes.
 ```bash
-python medical_pipeline.py /path/to/mimiciii/1.4/NOTEEVENTS.csv.gz /path_to_sample_output 1000 False
+python medical_pipeline.py /path/to/mimiciii/1.4/NOTEEVENTS.csv.gz /path_to_sample_output 1000 True
 ```
 
-Tha last command line argument is ```singlePack```, it informs the script whether it should run the pipeline on MIMIC3 files located at '/path/to/mimiciii/1.4/NOTEEVENTS.csv.gz' (```False```) or just process a single pack using a single string of discharge note already present in the code (```True```).
+Tha last command line argument is ```use_mimic3_data```, it informs the script whether it should run the pipeline on MIMIC3 files located at ```/path/to/mimiciii/1.4/NOTEEVENTS.csv.gz``` (```True```) or just process a single pack using a single text file of discharge notes already present in the code (```False```). 
+The path of the text file has to be provided to run the pipeline with ```use_mimic3_data``` as ```False```.
+
+```bash
+python medical_pipeline.py sample_data/ /path_to_sample_output 1000 False
+```
 
 Here, we also write out the raw data pack to `/path_to_sample_output`, and only
-index the first 1k notes. Remove the `1000` parameter to index all documents.
-
-After the indexing is done, we are ready with the data processing part. Let's start the GUI.
-
-## Stave 
-First, set up Stave following the instructions.
-
-Second, create an empty project with the [default ontology](https://github.com/asyml/forte/blob/master/forte/ontology_specs/base_ontology.json),
- now record the project id.
-
-Set up the following environment variables:
-```bash
-export stave_db_path=[path_to_stave]/simple_backend/db.sqlite3
-export url_stub=http://localhost:3000
-export query_result_project_id=[the project id above]
-```
-
-Now, create another project with default ontology.
-
-Upload the `*.json` file (you can find it in the directory of the README) to the project.
+process the first 1000 notes. Remove the `1000` parameter to index all documents.
 

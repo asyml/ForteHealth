@@ -14,6 +14,7 @@
 """
 Negation Context Analyser
 """
+import os
 import re
 from typing import Dict, List, Set
 
@@ -38,6 +39,7 @@ class NegationContextAnalyzer(PackProcessor):
     by W.W. Chapman and others. A rendition of it that exists on github has
     been referred to as well.
 
+    Referred repo link: https://github.com/chapmanbe/negex
     Paper link: https://pubmed.ncbi.nlm.nih.gov/12123149/
     """
 
@@ -61,20 +63,21 @@ class NegationContextAnalyzer(PackProcessor):
 
     def set_up(self, configs: Config):
         if len(configs.negation_rules_path) > 0:
-            with open(
-                configs.negation_rules_path, "r", encoding="utf8"
+            negation_rules_path = configs.negation_rules_path
+        else:
+            dir_path: str = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                "resources/negex_triggers.txt",
+            )
+            negation_rules_path = dir_path
+        
+        with open(
+                negation_rules_path, "r", encoding="utf8"
             ) as rules_file:
                 all_rules = rules_file.readlines()
                 all_rules.extend(configs.pre_negation_rules)
                 all_rules.extend(configs.post_negation_rules)
                 self.__rules = self.__sort_rules(all_rules)
-        else:
-            raise ProcessExecutionException(
-                "Please provide a file path in "
-                + "config as config.negation_rules_path, for "
-                + "negation rules that will be used by the "
-                + "processor."
-            )
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
