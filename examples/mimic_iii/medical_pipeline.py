@@ -21,7 +21,7 @@ from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
 
 
-def main(input_path: str, output_path: str, max_packs: int = -1, use_mimic3_reader: bool = False):
+def main(input_path: str, output_path: str, max_packs: int = -1, use_mimic3_reader: bool = True):
     pl = Pipeline[DataPack]()
 
     if use_mimic3_reader is False:
@@ -83,4 +83,4 @@ def showData(pack: DataPack):
         input(colored("Press ENTER to continue...\n", "green"))
 
 
-main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])
+main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4].lower() == "true")
