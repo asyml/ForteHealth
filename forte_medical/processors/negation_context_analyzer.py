@@ -19,6 +19,7 @@ import re
 from typing import Dict, List, Set
 
 from ft.onto.base_ontology import Sentence, EntityMention
+from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
@@ -69,7 +70,7 @@ class NegationContextAnalyzer(PackProcessor):
                 "resources/negex_triggers.txt",
             )
             negation_rules_path = dir_path
-        
+
         with open(
             negation_rules_path, "r", encoding="utf8"
         ) as rules_file:
