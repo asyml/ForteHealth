@@ -137,9 +137,6 @@ class NegationContextAnalyzer(PackProcessor):
             ]
             entities = set(entities)
 
-            if len(entities) == 0:
-                break
-
             for entity in entities:
 
                 # Precede all ].,?+(){^* with a '\' so the special characters
@@ -206,23 +203,25 @@ class NegationContextAnalyzer(PackProcessor):
                 substring = re.sub(r"(\[\w*\])", "", match)
                 pattern = r"\b" + substring + r"\b"
                 result = re.search(pattern, sentence.text)
-                negation_context = NegationContext(
-                    input_pack,
-                    sentence.span.begin + result.span()[0],
-                    sentence.span.begin + result.span()[1],
-                )
-                negation_context.polarity = False
+                if result:
+                    negation_context = NegationContext(
+                        input_pack,
+                        sentence.span.begin + result.span()[0],
+                        sentence.span.begin + result.span()[1],
+                    )
+                    negation_context.polarity = False
 
             for match in neg_matches:
                 substring = re.sub(r"(\[\w*\])", "", match)
                 pattern = r"\b" + substring + r"\b"
                 result = re.search(pattern, sentence.text)
-                negation_context = NegationContext(
-                    input_pack,
-                    sentence.span.begin + result.span()[0],
-                    sentence.span.begin + result.span()[1],
-                )
-                negation_context.polarity = True
+                if result:
+                    negation_context = NegationContext(
+                        input_pack,
+                        sentence.span.begin + result.span()[0],
+                        sentence.span.begin + result.span()[1],
+                    )
+                    negation_context.polarity = True
 
     @classmethod
     def default_configs(cls):
