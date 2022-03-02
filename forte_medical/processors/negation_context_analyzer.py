@@ -200,7 +200,7 @@ class NegationContextAnalyzer(PackProcessor):
             pos_matches = r.findall(tagged_sentence)
 
             for match in pos_matches:
-                substring = re.sub(r"(\[\w*\])", "", match) # type: ignore
+                substring = re.sub(r"(\[\w*\])", "", match)  # type: ignore
                 pattern = r"\b" + substring + r"\b"
                 result = re.search(pattern, sentence.text)
                 if result:
@@ -212,7 +212,7 @@ class NegationContextAnalyzer(PackProcessor):
                     negation_context.polarity = False
 
             for match in neg_matches:
-                substring = re.sub(r"(\[\w*\])", "", match) # type: ignore
+                substring = re.sub(r"(\[\w*\])", "", match)  # type: ignore
                 pattern = r"\b" + substring + r"\b"
                 result = re.search(pattern, sentence.text)
                 if result:
