@@ -41,6 +41,9 @@ setuptools.setup(
         "fastapi==0.65.2",
         "uvicorn==0.14.0",
     ],
+    extras_require={
+        "test": ["ddt", "testfixtures"],
+    },
     entry_points={
         'console_scripts': [
             "forte-medical-train=forte_medical_cli.train:main",

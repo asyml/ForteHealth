@@ -62,11 +62,9 @@ jobs:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        # flake8 forte_medical/ examples/ ftx/ scripts/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 forte_medical/ examples/ ftx/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 forte_medical/ examples/ tests/ ftx/ --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        # flake8 forte/ examples/ ft/ scripts/ tests/ --ignore E203,W503 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-        flake8 forte/ examples/ ftx/  --ignore E203,W503 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 forte_medical/ examples/ ftx/ tests/ --ignore E203,W503 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Lint with pylint
       run: |
@@ -75,3 +73,15 @@ jobs:
     - name: Lint main code with mypy when torch version is not 1.5.0 and python is 3.9
       run: |
         if [[ ${{ matrix.torch-version }} != "1.5.0" && ${{ matrix.python-version }} == "3.9" ]]; then mypy forte_medical/ ; fi
+
+    - name: Install requirements for tests
+        run: |
+          pip install --use-feature=in-tree-build --progress-bar off .[test]
+
+    - name: Test with pytest and run coverage
+      run: |
+        coverage run -m pytest tests/
+        coverage run --append -m pytest --doctest-modules forte_medical/
+    - name: Upload coverage
+      run: |
+        codecov
