@@ -86,7 +86,7 @@ jobs:
     - name: Test with pytest and run coverage
       run: |
         coverage run -m pytest tests/
-        coverage run --append -m pytest --doctest-modules forte_medical/
+#        coverage run --append -m pytest --doctest-modules forte_medical/
     - name: Upload coverage
       run: |
         codecov
