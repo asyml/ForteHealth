@@ -7,8 +7,7 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
-from ftx.onto.clinical import MedicalEntityMention
-from ftx.medical.clinical_ontology import NegationContext
+from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
 
 from ft.onto.base_ontology import (
     Token,
@@ -18,10 +17,17 @@ from ft.onto.base_ontology import (
 from fortex.spacy import SpacyProcessor
 
 from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
-from forte_medical.processors.negation_context_analyzer import NegationContextAnalyzer
+from forte_medical.processors.negation_context_analyzer import (
+    NegationContextAnalyzer,
+)
 
 
-def main(input_path: str, output_path: str, max_packs: int = -1, use_mimic3_reader: bool = True):
+def main(
+    input_path: str,
+    output_path: str,
+    max_packs: int = -1,
+    use_mimic3_reader: bool = True,
+):
     pl = Pipeline[DataPack]()
 
     if use_mimic3_reader is False:
@@ -73,12 +79,21 @@ def showData(pack: DataPack):
 
         negation_contexts = [
             (negation_context.text, negation_context.polarity)
-            for negation_context in pack.get(NegationContext, sentence)]
+            for negation_context in pack.get(NegationContext, sentence)
+        ]
 
         print(colored("Tokens:", "red"), tokens, "\n")
         print(colored("Entity Mentions:", "red"), entities, "\n")
-        print(colored("UMLS Entity Mentions detected:", "cyan"), medical_entities, "\n")
-        print(colored("Entity Negation Contexts:", "cyan"), negation_contexts, "\n")
+        print(
+            colored("UMLS Entity Mentions detected:", "cyan"),
+            medical_entities,
+            "\n",
+        )
+        print(
+            colored("Entity Negation Contexts:", "cyan"),
+            negation_contexts,
+            "\n",
+        )
 
         input(colored("Press ENTER to continue...\n", "green"))
 
