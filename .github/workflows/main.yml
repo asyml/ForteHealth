@@ -55,6 +55,11 @@ jobs:
         pip install --progress-bar off types-PyYAML==5.4.8 types-typed-ast==1.4.4 types-requests==2.25.6 types-dataclasses==0.1.7
         pip install --progress-bar off coverage codecov
 
+    - name: Install deep learning frameworks
+      run: |
+        pip install --progress-bar off torch==${{ matrix.torch-version }}
+        pip install --progress-bar off tensorflow==${{ matrix.tensorflow-version }}
+
     - name: Format check with Black
       run: |
         black --line-length 80 --check forte_medical/
