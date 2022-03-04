@@ -308,6 +308,66 @@
         "entry_name": "ftx.medical.clinical_ontology.DrugLookupWindowAnnotation",
         "parent_entry": "forte.data.ontology.top.Annotation",
         "description": "Similar to LookupWindowAnnotation however, these annotations are restricted to the segments/sections specified in the parameter - sectionOverrideSet - in DrugCNP2LookupWindow"
+      },
+      {
+        "entry_name": "ftx.medical.clinical_ontology.NegationContext",
+        "parent_entry": "forte.data.ontology.top.Annotation",
+        "description": "A span based annotation `NegationContext`, used to represent the negation context of a named entity.",
+        "attributes": [
+          {
+            "name": "polarity",
+            "type": "bool"
+          }
+        ]
+      },
+      {
+        "entry_name": "ftx.medical.clinical_ontology.UMLSConceptLink",
+        "parent_entry": "forte.data.ontology.top.Generics",
+        "description": "A umls concept entity, used to represent basic information of a umls concept",
+        "attributes": [
+          {
+              "name": "cui",
+              "type": "str"
+          },
+          {
+              "name": "name",
+              "type": "str"
+          },
+          {
+              "name": "definition",
+              "type": "str"
+          },
+          {
+              "name": "tuis",
+              "type": "List",
+              "item_type": "str"
+          },
+          {
+              "name": "aliases",
+              "type": "List",
+              "item_type": "str"
+          },
+          {
+              "name": "score",
+              "type": "str"
+          }
+        ]
+      },
+      {
+        "entry_name": "ftx.medical.clinical_ontology.MedicalEntityMention",
+        "parent_entry": "ft.onto.base_ontology.EntityMention",
+        "description": "A span based annotation class MedicalEntityMention, used to represent an Entity Mention in medical domain",
+        "attributes": [
+          {
+              "name": "umls_link",
+              "type": "str"
+          },
+          {
+              "name": "umls_entities",
+              "type": "List",
+              "item_type": "ftx.medical.clinical_ontology.UMLSConceptLink"
+          }
+        ]
       }
     ]
   }

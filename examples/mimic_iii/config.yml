@@ -1,0 +1,6 @@
+Spacy:
+  processors: ["sentence", "tokenize", "pos", "ner", "umls_link"]
+  lang: "en_ner_bionlp13cg_md"
+
+Negation:
+  negation_rules_path: ""
