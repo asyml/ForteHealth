@@ -1,7 +1,7 @@
 # OVERVIEW #
 
 
-### Download and Installation
+## Download and Installation
 
 Download the repository through
 
@@ -9,7 +9,7 @@ Download the repository through
 git clone https://github.com/asyml/forte-medical.git
 ```
 
-After `cd` into `forte`, you can install it through
+After `cd` into `forte-medical`, you can install it through
 
 ```bash
 pip install .
