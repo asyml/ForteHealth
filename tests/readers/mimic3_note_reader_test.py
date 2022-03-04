@@ -9,6 +9,7 @@ from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 class TestMimic3DischargeNoteReader(unittest.TestCase):
     @data('xxx')
     def test_mimic3_discharge_note_reader(self, mimic3_path):
+        # TODO: write test
         self.assertEqual(mimic3_path, 'xxx')
 
 
