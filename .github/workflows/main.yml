@@ -83,6 +83,12 @@ jobs:
       run: |
         pip install --use-feature=in-tree-build --progress-bar off .[test]
 
+    - name: Install Forte-wrappers-spacy
+      run: |        
+        git clone https://github.com/asyml/forte-wrappers.git
+        cd forte-wrappers
+        pip install src/spacy
+
     - name: Test with pytest and run coverage
       run: |
         coverage run -m pytest tests/
