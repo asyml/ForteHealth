@@ -40,9 +40,7 @@ class Mimic3ReaderPipelineTest(unittest.TestCase):
         consistent with infectious process/tuberculosis.  This also
         moderate-sized left pleural effusion."""
 
-        self.expected_text = """Report
-        -----------------
-        Admission Date:  [**2151-7-16**]       Discharge Date:  [**2151-8-4**]
+        self.expected_text = """Report\n-----------------\nAdmission Date:  [**2151-7-16**]       Discharge Date:  [**2151-8-4**]
 
         Service:
         ADDENDUM:
@@ -50,8 +48,7 @@ class Mimic3ReaderPipelineTest(unittest.TestCase):
         RADIOLOGIC STUDIES:  Radiologic studies also included a chest
         CT, which confirmed cavitary lesions in the left lung apex
         consistent with infectious process/tuberculosis.  This also
-        moderate-sized left pleural effusion.
-        """
+        moderate-sized left pleural effusion."""
 
         file_path = os.path.join(test_dir, "test.csv")
         self.file_path = file_path
