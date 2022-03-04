@@ -28,8 +28,7 @@ from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 class Mimic3ReaderPipelineTest(unittest.TestCase):
     def setUp(self):
         test_dir = tempfile.mkdtemp()
-        self.orig_text = \
-        '''
+        self.orig_text = """
         ROW_ID","SUBJECT_ID","HADM_ID","CHARTDATE","CHARTTIME","STORETIME","CATEGORY","DESCRIPTION","CGID","ISERROR","TEXT"
         174,22532,167853,2151-08-04,,,"Discharge summary","Report",,,"Admission Date:  [**2151-7-16**]       Discharge Date:  [**2151-8-4**]
 
@@ -39,7 +38,20 @@ class Mimic3ReaderPipelineTest(unittest.TestCase):
         RADIOLOGIC STUDIES:  Radiologic studies also included a chest
         CT, which confirmed cavitary lesions in the left lung apex
         consistent with infectious process/tuberculosis.  This also
-        moderate-sized left pleural effusion.'''
+        moderate-sized left pleural effusion."""
+
+        self.expected_text = """Report
+        -----------------
+        Admission Date:  [**2151-7-16**]       Discharge Date:  [**2151-8-4**]
+
+        Service:
+        ADDENDUM:
+
+        RADIOLOGIC STUDIES:  Radiologic studies also included a chest
+        CT, which confirmed cavitary lesions in the left lung apex
+        consistent with infectious process/tuberculosis.  This also
+        moderate-sized left pleural effusion.
+        """
 
         file_path = os.path.join(test_dir, "test.csv")
         self.file_path = file_path
@@ -53,7 +65,8 @@ class Mimic3ReaderPipelineTest(unittest.TestCase):
 
     def test_reader(self):
         for pack in self.pl.process_dataset(self.file_path):
-            self.assertEqual(self.orig_text, pack.text)
+            self.assertEqual(self.expected_text, pack.text)
+
 
 if __name__ == "__main__":
     unittest.main()
