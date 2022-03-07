@@ -77,14 +77,16 @@ def main(
     packs = pl.process_dataset(input_path)
     for pack in packs:
         showData(pack)
-    
-    typesystem_path = os.path.join(
-                os.path.dirname(os.path.dirname(__file__)),
-                "resources/uima_typesystem.xml",
-            )
 
-    processor = VisualizationProcessor()
-    processor.run(typesystem_path, output_path, output_path)
+        pathh = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        print("**********: ", pathh)
+        typesystem_path = os.path.join(
+                    pathh,
+                    "forte_medical/resources/uima_typesystem.xml",
+                )
+
+        processor = VisualizationProcessor()
+        processor.run(typesystem_path, output_path+"/" + str(pack.pack_id)+".json", output_path + "/mycas.xmi")
 
 
 def showData(pack: DataPack):
