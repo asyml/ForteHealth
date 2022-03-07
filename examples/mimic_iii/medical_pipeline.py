@@ -1,3 +1,20 @@
+# Copyright 2022 The Forte Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+"""
+Demo Medical Pipeline
+"""
+import os
 import sys
 import yaml
 from termcolor import colored
@@ -8,6 +25,9 @@ from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
 from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
+from forte_medical.processors.visualization_processor import (
+    VisualizationProcessor
+)
 
 from ft.onto.base_ontology import (
     Token,
@@ -48,7 +68,7 @@ def main(
             "indent": 2,
             "overwrite": True,
             "drop_record": True,
-            "zip_pack": True,
+            "zip_pack": False,
         },
     )
 
@@ -57,6 +77,14 @@ def main(
     packs = pl.process_dataset(input_path)
     for pack in packs:
         showData(pack)
+    
+    typesystem_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                "resources/uima_typesystem.xml",
+            )
+
+    processor = VisualizationProcessor()
+    processor.run(typesystem_path, output_path, output_path)
 
 
 def showData(pack: DataPack):
