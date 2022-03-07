@@ -84,9 +84,16 @@ def main(
                     pathh,
                     "forte_medical/resources/uima_typesystem.xml",
                 )
-
+        annotation_viewer_path = os.path.join(
+                    pathh,
+                    "forte_medical/resources/annotation_viewer.sh",
+                )
         processor = VisualizationProcessor()
-        processor.run(typesystem_path, output_path+"/" + str(pack.pack_id)+".json", output_path + "/mycas.xmi")
+        processor.run(
+            typesystem_path,
+            output_path+"/" + str(pack.pack_id)+".json",
+            output_path + "/mycas.xmi",
+            annotation_viewer_path)
 
 
 def showData(pack: DataPack):
