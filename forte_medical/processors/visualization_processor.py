@@ -108,7 +108,7 @@ class VisualizationProcessor:
         
         return cas
 
-    def run(typesystem_loc: str, json_op_path: str, xmi_op_path: str):
+    def run(self, typesystem_loc: str, json_op_path: str, xmi_op_path: str):
         typesystem_path=typesystem_loc#"./TypeSystem.xml"
         json_output_path=json_op_path#'notes_small_output.json'
         output_xmi_path=xmi_op_path#"./Output/my_cas.xmi"
