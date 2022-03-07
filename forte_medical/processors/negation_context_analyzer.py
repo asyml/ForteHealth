@@ -226,23 +226,23 @@ class NegationContextAnalyzer(PackProcessor):
 
     @classmethod
     def default_configs(cls):
+
         r"""
         This defines a basic config structure for `NegationContextAnalyzer`.
 
         Following are the keys for this dictionary:
+
             - `negation_rules_path`: provides the location of a rule phrases
-            file, which would be used as triggers to detect negation context
-            in sentences.
-
+              file, which would be used as triggers to detect negation context
+              in sentences.
             - `pre_negation_rules`: an additional set of pre negation rules
-            that are to be considered along with the default rules that
-            processor uses.
-            Example: `"pre_negation_rules": ["absence of", "no"]`
-
+              that are to be considered along with the default rules that
+              processor uses.
+              Example: `"pre_negation_rules": ["absence of", "no"]`
             - `post_negation_rules`: an additional set of post negation rules
-            that are to be consdiered along with the default rules that
-            processor uses.
-            Example: `"post_negation_rules": ["is absent", "not present"]"`
+              that are to be consdiered along with the default rules that
+              processor uses.
+              Example: `"post_negation_rules": ["is absent", "not present"]`
 
         Returns: A dictionary with the default config for this processor.
         """
