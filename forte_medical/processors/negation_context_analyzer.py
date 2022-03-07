@@ -226,7 +226,6 @@ class NegationContextAnalyzer(PackProcessor):
 
     @classmethod
     def default_configs(cls):
-
         r"""
         This defines a basic config structure for `NegationContextAnalyzer`.
 
