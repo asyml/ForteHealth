@@ -4,3 +4,8 @@ Spacy:
 
 Negation:
   negation_rules_path: ""
+
+SRL:
+  storage_path: "model/srl"
+  batcher:
+    batch_size: 1

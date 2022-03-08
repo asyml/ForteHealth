@@ -7,12 +7,14 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
+from forte.processors.nlp import SRLPredictor
 from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
 
 from ft.onto.base_ontology import (
     Token,
     Sentence,
     EntityMention,
+    PredicateLink,
 )
 from fortex.spacy import SpacyProcessor
 
@@ -40,6 +42,7 @@ def main(
     config = Config(yaml.safe_load(open("config.yml", "r")), None)
     pl.add(SpacyProcessor(), config.Spacy)
     pl.add(NegationContextAnalyzer(), config.Negation)
+    pl.add(SRLPredictor(), config.SRL)
 
     pl.add(
         PackIdJsonPackWriter(),
@@ -81,6 +84,16 @@ def showData(pack: DataPack):
             (negation_context.text, negation_context.polarity)
             for negation_context in pack.get(NegationContext, sentence)
         ]
+
+        print ("SRL: ")
+        for link in pack.get(PredicateLink, sentence):
+            parent = link.get_parent()
+            child = link.get_child()
+            print(
+                f'  - "{child.text}" is role '
+                f"{link.arg_type} of "
+                f'predicate "{parent.text}"'
+            )
 
         print(colored("Tokens:", "red"), tokens, "\n")
         print(colored("Entity Mentions:", "red"), entities, "\n")
