@@ -50,7 +50,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 NegationContextAnalyzer(),
                 config={
                     "negation_rules_path": 
-                        "../../../examples/mimic_iii/negex_triggers.txt",
+                        "../../../forte_medical/resources/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -87,7 +87,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 NegationContextAnalyzer(),
                 config={
                     "negation_rules_path": 
-                        "../../../examples/mimic_iii/negex_triggers.txt",
+                        "../../../forte_medical/resources/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -124,7 +124,7 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 NegationContextAnalyzer(),
                 config={
                     "negation_rules_path": 
-                        "../../../examples/mimic_iii/negex_triggers.txt",
+                        "../../../forte_medical/resources/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
