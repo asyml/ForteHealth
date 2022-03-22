@@ -49,8 +49,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": 
-                        "../../../forte_medical/resources/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -86,8 +84,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": 
-                        "../../../forte_medical/resources/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -123,8 +119,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": 
-                        "../../../forte_medical/resources/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -143,29 +137,3 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
                 assert negationContexts == check
                 break
-    
-    @data(
-        "ADDENDUM:"
-        "ABDOMINAL CT:  Abdominal CT shows lesions but "
-        "no sacrum most likely secondary to osteoporosis. These can "
-        "be followed by repeat imaging as an outpatient."
-    )
-    def test_processing_error(self, input_data):
-        self.pl = (
-            Pipeline[DataPack]()
-            .set_reader(StringReader())
-            .add(
-                SpacyProcessor(),
-                config={
-                    "processors": ["sentence", "tokenize", "ner"],
-                    "lang": "en_ner_bionlp13cg_md",
-                })
-            .add(
-                NegationContextAnalyzer(),
-                config={
-                    "negation_rules_path": "",
-                    }
-            ))
-
-        with self.assertRaises(ProcessExecutionException) as context:
-            self.pl.initialize()

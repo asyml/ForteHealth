@@ -67,7 +67,7 @@ class NegationContextAnalyzer(PackProcessor):
         else:
             dir_path: str = os.path.join(
                 os.path.dirname(os.path.dirname(__file__)),
-                "forte_medical/resources/negex_triggers.txt",
+                "resources/negex_triggers.txt",
             )
             negation_rules_path = dir_path
 
