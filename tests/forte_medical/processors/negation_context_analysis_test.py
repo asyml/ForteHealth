@@ -127,13 +127,11 @@ class TestNegationContextAnalyzer(unittest.TestCase):
         )
 
         for pack in self.pl.process_dataset(input_data):
-            for sentence in pack.get(Sentence):
-                e = [ent.text for ent in pack.get(EntityMention, sentence)]
-                print (e)
-                negationContexts = [(negations.text, negations.polarity) 
-                        for negations in pack.get(NegationContext, sentence)]
-                
-                check = [('lesions', False), ('sacrum', True)]
+            sentence = pack.get_single(Sentence)
+            e = [ent.text for ent in pack.get(EntityMention, sentence)]
+            negationContexts = [(negations.text, negations.polarity) 
+                    for negations in pack.get(NegationContext, sentence)]
+            
+            check = [('lesions', False), ('sacrum', True)]
 
-                assert negationContexts == check
-                break
+            assert negationContexts == check
