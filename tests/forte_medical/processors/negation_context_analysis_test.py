@@ -57,14 +57,13 @@ class TestNegationContextAnalyzer(unittest.TestCase):
         )
 
         for pack in self.pl.process_dataset(input_data):
-            for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.polarity) 
-                        for negations in pack.get(NegationContext, sentence)]
-                
-                check = [('lesions', True), ('T10', True), ('sacrum', True)]
+            sentence = pack.get_single(Sentence)
+            negationContexts = [(negations.text, negations.polarity) 
+                    for negations in pack.get(NegationContext, sentence)]
+            
+            check = [('lesions', True), ('T10', True), ('sacrum', True)]
 
-                assert negationContexts == check
-                break
+            assert negationContexts == check
 
     @data(
         "Abdominal CT shows lesions are absent "
@@ -92,14 +91,13 @@ class TestNegationContextAnalyzer(unittest.TestCase):
         )
 
         for pack in self.pl.process_dataset(input_data):
-            for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.polarity) 
-                        for negations in pack.get(NegationContext, sentence)]
-                
-                check = [('lesions', True)]
+            sentence = pack.get_single(Sentence)
+            negationContexts = [(negations.text, negations.polarity) 
+                    for negations in pack.get(NegationContext, sentence)]
+            
+            check = [('lesions', True)]
 
-                assert negationContexts == check
-                break
+            assert negationContexts == check
     
     @data(
         "Abdominal CT shows lesions exist but "
@@ -128,7 +126,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            e = [ent.text for ent in pack.get(EntityMention, sentence)]
             negationContexts = [(negations.text, negations.polarity) 
                     for negations in pack.get(NegationContext, sentence)]
             
