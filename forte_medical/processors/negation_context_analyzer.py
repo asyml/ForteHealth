@@ -235,13 +235,14 @@ class NegationContextAnalyzer(PackProcessor):
               file, which would be used as triggers to detect negation context
               in sentences.
             - `pre_negation_rules`: an additional set of pre negation rules
-            that are to be considered along with the default rules that
-            processor uses. Example: `"pre_negation_rules": ["absence of","no"]`
+              that are to be considered along with the default rules that
+              processor uses. Example: `"pre_negation_rules": ["absence of",
+              "no"]`
 
             - `post_negation_rules`: an additional set of post negation rules
-            that are to be considered along with the default rules that
-            processor uses. Example: `"post_negation_rules": ["is absent",
-            "not present"]"`
+              that are to be considered along with the default rules that
+              processor uses. Example: `"post_negation_rules": ["is absent",
+              "not present"]"`
 
         Returns: A dictionary with the default config for this processor.
         """
