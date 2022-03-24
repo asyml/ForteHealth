@@ -240,7 +240,7 @@ class NegationContextAnalyzer(PackProcessor):
             Example: `"pre_negation_rules": ["absence of", "no"]`
 
             - `post_negation_rules`: an additional set of post negation rules
-            that are to be consdiered along with the default rules that
+            that are to be considered along with the default rules that
             processor uses.
             Example: `"post_negation_rules": ["is absent", "not present"]"`
 
