@@ -9,3 +9,4 @@ API
 
 
    code/readers.rst
+   code/processors.rst
