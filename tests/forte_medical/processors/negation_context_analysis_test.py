@@ -49,8 +49,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": 
-                        "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -59,14 +57,13 @@ class TestNegationContextAnalyzer(unittest.TestCase):
         )
 
         for pack in self.pl.process_dataset(input_data):
-            for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.polarity) 
-                        for negations in pack.get(NegationContext, sentence)]
-                
-                check = [('lesions', True), ('T10', True), ('sacrum', True)]
+            sentence = pack.get_single(Sentence)
+            negation_contexts = [(negations.text, negations.polarity) 
+                    for negations in pack.get(NegationContext, sentence)]
+            
+            check = [('lesions', True), ('T10', True), ('sacrum', True)]
 
-                assert negationContexts == check
-                break
+            assert negation_contexts == check
 
     @data(
         "Abdominal CT shows lesions are absent "
@@ -86,8 +83,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": 
-                        "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -96,14 +91,13 @@ class TestNegationContextAnalyzer(unittest.TestCase):
         )
 
         for pack in self.pl.process_dataset(input_data):
-            for sentence in pack.get(Sentence):
-                negationContexts = [(negations.text, negations.polarity) 
-                        for negations in pack.get(NegationContext, sentence)]
-                
-                check = [('lesions', True)]
+            sentence = pack.get_single(Sentence)
+            negation_contexts = [(negations.text, negations.polarity) 
+                    for negations in pack.get(NegationContext, sentence)]
+            
+            check = [('lesions', True)]
 
-                assert negationContexts == check
-                break
+            assert negation_contexts == check
     
     @data(
         "Abdominal CT shows lesions exist but "
@@ -123,8 +117,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             .add(
                 NegationContextAnalyzer(),
                 config={
-                    "negation_rules_path": 
-                        "../../../examples/mimic_iii/negex_triggers.txt",
                     "pre_negation_rules": [],
                     "post_negation_rules": [],
                     }
@@ -133,39 +125,10 @@ class TestNegationContextAnalyzer(unittest.TestCase):
         )
 
         for pack in self.pl.process_dataset(input_data):
-            for sentence in pack.get(Sentence):
-                e = [ent.text for ent in pack.get(EntityMention, sentence)]
-                print (e)
-                negationContexts = [(negations.text, negations.polarity) 
-                        for negations in pack.get(NegationContext, sentence)]
-                
-                check = [('lesions', False), ('sacrum', True)]
+            sentence = pack.get_single(Sentence)
+            negation_contexts = [(negations.text, negations.polarity) 
+                    for negations in pack.get(NegationContext, sentence)]
+            
+            check = [('lesions', False), ('sacrum', True)]
 
-                assert negationContexts == check
-                break
-    
-    @data(
-        "ADDENDUM:"
-        "ABDOMINAL CT:  Abdominal CT shows lesions but "
-        "no sacrum most likely secondary to osteoporosis. These can "
-        "be followed by repeat imaging as an outpatient."
-    )
-    def test_processing_error(self, input_data):
-        self.pl = (
-            Pipeline[DataPack]()
-            .set_reader(StringReader())
-            .add(
-                SpacyProcessor(),
-                config={
-                    "processors": ["sentence", "tokenize", "ner"],
-                    "lang": "en_ner_bionlp13cg_md",
-                })
-            .add(
-                NegationContextAnalyzer(),
-                config={
-                    "negation_rules_path": "",
-                    }
-            ))
-
-        with self.assertRaises(ProcessExecutionException) as context:
-            self.pl.initialize()
+            assert negation_contexts == check

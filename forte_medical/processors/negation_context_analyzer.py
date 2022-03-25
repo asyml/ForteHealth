@@ -39,7 +39,7 @@ class NegationContextAnalyzer(PackProcessor):
     by W.W. Chapman and others. A rendition of it that exists on github has
     been referred to as well.
 
-    Referred repo link: https://github.com/chapmanbe/negex
+    Referred repository link: https://github.com/chapmanbe/negex
     Paper link: https://pubmed.ncbi.nlm.nih.gov/12123149/
     """
 
@@ -236,12 +236,13 @@ class NegationContextAnalyzer(PackProcessor):
               in sentences.
             - `pre_negation_rules`: an additional set of pre negation rules
               that are to be considered along with the default rules that
-              processor uses.
-              Example: `"pre_negation_rules": ["absence of", "no"]`
+              processor uses. Example: `"pre_negation_rules": ["absence of",
+              "no"]`
+
             - `post_negation_rules`: an additional set of post negation rules
-              that are to be consdiered along with the default rules that
-              processor uses.
-              Example: `"post_negation_rules": ["is absent", "not present"]`
+              that are to be considered along with the default rules that
+              processor uses. Example: `"post_negation_rules": ["is absent",
+              "not present"]"`
 
         Returns: A dictionary with the default config for this processor.
         """
