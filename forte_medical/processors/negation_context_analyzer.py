@@ -39,7 +39,7 @@ class NegationContextAnalyzer(PackProcessor):
     by W.W. Chapman and others. A rendition of it that exists on github has
     been referred to as well.
 
-    Referred repo link: https://github.com/chapmanbe/negex
+    Referred repository link: https://github.com/chapmanbe/negex
     Paper link: https://pubmed.ncbi.nlm.nih.gov/12123149/
     """
 

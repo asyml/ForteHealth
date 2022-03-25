@@ -58,12 +58,12 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            negationContexts = [(negations.text, negations.polarity) 
+            negation_contexts = [(negations.text, negations.polarity) 
                     for negations in pack.get(NegationContext, sentence)]
             
             check = [('lesions', True), ('T10', True), ('sacrum', True)]
 
-            assert negationContexts == check
+            assert negation_contexts == check
 
     @data(
         "Abdominal CT shows lesions are absent "
@@ -92,12 +92,12 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            negationContexts = [(negations.text, negations.polarity) 
+            negation_contexts = [(negations.text, negations.polarity) 
                     for negations in pack.get(NegationContext, sentence)]
             
             check = [('lesions', True)]
 
-            assert negationContexts == check
+            assert negation_contexts == check
     
     @data(
         "Abdominal CT shows lesions exist but "
@@ -126,9 +126,9 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            negationContexts = [(negations.text, negations.polarity) 
+            negation_contexts = [(negations.text, negations.polarity) 
                     for negations in pack.get(NegationContext, sentence)]
             
             check = [('lesions', False), ('sacrum', True)]
 
-            assert negationContexts == check
+            assert negation_contexts == check
