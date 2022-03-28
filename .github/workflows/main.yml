@@ -62,7 +62,7 @@ jobs:
 
     - name: Format check with Black
       run: |
-        black --line-length 80 --check forte_medical/
+        black --line-length 80 --check forte_medical/ tests/
 
     - name: Lint with flake8
       run: |
@@ -73,11 +73,11 @@ jobs:
 
     - name: Lint with pylint
       run: |
-        pylint forte_medical/
+        pylint forte_medical/ tests/
 
     - name: Lint main code with mypy when torch version is not 1.5.0 and python is 3.9
       run: |
-        if [[ ${{ matrix.torch-version }} != "1.5.0" && ${{ matrix.python-version }} == "3.9" ]]; then mypy forte_medical/ ; fi
+        if [[ ${{ matrix.torch-version }} != "1.5.0" && ${{ matrix.python-version }} == "3.9" ]]; then mypy forte_medical/ tests/ ; fi
 
     - name: Install requirements for tests
       run: |
