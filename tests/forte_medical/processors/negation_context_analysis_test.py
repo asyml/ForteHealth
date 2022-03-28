@@ -50,7 +50,10 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             )
             .add(
                 NegationContextAnalyzer(),
-                config={"pre_negation_rules": [], "post_negation_rules": [],},
+                config={
+                    "pre_negation_rules": [],
+                    "post_negation_rules": [],
+                },
             )
             .initialize()
         )
@@ -84,7 +87,10 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             )
             .add(
                 NegationContextAnalyzer(),
-                config={"pre_negation_rules": [], "post_negation_rules": [],},
+                config={
+                    "pre_negation_rules": [],
+                    "post_negation_rules": [],
+                },
             )
             .initialize()
         )
@@ -118,7 +124,10 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             )
             .add(
                 NegationContextAnalyzer(),
-                config={"pre_negation_rules": [], "post_negation_rules": [],},
+                config={
+                    "pre_negation_rules": [],
+                    "post_negation_rules": [],
+                },
             )
             .initialize()
         )
