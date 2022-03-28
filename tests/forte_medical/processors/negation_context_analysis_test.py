@@ -24,8 +24,9 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 from ft.onto.base_ontology import Sentence, EntityMention
 from fortex.spacy import SpacyProcessor
-from forte_medical.processors.negation_context_analyzer \
-    import NegationContextAnalyzer
+from forte_medical.processors.negation_context_analyzer import (
+    NegationContextAnalyzer,
+)
 from ftx.medical.clinical_ontology import NegationContext
 
 
@@ -45,23 +46,23 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 config={
                     "processors": ["sentence", "tokenize", "ner"],
                     "lang": "en_ner_bionlp13cg_md",
-                })
+                },
+            )
             .add(
                 NegationContextAnalyzer(),
-                config={
-                    "pre_negation_rules": [],
-                    "post_negation_rules": [],
-                    }
+                config={"pre_negation_rules": [], "post_negation_rules": [],},
             )
             .initialize()
         )
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            negation_contexts = [(negations.text, negations.polarity) 
-                    for negations in pack.get(NegationContext, sentence)]
-            
-            check = [('lesions', True), ('T10', True), ('sacrum', True)]
+            negation_contexts = [
+                (negations.text, negations.polarity)
+                for negations in pack.get(NegationContext, sentence)
+            ]
+
+            check = [("lesions", True), ("T10", True), ("sacrum", True)]
 
             assert negation_contexts == check
 
@@ -79,26 +80,26 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 config={
                     "processors": ["sentence", "tokenize", "ner"],
                     "lang": "en_ner_bionlp13cg_md",
-                })
+                },
+            )
             .add(
                 NegationContextAnalyzer(),
-                config={
-                    "pre_negation_rules": [],
-                    "post_negation_rules": [],
-                    }
+                config={"pre_negation_rules": [], "post_negation_rules": [],},
             )
             .initialize()
         )
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            negation_contexts = [(negations.text, negations.polarity) 
-                    for negations in pack.get(NegationContext, sentence)]
-            
-            check = [('lesions', True)]
+            negation_contexts = [
+                (negations.text, negations.polarity)
+                for negations in pack.get(NegationContext, sentence)
+            ]
+
+            check = [("lesions", True)]
 
             assert negation_contexts == check
-    
+
     @data(
         "Abdominal CT shows lesions exist but "
         "no sacrum most likely secondary to osteoporosis. These can "
@@ -113,22 +114,22 @@ class TestNegationContextAnalyzer(unittest.TestCase):
                 config={
                     "processors": ["sentence", "tokenize", "ner"],
                     "lang": "en_ner_bionlp13cg_md",
-                })
+                },
+            )
             .add(
                 NegationContextAnalyzer(),
-                config={
-                    "pre_negation_rules": [],
-                    "post_negation_rules": [],
-                    }
+                config={"pre_negation_rules": [], "post_negation_rules": [],},
             )
             .initialize()
         )
 
         for pack in self.pl.process_dataset(input_data):
             sentence = pack.get_single(Sentence)
-            negation_contexts = [(negations.text, negations.polarity) 
-                    for negations in pack.get(NegationContext, sentence)]
-            
-            check = [('lesions', False), ('sacrum', True)]
+            negation_contexts = [
+                (negations.text, negations.polarity)
+                for negations in pack.get(NegationContext, sentence)
+            ]
+
+            check = [("lesions", False), ("sacrum", True)]
 
             assert negation_contexts == check
