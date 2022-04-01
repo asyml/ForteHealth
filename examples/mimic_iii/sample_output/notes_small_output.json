@@ -1,0 +1,776 @@
+{
+  "py/object": "forte.data.data_pack.DataPack",
+  "py/state": {
+    "_creation_records": {},
+    "_field_records": {},
+    "links": [],
+    "groups": [],
+    "pack_version": "0.0.1",
+    "_meta": {
+      "py/object": "forte.data.data_pack.Meta",
+      "py/state": {
+        "pack_name": "sample_data_small/notes_small.txt",
+        "_pack_id": 211230762558809616268911394647227693964,
+        "record": {},
+        "language": "eng",
+        "span_unit": "character",
+        "sample_rate": null,
+        "info": {}
+      }
+    },
+    "_text": "Radiologic studies also included a chest CT, which did not confirm cavitary lesions in the left lung apex consistent with infectious process/tuberculosis.\n",
+    "_audio": null,
+    "annotations": [
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 0,
+            "end": 10
+          },
+          "_tid": 16213599082491227242686111550617836612,
+          "pos": "JJ",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Sentence",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 0,
+            "end": 154
+          },
+          "_tid": 94643191873210836928405886637736423707,
+          "speaker": null,
+          "part_id": null,
+          "sentiment": {},
+          "classification": {},
+          "classifications": {
+            "py/object": "forte.data.ontology.core.FDict",
+            "py/state": {
+              "data": {}
+            }
+          }
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Document",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 0,
+            "end": 155
+          },
+          "_tid": 291136721975757108951773103835310865718,
+          "document_class": [],
+          "sentiment": {},
+          "classifications": {
+            "py/object": "forte.data.ontology.core.FDict",
+            "py/state": {
+              "data": {}
+            }
+          }
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 11,
+            "end": 18
+          },
+          "_tid": 277686598967643501648734741520098672040,
+          "pos": "NNS",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 19,
+            "end": 23
+          },
+          "_tid": 206623827059715449806817171433902987772,
+          "pos": "RB",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 24,
+            "end": 32
+          },
+          "_tid": 209036954899490618285638858350892904884,
+          "pos": "VBD",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 33,
+            "end": 34
+          },
+          "_tid": 67076537928838813791362645981726535636,
+          "pos": "DT",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 35,
+            "end": 40
+          },
+          "_tid": 269583047804118947853719787495038336248,
+          "pos": "NN",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 41,
+            "end": 43
+          },
+          "_tid": 129682642418219761270718286094785935240,
+          "pos": "NNP",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 43,
+            "end": 44
+          },
+          "_tid": 282477907636680893688112301111692985092,
+          "pos": ",",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 45,
+            "end": 50
+          },
+          "_tid": 62108807671350949218815941419605919527,
+          "pos": "WDT",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 51,
+            "end": 54
+          },
+          "_tid": 176804349648741004520749567327472127825,
+          "pos": "VBD",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 55,
+            "end": 58
+          },
+          "_tid": 306126055883421898489103495246393081397,
+          "pos": "RB",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 59,
+            "end": 66
+          },
+          "_tid": 228433803255052698839334376859799687414,
+          "pos": "VB",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 67,
+            "end": 75
+          },
+          "_tid": 219749863575113084363110473962470785781,
+          "pos": "JJ",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.EntityMention",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 67,
+            "end": 83
+          },
+          "_tid": 132445150814705589788245540520576457534,
+          "ner_type": "CANCER"
+        }
+      },
+      {
+        "py/object": "ftx.medical.clinical_ontology.MedicalEntityMention",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 67,
+            "end": 83
+          },
+          "_tid": 246120092224485174871342368833572551404,
+          "ner_type": "CANCER",
+          "umls_link": null,
+          "umls_entities": {
+            "py/object": "forte.data.ontology.core.FList",
+            "py/state": {
+              "data": []
+            }
+          }
+        }
+      },
+      {
+        "py/object": "ftx.medical.clinical_ontology.NegationContext",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 67,
+            "end": 83
+          },
+          "_tid": 10205015423191073994383970849624859531,
+          "polarity": true
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 76,
+            "end": 83
+          },
+          "_tid": 147646484893616778119250371960544244166,
+          "pos": "NNS",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 84,
+            "end": 86
+          },
+          "_tid": 266926759714979121104329172005628709863,
+          "pos": "IN",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 87,
+            "end": 90
+          },
+          "_tid": 325225705533299478636427694169054744701,
+          "pos": "DT",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 91,
+            "end": 95
+          },
+          "_tid": 144744740116608855719942070825758460700,
+          "pos": "JJ",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.EntityMention",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 91,
+            "end": 105
+          },
+          "_tid": 96352873034708512245084721841960778516,
+          "ner_type": "TISSUE"
+        }
+      },
+      {
+        "py/object": "ftx.medical.clinical_ontology.MedicalEntityMention",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 91,
+            "end": 105
+          },
+          "_tid": 176178028856240839856915177922188186800,
+          "ner_type": "TISSUE",
+          "umls_link": null,
+          "umls_entities": {
+            "py/object": "forte.data.ontology.core.FList",
+            "py/state": {
+              "data": [
+                {
+                  "py/object": "forte.data.ontology.core.Pointer",
+                  "py/state": {
+                    "_tid": 164041362189401582243637255144200253809
+                  }
+                },
+                {
+                  "py/object": "forte.data.ontology.core.Pointer",
+                  "py/state": {
+                    "_tid": 71633812405045599469188083038297868090
+                  }
+                },
+                {
+                  "py/object": "forte.data.ontology.core.Pointer",
+                  "py/state": {
+                    "_tid": 78207116004002276601142287145726539305
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "py/object": "ftx.medical.clinical_ontology.NegationContext",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 91,
+            "end": 105
+          },
+          "_tid": 291041533786128253706389419648161111073,
+          "polarity": true
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 96,
+            "end": 100
+          },
+          "_tid": 50492464865693138602366688556943008472,
+          "pos": "NN",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 101,
+            "end": 105
+          },
+          "_tid": 18612428287205889059966238228469360256,
+          "pos": "NN",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 106,
+            "end": 116
+          },
+          "_tid": 206076730142374440161274381177278211860,
+          "pos": "JJ",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 117,
+            "end": 121
+          },
+          "_tid": 265142062167454874892444336764431231796,
+          "pos": "IN",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 122,
+            "end": 132
+          },
+          "_tid": 60368365419651417397781670295506960801,
+          "pos": "JJ",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 133,
+            "end": 153
+          },
+          "_tid": 273193327287031237852390494474034286118,
+          "pos": "NN",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 153,
+            "end": 154
+          },
+          "_tid": 260430413553574747478844489601658433228,
+          "pos": ".",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Sentence",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 154,
+            "end": 155
+          },
+          "_tid": 226544120478259086667497019912328627124,
+          "speaker": null,
+          "part_id": null,
+          "sentiment": {},
+          "classification": {},
+          "classifications": {
+            "py/object": "forte.data.ontology.core.FDict",
+            "py/state": {
+              "data": {}
+            }
+          }
+        }
+      },
+      {
+        "py/object": "ft.onto.base_ontology.Token",
+        "py/state": {
+          "_span": {
+            "py/object": "forte.data.span.Span",
+            "begin": 154,
+            "end": 155
+          },
+          "_tid": 318564428936614584857192607254725235349,
+          "pos": "_SP",
+          "ud_xpos": null,
+          "lemma": null,
+          "chunk": null,
+          "ner": null,
+          "sense": null,
+          "is_root": null,
+          "ud_features": {},
+          "ud_misc": {}
+        }
+      }
+    ],
+    "generics": [
+      {
+        "py/object": "ftx.medical.clinical_ontology.UMLSConceptLink",
+        "py/state": {
+          "_tid": 164041362189401582243637255144200253809,
+          "cui": "C0225731",
+          "name": "Structure of apex of left lung",
+          "definition": null,
+          "tuis": [
+            "T029"
+          ],
+          "aliases": [
+            "Left lung, apex",
+            "Apex of left lung (viewed anatomically)",
+            "Left pulmonary viewed anatomically apex",
+            "Apex of left lung viewed anatomically",
+            "Anatomical apex of left lung",
+            "Structure of apex of left lung (body structure)",
+            "Structure of apex of left lung",
+            "Apex of left lung"
+          ],
+          "score": "0.9749283790588379"
+        }
+      },
+      {
+        "py/object": "ftx.medical.clinical_ontology.UMLSConceptLink",
+        "py/state": {
+          "_tid": 71633812405045599469188083038297868090,
+          "cui": "C0225703",
+          "name": "Structure of apex of lung",
+          "definition": "The rounded, uppermost part of the lung, located above the level of the sternal end of the first rib.",
+          "tuis": [
+            "T029"
+          ],
+          "aliases": [
+            "Apex of lung",
+            "Structure of apex of lung",
+            "apex lung",
+            "Lung Apex",
+            "Anatomical apex of lung",
+            "Apex of lung, NOS",
+            "Structure of apex of lung (body structure)",
+            "Pulmonary viewed anatomically apex",
+            "Apex of lung viewed anatomically",
+            "apex of lung",
+            "apex lungs",
+            "lung apex",
+            "Apex of lung (viewed anatomically)",
+            "Apex of Lung",
+            "Apex of the Lung",
+            "Apex pulmonis (pulmonalis)"
+          ],
+          "score": "0.890068531036377"
+        }
+      },
+      {
+        "py/object": "ftx.medical.clinical_ontology.UMLSConceptLink",
+        "py/state": {
+          "_tid": 78207116004002276601142287145726539305,
+          "cui": "C0225730",
+          "name": "Left lung",
+          "definition": "The 2-lobed lung located on the left side of the body.",
+          "tuis": [
+            "T023"
+          ],
+          "aliases": [
+            "Pulmo sinister",
+            "Left lung, NOS",
+            "left lungs",
+            "Left lung structure (body structure)",
+            "LUNG, LEFT",
+            "Left lung structure",
+            "left lung",
+            "Left lung",
+            "Left Lung"
+          ],
+          "score": "0.7412367463111877"
+        }
+      }
+    ],
+    "audio_annotations": [],
+    "_DataPack__replace_back_operations": [],
+    "_DataPack__processed_original_spans": [],
+    "_DataPack__orig_text_len": 155
+  }
+}
