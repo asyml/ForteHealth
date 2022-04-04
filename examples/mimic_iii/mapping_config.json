@@ -68,7 +68,7 @@
         "tag": "org.apache.ctakes.typesystem.type.textsem.EntityMention",
         "attributes": {
             "entity": "ner_type",
-            "umls": 
+            "umls": {}
         }
 
     },
