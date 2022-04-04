@@ -1,0 +1,167 @@
+{
+    "Token": {
+        "tag": "org.apache.ctakes.typesystem.type.syntax.BaseToken",
+        "attributes": {
+            "lemmeEntries": "lemma",
+            "partOfSpeech": "pos",
+            "tokenNumber": "tid"
+        }
+    },
+    "Subword": {
+        "tag": "org.apache.ctakes.typesystem.type.textspan.Segment",
+        "attributes": {
+            "id": "vocab_id"
+        }
+    },
+    "Classification": {
+        "tag": "org.apache.ctakes.typesystem.type.structured.DocumentClassification",
+        "attributes": {
+            "id": "vocab_id",
+            "label": "classification_result"
+        }
+    },
+    "Sentence": {
+        "tag": "org.apache.ctakes.typesystem.type.textspan.Sentence",
+        "attributes": {
+            "segmentId": "part_id"
+        }
+    },
+    "Phrase":{
+        "tag": {
+            "NP": "org.apache.ctakes.typesystem.type.syntax.NP",
+            "ADJP": "org.apache.ctakes.typesystem.type.syntax.ADJP",
+            "ADVP": "org.apache.ctakes.typesystem.type.syntax.ADVP",
+            "CONJP": "org.apache.ctakes.typesystem.type.syntax.CONJP",
+            "INTJ": "org.apache.ctakes.typesystem.type.syntax.INTJ",
+            "LST": "org.apache.ctakes.typesystem.type.syntax.LST",
+            "PP": "org.apache.ctakes.typesystem.type.syntax.PP",
+            "PRT": "org.apache.ctakes.typesystem.type.syntax.PRT",
+            "SBAR": "org.apache.ctakes.typesystem.type.syntax.SBAR",
+            "UCP": "org.apache.ctakes.typesystem.type.syntax.UCP",
+            "VP": "org.apache.ctakes.typesystem.type.syntax.VP"
+        },
+        "attributes": {
+            "segmentId": "part_id"
+        }
+    },
+    "PredicateArgument": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.SemanticArgument",
+        "attributes": {
+            "label": "predicate_lemma"
+        }
+
+    },
+    "PredicateMention": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.Predicate",
+        "attributes": {
+            "frameSet": "framenet_id"
+        }
+    },
+
+    "EntityMention": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.EntityMention",
+        "attributes": {
+            "entity": "ner_type"
+        }
+    },
+    "MedicalEntityMention":{
+        "tag": "org.apache.ctakes.typesystem.type.textsem.EntityMention",
+        "attributes": {
+            "entity": "ner_type",
+            "umls": 
+        }
+
+    },
+    "NegationContext": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.EntityMention",
+        "attributes": {
+            "polarity": "polarity"
+        }
+    },
+    "ClinicalEntityMention": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.EntityMention",
+        "attributes": {
+            "polarity": "polarity"
+        }
+    },
+    "Description": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.Description",
+        "attributes": {}
+    },
+    "FrequencyAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationFrequency",
+        "attributes": {}
+    },
+    "RouteAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationRoute",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "DurationAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationDuration",
+        "attributes": {}
+    },
+    "SuffixStrengthAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationStrength",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "FractionStrengthAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationStrength",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "RangeStrengthAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationStrength",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "DecimalStrengthAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationStrength",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "StrengthAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationStrength",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "DrugChangeStatusAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationStatusChange",
+        "attributes": {
+            "value": "in_take_method"
+        }
+    },
+    "DosagesAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationDuration",
+        "attributes": {}
+    },
+    "FormAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.refsem.MedicationForm",
+        "attributes": {}
+    },
+    "DrugMentionAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.textsem.MedicationMention",
+        "attributes": {
+            "medicationFrequency": "frequency",
+            "medicationDuration": "duration",
+            "medicationRoute": "route",
+            "medicationStatusChange": "drug_change_status",
+            "medicationDosage": "dosage",
+            "medicationStrength": "strength",
+            "medicationForm": "form",
+            "startDate": "start_date"
+        }
+    },
+    "ChunkAnnotation": {
+        "tag": "org.apache.ctakes.typesystem.type.syntax.Chunk",
+        "attributes": {}
+    }
+
+}
