@@ -383,6 +383,28 @@
               "item_type": "ftx.medical.clinical_ontology.UMLSConceptLink"
           }
         ]
+      },
+      {
+        "entry_name": "ftx.medical.clinical_ontology.MedicalArticle",
+        "parent_entry": "forte.data.ontology.top.Generics",
+        "description": "A document based ontology, which represent the whole medical text chunk/document"
+      },
+      {
+        "entry_name": "ftx.medical.clinical_ontology.ICDCode",
+        "parent_entry": "ftx.medical.clinical_ontology.MedicalArticle",
+        "description": "ICD Coding that represents the whole medical article/document.",
+        "attributes": [
+          {
+              "name": "version",
+              "type": "int",
+              "description": "The version of ICD-Coding being used."
+            },
+          {
+              "name": "code",
+              "type": "str",
+              "description": "The ICD code assigned to current medical article."
+            }
+        ]
       }
     ]
   }
