@@ -41,6 +41,8 @@ __all__ = [
     "NegationContext",
     "UMLSConceptLink",
     "MedicalEntityMention",
+    "MedicalArticle",
+    "ICDCode",
 ]
 
 
@@ -435,3 +437,31 @@ class MedicalEntityMention(EntityMention):
         super().__init__(pack, begin, end)
         self.umls_link: Optional[str] = None
         self.umls_entities: FList[UMLSConceptLink] = FList(self)
+
+
+@dataclass
+class MedicalArticle(Generics):
+    """
+    A document based ontology, which represent the whole medical text chunk/document
+    """
+
+    def __init__(self, pack: DataPack):
+        super().__init__(pack)
+
+
+@dataclass
+class ICDCode(MedicalArticle):
+    """
+    ICD Coding that represents the whole medical article/document.
+    Attributes:
+        version (Optional[int]):	The version of ICD-Coding being used.
+        code (Optional[str]):	The ICD code assigned to current medical article.
+    """
+
+    version: Optional[int]
+    code: Optional[str]
+
+    def __init__(self, pack: DataPack):
+        super().__init__(pack)
+        self.version: Optional[int] = None
+        self.code: Optional[str] = None
