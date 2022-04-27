@@ -42,7 +42,6 @@ __all__ = [
     "UMLSConceptLink",
     "MedicalEntityMention",
     "MedicalArticle",
-    "ICDCode",
 ]
 
 
@@ -440,28 +439,18 @@ class MedicalEntityMention(EntityMention):
 
 
 @dataclass
-class MedicalArticle(Generics):
+class MedicalArticle(Annotation):
     """
-    A document based ontology, which represent the whole medical text chunk/document
-    """
-
-    def __init__(self, pack: DataPack):
-        super().__init__(pack)
-
-
-@dataclass
-class ICDCode(MedicalArticle):
-    """
-    ICD Coding that represents the whole medical article/document.
+    An annotation which represents the whole medical text chunk/document
     Attributes:
-        version (Optional[int]):	The version of ICD-Coding being used.
-        code (Optional[str]):	The ICD code assigned to current medical article.
+        icd_version (Optional[int]):	The version of ICD-Coding being used.
+        icd_code (Optional[str]):	The ICD code assigned to current medical article.
     """
 
-    version: Optional[int]
-    code: Optional[str]
+    icd_version: Optional[int]
+    icd_code: Optional[str]
 
-    def __init__(self, pack: DataPack):
-        super().__init__(pack)
-        self.version: Optional[int] = None
-        self.code: Optional[str] = None
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+        self.icd_version: Optional[int] = None
+        self.icd_code: Optional[str] = None
