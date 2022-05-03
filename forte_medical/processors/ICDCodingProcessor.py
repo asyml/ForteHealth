@@ -71,16 +71,15 @@ class ICDCodingProcessor(PackProcessor):
 
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
-        for entry_specified in input_pack.get(entry_type=entry):  #entry_type=entry
+        for entry_specified in input_pack.get(
+            entry_type=entry
+        ):  # entry_type=entry
 
-            result = self.extractor(
-                inputs=entry_specified.text
-            )
+            result = self.extractor(inputs=entry_specified.text)
 
             r0 = result[0]["label"]
             rt = MedicalArticle(pack=input_pack, begin=0, end=1)
             rt.icd_code = r0
-
 
     @classmethod
     def default_configs(cls):
@@ -111,8 +110,8 @@ class ICDCodingProcessor(PackProcessor):
         the pipeline.
         """
         return {
-            'ft.onto.base_ontology.Document': set(),
-            'forte.data.ontology.top.Annotation': set()
+            "ft.onto.base_ontology.Document": set(),
+            "forte.data.ontology.top.Annotation": set(),
         }
 
     def record(self, record_meta: Dict[str, Set[str]]):
@@ -126,7 +125,10 @@ class ICDCodingProcessor(PackProcessor):
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
         """
-        record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {"icd_version", "icd_code"}
+        record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
+            "icd_version",
+            "icd_code",
+        }
         if self.configs.entry_type in record_meta:
             record_meta[self.configs.entry_type].add(
                 self.configs.attribute_name

@@ -30,7 +30,7 @@ from forte_medical.processors.ICDCodingProcessor import (
 
 class TestICDCodeProcessor(unittest.TestCase):
     def setUp(self):
-        self.nlp = Pipeline[DataPack](enforce_consistency=True)  #False
+        self.nlp = Pipeline[DataPack](enforce_consistency=True)  # False
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
@@ -40,22 +40,19 @@ class TestICDCodeProcessor(unittest.TestCase):
             "cuda_devices": -1,
         }
 
-        self.nlp.add(ICDCodingProcessor(), config=config)  #, config=config
+        self.nlp.add(ICDCodingProcessor(), config=config)  # , config=config
         self.nlp.initialize()
 
     def test_huggingface_ICDCode_processor(self):
         sentences = [
             "subarachnoid hemorrhage scalp laceration service: surgery major surgical or invasive.",
-            #"Other related medical statements.",  # if this line is added the classification changed to T34.99
+            # "Other related medical statements.",  # if this line is added the classification changed to T34.99
         ]
         document = "".join(sentences)
         pack = self.nlp.process(document)
 
-        expected_code = 'H59.11'
+        expected_code = "H59.11"
 
         for idx, icd_coding_item in enumerate(pack.get(MedicalArticle)):
-            #print(icd_coding_item.icd_code, idx)
-            self.assertEqual(
-                icd_coding_item.icd_code,
-                expected_code
-            )
+            # print(icd_coding_item.icd_code, idx)
+            self.assertEqual(icd_coding_item.icd_code, expected_code)
