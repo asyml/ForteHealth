@@ -1,6 +1,8 @@
 Spacy:
   processors: ["sentence", "tokenize", "pos", "ner", "umls_link"]
   lang: "en_ner_bionlp13cg_md"
+  medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
+  umls_onto_type: "ftx.medical.clinical_ontology.UMLSConceptLink"
 
 Negation:
   negation_rules_path: ""
