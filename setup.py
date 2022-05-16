@@ -42,7 +42,11 @@ setuptools.setup(
         "uvicorn==0.14.0",
     ],
     extras_require={
-        "test": ["ddt", "testfixtures"],
+        "test": [
+            "ddt",
+            "testfixtures",
+            "transformers>=4.15.0",
+        ],
     },
     entry_points={
         'console_scripts': [
