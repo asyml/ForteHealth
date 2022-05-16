@@ -81,7 +81,7 @@ jobs:
 
     - name: Install requirements for tests
       run: |
-        pip install --use-feature=in-tree-build --progress-bar off .[test]
+        pip install --use-feature=2020-resolver --progress-bar off .[test]
 
     - name: Install Forte-wrappers-spacy
       run: |        
