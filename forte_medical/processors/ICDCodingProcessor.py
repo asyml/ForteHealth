@@ -71,14 +71,14 @@ class ICDCodingProcessor(PackProcessor):
 
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
-        for entry_specified in input_pack.get(
-            entry_type=entry
-        ):  # entry_type=entry
+        for entry_specified in input_pack.get(entry_type=entry):
 
             result = self.extractor(inputs=entry_specified.text)
 
             r0 = result[0]["label"]
-            rt = MedicalArticle(pack=input_pack, begin=0, end=1)
+            rt = MedicalArticle(
+                pack=input_pack, begin=0, end=len(entry_specified.text)
+            )
             rt.icd_code = r0
 
     @classmethod
