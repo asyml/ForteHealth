@@ -45,7 +45,7 @@ setuptools.setup(
         "test": [
             "ddt",
             "testfixtures",
-            "transformers>=4.15.0",
+            "transformers==4.2.2",
         ],
     },
     entry_points={
