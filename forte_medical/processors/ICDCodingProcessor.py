@@ -75,11 +75,11 @@ class ICDCodingProcessor(PackProcessor):
 
             result = self.extractor(inputs=entry_specified.text)
 
-            r0 = result[0]["label"]
-            rt = MedicalArticle(
-                pack=input_pack, begin=0, end=len(entry_specified.text)
+            icd_code = result[0]["label"]
+            article = MedicalArticle(
+                pack=input_pack, begin=0, end=entry_specified.span.end
             )
-            rt.icd_code = r0
+            article.icd_code = icd_code
 
     @classmethod
     def default_configs(cls):
