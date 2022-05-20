@@ -23,7 +23,7 @@ from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import MedicalArticle
 
-from forte_medical.processors.ICDCodingProcessor import (
+from forte_medical.processors.icd_coding_processor import (
     ICDCodingProcessor,
 )
 
@@ -49,6 +49,7 @@ class TestICDCodeProcessor(unittest.TestCase):
             # "Other related medical statements.",  # if this line is added the classification changed to T34.99
         ]
         document = "".join(sentences)
+        print(document)
         pack = self.nlp.process(document)
 
         expected_code = "H59.11"
