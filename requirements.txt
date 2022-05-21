@@ -23,6 +23,6 @@ torch>=1.6.0
 
 # Wrappers
 git+https://git@github.com/asyml/forte-wrappers.git#egg=forte.huggingface&subdirectory=src/huggingface
-dataclasses~=0.8
+dataclasses~=0.8; python_version < '3.7'
 setuptools~=57.0.0
 transformers~=4.2.2
