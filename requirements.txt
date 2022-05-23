@@ -1,4 +1,4 @@
-forte~=0.1.2
+forte~=0.2.0
 sortedcontainers==2.1.0
 numpy>=1.16
 jsonpickle==1.4
