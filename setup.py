@@ -21,7 +21,7 @@ setuptools.setup(
         exclude=["scripts*", "examples*", "tests*"]
     ),
     install_requires=[
-        'forte',
+        'forte~=0.2.0',
         "sortedcontainers==2.1.0",
         "numpy>=1.16.6",
         "jsonpickle==1.4",

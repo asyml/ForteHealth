@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:../../../../casl/forte-medical/forte_medical/ontology_specs/clinical_ontology.json***
+# ***source json:../forte-medical/forte_medical/ontology_specs/clinical_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
