@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:../../../../casl/forte-medical/forte_medical/ontology_specs/clinical_ontology.json***
+# ***source json:../../../../../home/p1yadav/forte-medical/forte_medical/ontology_specs/clinical_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
@@ -42,6 +42,7 @@ __all__ = [
     "UMLSConceptLink",
     "MedicalEntityMention",
     "MedicalArticle",
+    "Abbreviation",
 ]
 
 
@@ -454,3 +455,18 @@ class MedicalArticle(Annotation):
         super().__init__(pack, begin, end)
         self.icd_version: Optional[int] = None
         self.icd_code: Optional[str] = None
+
+
+@dataclass
+class Abbreviation(Annotation):
+    """
+    A span based annotation `Abbreviation`, used to represent an abbreviated token..
+    Attributes:
+        long_form (Optional[str]):
+    """
+
+    long_form: Optional[str]
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+        self.long_form: Optional[str] = None

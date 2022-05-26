@@ -400,6 +400,17 @@
               "description": "The ICD code assigned to current medical article."
             }
         ]
-      }
+      },
+      {
+      "entry_name": "ftx.medical.clinical_ontology.Abbreviation",
+      "parent_entry": "forte.data.ontology.top.Annotation",
+      "description": "A span based annotation `Abbreviation`, used to represent an abbreviated token..",
+      "attributes": [
+        {
+          "name": "long_form",
+          "type": "str"
+        }
+      ]
+     }
     ]
   }
