@@ -411,6 +411,20 @@
           "type": "str"
         }
       ]
+     },
+     {
+      "entry_name": "ftx.medical.clinical_ontology.Hyponym",
+      "parent_entry": "forte.data.ontology.top.Link",
+      "description": "A `Link` type entry which represent a hyponym pair.",
+      "attributes": [
+        {
+          "name": "hyponym_link",
+          "type": "str",
+          "description": "The hyponym link."
+        }
+      ],
+      "parent_type": "ft.onto.base_ontology.Token",
+      "child_type": "ft.onto.base_ontology.Token"
      }
     ]
   }
