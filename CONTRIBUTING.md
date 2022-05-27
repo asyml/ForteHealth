@@ -4,7 +4,7 @@ the [ASYML family](https://asyml.io/).
 This file outlines the guidelines for contributing to Forte and ASYML projects. While
 the guideline cannot cover all scenarios, we ask everyone to be reasonable and make your
 bets judgments, and feel free to propose changes to this document via
-a [pull request](https://github.com/asyml/forte/pulls).
+a [pull request](https://github.com/asyml/ForteHealth/pulls).
 
 ## Code of Conduct
 
@@ -37,26 +37,32 @@ you are most interested and get started!
 
 ### ForteHealth, Forte and Forte-Wrapper Package Convention
 
-We adopt standard namespace packaging strategy. Namespace packages allow us to split the sub-packages and modules within a single package across multiple, separate distribution packages. This can be useful for a large collection of loosely-related packages, which is the use case for FortHealth and hence allows us to provide a more modular and effective user experience.
+We adopt standard namespace packaging strategy o coordinate different Forte projects. Namespace packages allow us to split the sub-packages and modules within a single package across multiple, separate distribution packages. This can be useful for a large collection of loosely-related packages, which is the use case for FortHealth and hence allows us to provide a more modular and effective user experience.
 
-#### The `fortex` namespace and Forte Wrappers
+#### The `fortex` namespace for other Forte based projects
+ We use the namespace packaging here to make sure different `fortex` projects can be installed
+ at the same folder without conflicting with each other. In general, `fortex` is the shared namespace
+ for different Forte-based projects. 
 
 * `fortex.xxx`: Forte Wrapper contains adapters of third party tools. Each tool is installed
   in its own namespace to avoid dependency conflicts. Each directory contains a standalone
   project and can be installed independently. *The project will be installed as
   `fortex.xxx` and under `fortex/xxx` folder in the site-packages.* For
-  example, `fortex.nltk` will be installed under `site_packages/fortex/nltk` folder via
-  `pip install forte.nltk` and the tool can be imported via `import fortex.nltk` and uninstalled
-  via `pip uninstall forte.nltk`.
+  example, `fortex.nltk` will be installed under `site_packages/fortex/nltk`.
 
 ### Ontology namespaces
+We have a similar package convention for the ontology code. 
+
 * The `ftx.medical` namespace contains the ontologies necessary for the tools to work in the
   biomedical and clinical domain, like "MedicalEntityMention", "UMLSConceptLink", etc.
 * The `ft.onto` namespace contains the core/basic ontology types defined by Forte, data types
-  in this namespace are mainly generic NLP concepts, such as "Sentence", "Token".
+  in this namespace are mainly generic ML data concepts, such as "Sentence", "Token". Mainly
+  the Forte developers will use this namespace. Since no namespace packaging is used here, if
+  another `ft` package is used, it may cause conflicts. So we advise you not to.
 * The `ftx` namespace supports namespace packaging:
   * We use `ftx.onto` namespace to show extra types for demo/example purposes.
-  * We are also working one additional types in the `ftx.xxx` namespace types for certain domains.
+  * We also develop in other `ftx.xxx` namespace types for certain domains where `xxx`
+     represents that domain.
 
 ### Report Bugs
 
