@@ -39,8 +39,7 @@ you are most interested and get started!
 
 We currently adopt a non-standard namespace packaging strategy. While this may introduce
 some constraints in development, this allows us to provide a unified user experience.
-The strategy, simply put, installs all Forte packages under "forte" module, but
-currently stored in two different repositories, as different projects.
+The strategy, simply put, installs all ForteHealth packages under "ForteHealth" repository. Moreover, we can install all forte packages under "forte" module, and few forte wrappers from two different repositories, as different projects.
 
 #### The `fortex` namespace and Forte Wrappers
 
