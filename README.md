@@ -38,9 +38,14 @@ pip install .
 To install some Forte adapter for some existing [libraries](https://github.com/asyml/forte-wrappers#libraries-and-tools-supported):
 
 Install from PyPI:
-```bash
+
+ForteHealth is not available through PyPI yet, however it will be in the near future.
+Some tools are pre-requisites to a few tasks in our pipeline. For example, forte.spacy and stave maybe needed 
+for a pipeline that implements NER with visualisation and so on, depending on the use case.
+ ```bash
 # To install other tools. Check here https://github.com/asyml/forte-wrappers#libraries-and-tools-supported for available tools.
 pip install forte.spacy
+pip install stave
 ```
 
 Some components or modules in forte may require some [extra requirements](https://github.com/asyml/forte/blob/master/setup.py#L45):
@@ -55,8 +60,6 @@ pip install forte.spacy
 Let's look at an example of a full fledged medical pipeline:
 
 ```python
-import sys
-import yaml
 from fortex.spacy import SpacyProcessor
 from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader

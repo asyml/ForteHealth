@@ -1,4 +1,4 @@
-Thanks for considering contribute to Forte, a project of
+Thanks for considering contribute to ForteHealth, a project of
 the [ASYML family](https://asyml.io/).
 
 This file outlines the guidelines for contributing to Forte and ASYML projects. While
@@ -52,17 +52,7 @@ We adopt standard namespace packaging strategy o coordinate different Forte proj
 
 ### Ontology namespaces
 We have a similar package convention for the ontology code. 
-
-* The `ftx.medical` namespace contains the ontologies necessary for the tools to work in the
-  biomedical and clinical domain, like "MedicalEntityMention", "UMLSConceptLink", etc.
-* The `ft.onto` namespace contains the core/basic ontology types defined by Forte, data types
-  in this namespace are mainly generic ML data concepts, such as "Sentence", "Token". Mainly
-  the Forte developers will use this namespace. Since no namespace packaging is used here, if
-  another `ft` package is used, it may cause conflicts. So we advise you not to.
-* The `ftx` namespace supports namespace packaging:
-  * We use `ftx.onto` namespace to show extra types for demo/example purposes.
-  * We also develop in other `ftx.xxx` namespace types for certain domains where `xxx`
-     represents that domain.
+For more information, you can go to [Ontology namespaces](https://github.com/asyml/forte/blob/master/CONTRIBUTING.md#ontology-namespaces)
 
 ### Report Bugs
 
