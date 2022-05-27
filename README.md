@@ -61,32 +61,17 @@ Let's look at an example of a full fledged medical pipeline:
 import sys
 import yaml
 from fortex.spacy import SpacyProcessor
-from mimic3_note_reader import Mimic3DischargeNoteReader
-from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from ft.onto.base_ontology import Sentence, EntityMention
-from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
+from ftx.medical.clinical_ontology import MedicalEntityMention
 from forte_medical.processors.negation_context_analyzer import (
     NegationContextAnalyzer,
 )
 
-max_packs: int = 10
-run_ner_pipeline = 0
-use_mimic3_reader = False
-
-print("Starting demo pipeline example..")
-
-if run_ner_pipeline == 1:
-print("Running NER pipeline...")
 pl = Pipeline[DataPack]()
-if use_mimic3_reader is False:
-        pl.set_reader(PlainTextReader())
-    else:
-        pl.set_reader(
-            Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs}
-        )
+pl.set_reader(PlainTextReader())
 pl.add(SpacyProcessor(), config={
     processors: ["sentence", "tokenize", "pos", "ner", "umls_link"],
     medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
@@ -94,7 +79,6 @@ pl.add(SpacyProcessor(), config={
     lang: "en_ner_bc5cdr_md"
     })
 
-pl.add(NegationContextAnalyzer())
 pl.initialize()
 ```
 
@@ -102,7 +86,6 @@ Here we have successfully created a pipeline with a few components:
 * a `PlainTextReader` that reads data from text files, given by the `input_path`
 * a `SpacyProcessor` that calls SpaCy to split the sentences, create tokenization, 
   pos tagging, NER and umls_linking
-* and finally the processor `NegationContextAnalyzer` detects negated contexts
 
 Let's see it run in action!
 
@@ -110,25 +93,14 @@ Let's see it run in action!
 packs = pl.process_dataset(input_path)
 for pack in packs:
     for sentence in pack.get(Sentence):
-
         medical_entities = []
         for entity in pack.get(MedicalEntityMention, sentence):
             for ent in entity.umls_entities:
                 medical_entities.append(ent)
 
-        negation_contexts = [
-            (negation_context.text, negation_context.polarity)
-            for negation_context in pack.get(NegationContext, sentence)
-        ]
-
         print(
             "UMLS Entity Mentions detected:",
             medical_entities,
-            "\n",
-        )
-        print(
-            "Entity Negation Contexts:",
-            negation_contexts,
             "\n",
         )
 ```
@@ -137,7 +109,7 @@ We have successfully created a simple pipeline. In the nutshell, the `DataPack`s
 the standard packages "flowing" on the pipeline. They are created by the reader, and
 then pass along the pipeline.
 
-Each processor, such as our `NegationContextAnalyzer`,
+Each processor, such as our `SpacyProcessor`,
 interfaces directly with `DataPack`s and do not need to worry about the
 other part of the pipeline, making the engineering process more modular. 
 
@@ -152,7 +124,7 @@ The data-centric abstraction of Forte opens the gate to many other opportunities
 Go to [this](https://github.com/asyml/forte#and-theres-more) link for more information
 
 To learn more about these, you can visit:
-* [Examples](https://github.com/asyml/forte/tree/master/examples)
+* [Examples](https://github.com/asyml/ForteHealth/tree/master/examples)
 * [Documentation](https://asyml-forte.readthedocs.io/)
 * Currently we are working on some interesting [tutorials](https://asyml-forte.readthedocs.io/en/latest/index_toc.html), stay tuned for a full set of documentation on how to do NLP with Forte!
 
