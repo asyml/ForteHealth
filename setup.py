@@ -21,7 +21,7 @@ setuptools.setup(
         exclude=["scripts*", "examples*", "tests*"]
     ),
     install_requires=[
-        'forte',
+        'forte~=0.2.0',
         "sortedcontainers==2.1.0",
         "numpy>=1.16.6",
         "jsonpickle==1.4",
@@ -42,7 +42,11 @@ setuptools.setup(
         "uvicorn==0.14.0",
     ],
     extras_require={
-        "test": ["ddt", "testfixtures"],
+        "test": [
+            "ddt",
+            "testfixtures",
+            "transformers==4.2.2",
+        ],
     },
     entry_points={
         'console_scripts': [

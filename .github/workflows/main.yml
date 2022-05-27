@@ -81,7 +81,7 @@ jobs:
 
     - name: Install requirements for tests
       run: |
-        pip install --use-feature=in-tree-build --progress-bar off .[test]
+        pip install --use-feature=2020-resolver --progress-bar off .[test]
 
     - name: Install Forte-wrappers-spacy
       run: |        
@@ -101,7 +101,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      python-version: 3.7
+      python-version: 3.8
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ env.python-version }}
