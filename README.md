@@ -23,10 +23,7 @@
 
 **Bring good software engineering to your Biomedical/Clinical ML solutions, starting from Data!**
 
-**ForteHealth** is a data-centric framework designed to engineer complex ML workflows in the clinical and biomedical domain. ForteHealth allows practitioners to build ML components in a composable and modular way. Behind the scene, it introduces [DataPack](https://asyml-forte.readthedocs.io/en/latest/notebook_tutorial/handling_structued_data.html), a standardized data structure for unstructured data, distilling
-good software engineering practices such as reusability, extensibility, and flexibility into ML solutions.
-
-DataPacks are standard data packages in an ML workflow, that can represent the source data (e.g. text, audio, images) and additional markups (e.g. entity mentions, bounding boxes). It is powered by a customizable data schema named "Ontology", allowing domain experts to inject their knowledge into ML engineering processes easily.
+**ForteHealth** is a biomedical and clinical domain centric framework designed to engineer complex ML workflows for several tasks including, but not limited to, Medical Entity Recognition, Negation Context Analysis and ICD Coding. ForteHealth allows practitioners to build ML components in a composable and modular way. It works in conjunction with Forte and Forte-wrappers project, and leverages the tools defined there to execute general  tasks vital in the biomedical and clinical use cases. 
 
 ## Installation
 
