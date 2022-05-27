@@ -37,9 +37,7 @@ you are most interested and get started!
 
 ### ForteHealth, Forte and Forte-Wrapper Package Convention
 
-We currently adopt a non-standard namespace packaging strategy. While this may introduce
-some constraints in development, this allows us to provide a unified user experience.
-The strategy, simply put, installs all ForteHealth packages under "ForteHealth" repository. Moreover, we can install all forte packages under "forte" module, and few forte wrappers from two different repositories, as different projects.
+We adopt standard namespace packaging strategy. Namespace packages allow us to split the sub-packages and modules within a single package across multiple, separate distribution packages. This can be useful for a large collection of loosely-related packages, which is the use case for FortHealth and hence allows us to provide a more modular and effective user experience.
 
 #### The `fortex` namespace and Forte Wrappers
 
