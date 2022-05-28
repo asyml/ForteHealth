@@ -46,7 +46,7 @@ setuptools.setup(
             "ddt",
             "testfixtures",
             "transformers==4.2.2",
-            "protobuf==3.20.1",
+            "protobuf==3.19.4",
         ],
     },
     entry_points={
