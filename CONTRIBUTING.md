@@ -39,17 +39,6 @@ you are most interested and get started!
 
 We adopt standard namespace packaging strategy o coordinate different Forte projects. Namespace packages allow us to split the sub-packages and modules within a single package across multiple, separate distribution packages. This can be useful for a large collection of loosely-related packages, which is the use case for FortHealth and hence allows us to provide a more modular and effective user experience.
 
-#### The `fortex` namespace for other Forte based projects
- We use the namespace packaging here to make sure different `fortex` projects can be installed
- at the same folder without conflicting with each other. In general, `fortex` is the shared namespace
- for different Forte-based projects. 
-
-* `fortex.xxx`: Forte Wrapper contains adapters of third party tools. Each tool is installed
-  in its own namespace to avoid dependency conflicts. Each directory contains a standalone
-  project and can be installed independently. *The project will be installed as
-  `fortex.xxx` and under `fortex/xxx` folder in the site-packages.* For
-  example, `fortex.nltk` will be installed under `site_packages/fortex/nltk`.
-
 ### Ontology namespaces
 We have a similar package convention for the ontology code. 
 * The `ftx.medical` namespace contains the ontologies necessary for the tools that can be used as part of our 
