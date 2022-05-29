@@ -12,7 +12,7 @@ setuptools.setup(
     name="forte-medical",
     version='0.0.0',
     url="https://github.com/asyml/forte-medical",
-    description="Medical NLP pipelines.",
+    description="NLP pipeline framework for biomedical and clinical domains",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='',
