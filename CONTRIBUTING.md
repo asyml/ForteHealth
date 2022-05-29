@@ -27,7 +27,7 @@ you are most interested and get started!
 * [Forte](github.com/asyml/forte): Decompose and abstract complex NLP problems into
   multiple modules, and standardize the interface between the sub-problems and ML
   interface.
-* [ForteHealth](github.com/asyml/ForteHealth): Lebverage Forte's capabilities and methods
+* [ForteHealth](github.com/asyml/ForteHealth): Leverage Forte's capabilities and methods
   adapted for the biomedical and clinical domains.
 * [Forte Wrappers](github.com/asyml/forte-wrappers): Decompose and abstract complex NLP
   problems into multiple modules, and standardize the interface between the sub-problems
