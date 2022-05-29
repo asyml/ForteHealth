@@ -84,7 +84,7 @@ Following the feature template, fill in the information in more details:
 When you have fixed a bug or implemented a new feature, you can create a pull request
 for review.
 
-* Use a [PR Template](https://github.com/asyml/forte/blob/master/.github/PULL_REQUEST_TEMPLATE.md) to structure your PR, and here:
+* Use a [PR Template](https://github.com/asyml/ForteHealth/master/.github/PULL_REQUEST_TEMPLATE.md) to structure your PR, and here:
 
   * The first line should always start with `This PR fixes [issue link]` or `This PR partially addresses [issue link]` where `[issue link]` can be replaced with a `#ISSUE_ID` associated to a specific [issue](https://github.com/asyml/forte/issues). This allows Github to automatically link your pull request to the corresponding issue. If this pull request will close the issue we use `fixes` otherwise we can say `partially addresses`.
   * **Description of changes**: You should include a description of the changes that you make. If the pull request is aimed to fix an issue, you can explain the approaches to address the problem.
