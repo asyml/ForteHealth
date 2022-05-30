@@ -2,7 +2,6 @@
 
 <p align="center">
    <a href="https://github.com/asyml/ForteHealth/actions/workflows/main.yml"><img src="https://github.com/asyml/forte/actions/workflows/main.yml/badge.svg" alt="build"></a>
-   <a href="https://codecov.io/gh/asyml/forte"><img src="https://codecov.io/gh/asyml/forte/branch/master/graph/badge.svg" alt="test coverage"></a>
    <a href="https://asyml-forte.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/asyml-forte/badge/?version=latest" alt="documentation"></a>
    <a href="https://github.com/asyml/ForteHealth/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="apache license"></a>
    <a href="https://gitter.im/asyml/community"><img src="http://img.shields.io/badge/gitter.im-asyml/forte-blue.svg" alt="gitter"></a>
@@ -65,7 +64,7 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from ft.onto.base_ontology import Sentence, EntityMention
-from ftx.medical.clinical_ontology import MedicalEntityMention
+from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
 from forte_medical.processors.negation_context_analyzer import (
     NegationContextAnalyzer,
 )
@@ -79,6 +78,7 @@ pl.add(SpacyProcessor(), config={
     lang: "en_ner_bc5cdr_md"
     })
 
+pl.add(NegationContextAnalyzer())
 pl.initialize()
 ```
 
@@ -86,30 +86,32 @@ Here we have successfully created a pipeline with a few components:
 * a `PlainTextReader` that reads data from text files, given by the `input_path`
 * a `SpacyProcessor` that calls SpaCy to split the sentences, create tokenization, 
   pos tagging, NER and umls_linking
+* finally, the processor `NegationContextAnalyzer` detects negated contexts
 
 Let's see it run in action!
 
 ```python
-packs = pl.process_dataset(input_path)
-for pack in packs:
+for pack in pl.process_dataset(input_path):
     for sentence in pack.get(Sentence):
         medical_entities = []
         for entity in pack.get(MedicalEntityMention, sentence):
             for ent in entity.umls_entities:
                 medical_entities.append(ent)
 
-        print(
-            "UMLS Entity Mentions detected:",
-            medical_entities,
-            "\n",
-        )
+        negation_contexts = [
+             (negation_context.text, negation_context.polarity)
+             for negation_context in pack.get(NegationContext, sentence)
+        ]
+
+	print("UMLS Entity Mentions detected:", medical_entities, "\n")
+	print("Entity Negation Contexts:", negation_contexts, "\n")
 ```
 
 We have successfully created a simple pipeline. In the nutshell, the `DataPack`s are
 the standard packages "flowing" on the pipeline. They are created by the reader, and
 then pass along the pipeline.
 
-Each processor, such as our `SpacyProcessor`,
+Each processor, such as our `SpacyProcessor` `NegationContextAnalyzer`,
 interfaces directly with `DataPack`s and do not need to worry about the
 other part of the pipeline, making the engineering process more modular. 
 
