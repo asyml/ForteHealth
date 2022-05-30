@@ -1,109 +1,156 @@
-# forte-medical
+
+
+<p align="center">
+   <a href="https://github.com/asyml/ForteHealth/actions/workflows/main.yml"><img src="https://github.com/asyml/forte/actions/workflows/main.yml/badge.svg" alt="build"></a>
+   <a href="https://asyml-forte.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/asyml-forte/badge/?version=latest" alt="documentation"></a>
+   <a href="https://github.com/asyml/ForteHealth/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="apache license"></a>
+   <a href="https://gitter.im/asyml/community"><img src="http://img.shields.io/badge/gitter.im-asyml/forte-blue.svg" alt="gitter"></a>
+   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="code style: black"></a>
+</p>
+
+<p align="center">
+  <a href="#installation">Download</a> •
+  <a href="#quick-start-guide">Quick Start</a> •
+  <a href="#contributing">Contribution Guide</a> •
+  <a href="#license">License</a> •
+  <a href="https://asyml-forte.readthedocs.io/en/latest">Documentation</a> •
+  <a href="https://aclanthology.org/2020.emnlp-demos.26/">Publication</a>
+</p>
+
+-----------------
+
+
+**Bring good software engineering to your Biomedical/Clinical ML solutions, starting from Data!**
+
+**ForteHealth** is a biomedical and clinical domain centric framework designed to engineer complex ML workflows for several tasks including, but not limited to, Medical Entity Recognition, Negation Context Analysis and ICD Coding. ForteHealth allows practitioners to build ML components in a composable and modular way. It works in conjunction with Forte and Forte-wrappers project, and leverages the tools defined there to execute general  tasks vital in the biomedical and clinical use cases. 
 
 ## Installation
-```shell
-pip install -e .
+
+To install from source:
+
+```bash
+git clone https://github.com/asyml/ForteHealth.git
+cd ForteHealth
+pip install .
 ```
 
-## Medical Tasks
-* blood_pressure_estimation
-* chunking
-* constituency_parsing
-* context_analyzation
-* coreference_resolution
-* dependency_parsing
-* icd_coding
-* length_of_stay_prediction
-* motality_prediction
-* multivariate_time_series
-* named_entity_recognition
-* negation_context_analyzation
-* pos_tagging
-* status_context_analyzation
-* temporal_relationships
-* umls_entity_linking
+To install some Forte adapter for some existing [libraries](https://github.com/asyml/forte-wrappers#libraries-and-tools-supported):
 
+Install from PyPI:
 
-## Usage
-### Annotation
-#### Command Line
-```shell
-./forte_medical_annotate \
-    --text "xxx" (--file_to_annotate xxx) \
-    --reader text_reader \
-    --annotators pos_tagger,named_entity_recognizer,xxx
+ForteHealth is not available through PyPI yet, however it will be in the near future.
+Some tools are pre-requisites to a few tasks in our pipeline. For example, forte.spacy and stave maybe needed 
+for a pipeline that implements NER with visualisation and so on, depending on the use case.
+ ```bash
+# To install other tools. Check here https://github.com/asyml/forte-wrappers#libraries-and-tools-supported for available tools.
+pip install forte.spacy
+pip install stave
 ```
 
-#### Python
+Some components or modules in forte may require some [extra requirements](https://github.com/asyml/forte/blob/master/setup.py#L45):
+
+## Quick Start Guide
+Writing biomedical NLP pipelines with ForteHealth is easy. The following example creates a simple pipeline that analyzes the sentences, tokens, and medical named entities from a discharge note.
+
+Before we start, make sure the SpaCy wrapper is installed.
+```bash
+pip install forte.spacy
+```
+Let's look at an example of a full fledged medical pipeline:
+
 ```python
-from forte import Pipeline
-from forte_medical.readers import XMIReader
-from forte_medical.annotators import POSTagger, NamedEntityRecognizer, ICDCoder
+from fortex.spacy import SpacyProcessor
+from forte.data.data_pack import DataPack
+from forte.data.readers import PlainTextReader
+from forte.pipeline import Pipeline
+from ft.onto.base_ontology import Sentence, EntityMention
+from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
+from forte_medical.processors.negation_context_analyzer import (
+    NegationContextAnalyzer,
+)
 
-pipeline = Pipeline()
-pipeline.set_reader(XMIReader())
-pipeline.add(POSTagger(model='scispacy-en_core_sci_sm'))
-pipeline.add(NamedEntityRecognizer(model=xxx))
-pipeline.add(ICDCoder(model=xxx))
-pipeline.run('Running SpaCy with Forte!')
+pl = Pipeline[DataPack]()
+pl.set_reader(PlainTextReader())
+pl.add(SpacyProcessor(), config={
+    processors: ["sentence", "tokenize", "pos", "ner", "umls_link"],
+    medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
+    umls_onto_type: "ftx.medical.clinical_ontology.UMLSConceptLink"
+    lang: "en_ner_bc5cdr_md"
+    })
+
+pl.add(NegationContextAnalyzer())
+pl.initialize()
 ```
 
-### Training
+Here we have successfully created a pipeline with a few components:
+* a `PlainTextReader` that reads data from text files, given by the `input_path`
+* a `SpacyProcessor` that calls SpaCy to split the sentences, create tokenization, 
+  pos tagging, NER and umls_linking
+* finally, the processor `NegationContextAnalyzer` detects negated contexts
 
-#### Command Line
-```shell
-./forte_medical_train --data mimiciii (or a filepath) --task icd_coding
-```
+Let's see it run in action!
 
-### Python
 ```python
-from forte_medical.datasets import MIMICIII
-from forte_medical.models import BERTClassifier
-from forte_medical.trainers import ICDCodingTrainer
+for pack in pl.process_dataset(input_path):
+    for sentence in pack.get(Sentence):
+        medical_entities = []
+        for entity in pack.get(MedicalEntityMention, sentence):
+            for ent in entity.umls_entities:
+                medical_entities.append(ent)
 
-mimiciii = MIMICIII()
-model = BERTClassifier()
-trainer = ICDCodingTrainer()
+        negation_contexts = [
+             (negation_context.text, negation_context.polarity)
+             for negation_context in pack.get(NegationContext, sentence)
+        ]
 
-trainer.fit(dataset=mimiciii, hparams=xxx)
+	print("UMLS Entity Mentions detected:", medical_entities, "\n")
+	print("Entity Negation Contexts:", negation_contexts, "\n")
 ```
 
-## Package Structure
-```
-forte_medical/
-├── annotate.py
-├── evaluate.py
-├── evaluators
-│   ├── evaluator_base.py
-│   ├── icd_coding_evaluator.py
-│   └── ner_evaluator.py
-├── models
-│   ├── bert.py
-│   └── model_base.py
-├── ontology_specs
-│   ├── icd_coding.json
-│   ├── master.json
-│   └── ner.json
-├── processors
-│   ├── chunker.py
-│   ├── constituency_parser.py
-│   ├── context_detector.py
-│   ├── coreference_annotator.py
-│   ├── dependency_parser.py
-│   ├── icd_coder.py
-│   ├── named_entity_recognizer.py
-│   ├── pos_tagger.py
-│   ├── temporal_relation_annotator.py
-│   └── umls_entity_linker.py
-├── readers
-│   ├── jdbc_reader.py
-│   ├── mimic_iii.py
-│   ├── reader_base.py
-│   ├── text_reader.py
-│   └── xmi_reader.py
-├── trainers
-│   ├── icd_coding_trainer.py
-│   ├── ner_trainer.py
-│   └── trainer_base.py
-└── train.py
-```
+We have successfully created a simple pipeline. In the nutshell, the `DataPack`s are
+the standard packages "flowing" on the pipeline. They are created by the reader, and
+then pass along the pipeline.
+
+Each processor, such as our `SpacyProcessor` `NegationContextAnalyzer`,
+interfaces directly with `DataPack`s and do not need to worry about the
+other part of the pipeline, making the engineering process more modular. 
+
+The above mentioned code snippet has been taken from the [Examples](https://github.com/asyml/ForteHealth/tree/master/examples/mimic_iii) folder.
+
+To learn more about the details, check out of [documentation](https://asyml-forte.readthedocs.io/)!
+The classes used in this guide can also be found in this repository or
+[the Forte Wrappers repository](https://github.com/asyml/forte-wrappers/tree/main/src/spacy)
+
+## And There's More
+The data-centric abstraction of Forte opens the gate to many other opportunities.
+Go to [this](https://github.com/asyml/forte#and-theres-more) link for more information
+
+To learn more about these, you can visit:
+* [Examples](https://github.com/asyml/ForteHealth/tree/master/examples)
+* [Documentation](https://asyml-forte.readthedocs.io/)
+* Currently we are working on some interesting [tutorials](https://asyml-forte.readthedocs.io/en/latest/index_toc.html), stay tuned for a full set of documentation on how to do NLP with Forte!
+
+
+## Contributing
+This project is part of the [CASL Open Source](http://casl-project.ai/) family.
+
+If you are interested in making enhancement to Forte, please first go over our [Code of Conduct](https://github.com/asyml/ForteHealth/master/CODE_OF_CONDUCT.md) and [Contribution Guideline](https://github.com/asyml/ForteHealth/master/CONTRIBUTING.md)
+
+## About
+
+### Supported By
+
+<p align="center">
+   <img src="https://user-images.githubusercontent.com/28021889/165799232-2bb9f819-f394-4ade-98b0-c55c751ec8b1.png", width="180" align="top">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <img src="https://user-images.githubusercontent.com/28021889/165799272-9e51b864-04f6-432a-92e8-e0f84e091f72.png" width="180" align="top">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <img src="https://user-images.githubusercontent.com/28021889/165802470-f478de54-6c44-4ec8-8cab-ba74ed1f0163.png" width="180" align="top">
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
+![image](https://user-images.githubusercontent.com/28021889/165806563-1542aeac-9656-4ad4-bf9c-f9a2e083f5d8.png)
+
+### License
+
+[Apache License 2.0](https://github.com/asyml/forte/blob/master/LICENSE)
