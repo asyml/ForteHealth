@@ -1,8 +1,7 @@
 
 
 <p align="center">
-   <a href="https://github.com/asyml/ForteHealth/actions/workflows/main.yml"><img src="https://github.com/asyml/forte/actions/workflows/main.yml/badge.svg" alt="build"></a>
-   <a href="https://asyml-forte.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/asyml-forte/badge/?version=latest" alt="documentation"></a>
+   <a href="https://github.com/asyml/ForteHealth/actions/workflows/main.yml"><img src="https://github.com/asyml/ForteHealth/actions/workflows/main.yml/badge.svg" alt="build"></a>
    <a href="https://github.com/asyml/ForteHealth/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="apache license"></a>
    <a href="https://gitter.im/asyml/community"><img src="http://img.shields.io/badge/gitter.im-asyml/forte-blue.svg" alt="gitter"></a>
    <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="code style: black"></a>
