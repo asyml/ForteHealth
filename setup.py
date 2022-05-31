@@ -9,16 +9,13 @@ if sys.version_info < (3, 6):
     sys.exit('Python>=3.6 is required by forte-medical.')
 
 setuptools.setup(
-    name="forte.health",
+    name="forte_medical",
     version='0.1.0',
     url="https://github.com/asyml/ForteHealth",
     description="NLP pipeline framework for biomedical and clinical domains",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license='Apache License Version 2.0',
-    packages=["fortex.health"],
-    namespace_packages=["fortex"],
-    include_package_data=True,
     packages=setuptools.find_namespace_packages(
         include=['ftx.*'],
         exclude=["scripts*", "examples*", "tests*"]
