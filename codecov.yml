@@ -5,7 +5,9 @@ coverage:
         target: false
         threshold: 1%
 
-    patch: false
+    patch: 
+      default:
+        target: false
 
 ignore:
   - "examples/"
