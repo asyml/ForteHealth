@@ -10,7 +10,7 @@ if sys.version_info < (3, 6):
 
 setuptools.setup(
     name="forte.health",
-    version='0.0.0',
+    version='0.1.0',
     url="https://github.com/asyml/ForteHealth",
     description="NLP pipeline framework for biomedical and clinical domains",
     long_description=long_description,
