@@ -21,7 +21,6 @@ setuptools.setup(
         exclude=["scripts*", "examples*", "tests*"]
     ),
     namespace_packages=["fortex"],
-    include_package_data=True,
     install_requires=[
         'forte~=0.2.0',
         "sortedcontainers==2.1.0",
