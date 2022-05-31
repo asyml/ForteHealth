@@ -9,10 +9,13 @@ Automatically generated ontology clinical_ontology. Do not change manually.
 
 from dataclasses import dataclass
 from forte.data.data_pack import DataPack
+from forte.data.ontology.core import Entry
 from forte.data.ontology.core import FList
 from forte.data.ontology.top import Annotation
 from forte.data.ontology.top import Generics
+from forte.data.ontology.top import Link
 from ft.onto.base_ontology import EntityMention
+from ft.onto.base_ontology import Token
 from typing import Dict
 from typing import List
 from typing import Optional
@@ -42,6 +45,8 @@ __all__ = [
     "UMLSConceptLink",
     "MedicalEntityMention",
     "MedicalArticle",
+    "Abbreviation",
+    "Hyponym",
 ]
 
 
@@ -454,3 +459,36 @@ class MedicalArticle(Annotation):
         super().__init__(pack, begin, end)
         self.icd_version: Optional[int] = None
         self.icd_code: Optional[str] = None
+
+
+@dataclass
+class Abbreviation(Annotation):
+    """
+    A span based annotation `Abbreviation`, used to represent an abbreviated token..
+    Attributes:
+        long_form (Optional[str]):
+    """
+
+    long_form: Optional[str]
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+        self.long_form: Optional[str] = None
+
+
+@dataclass
+class Hyponym(Link):
+    """
+    A `Link` type entry which represent a hyponym pair.
+    Attributes:
+        hyponym_link (Optional[str]):	The hyponym link.
+    """
+
+    hyponym_link: Optional[str]
+
+    ParentType = Token
+    ChildType = Token
+
+    def __init__(self, pack: DataPack, parent: Optional[Entry] = None, child: Optional[Entry] = None):
+        super().__init__(pack, parent, child)
+        self.hyponym_link: Optional[str] = None
