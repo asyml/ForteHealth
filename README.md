@@ -64,7 +64,7 @@ from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from ft.onto.base_ontology import Sentence, EntityMention
 from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
-from forte_medical.processors.negation_context_analyzer import (
+from fortex.health.processors.negation_context_analyzer import (
     NegationContextAnalyzer,
 )
 

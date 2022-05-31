@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from forte_medical.readers.mimic3_note_reader import *
+from fortex.health.readers.mimic3_note_reader import *

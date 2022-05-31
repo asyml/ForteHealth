@@ -24,7 +24,7 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 from ft.onto.base_ontology import Sentence, EntityMention
 from fortex.spacy import SpacyProcessor
-from forte_medical.processors.negation_context_analyzer import (
+from fortex.health.processors.negation_context_analyzer import (
     NegationContextAnalyzer,
 )
 from ftx.medical.clinical_ontology import NegationContext

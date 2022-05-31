@@ -21,7 +21,7 @@ from ddt import ddt, data
 
 from forte.pipeline import Pipeline
 from forte.data.data_pack import DataPack
-from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
+from fortex.health.readers.mimic3_note_reader import Mimic3DischargeNoteReader
 
 
 @ddt
