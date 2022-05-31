@@ -16,8 +16,8 @@ from ft.onto.base_ontology import (
 )
 from fortex.spacy import SpacyProcessor
 
-from forte_medical.readers.mimic3_note_reader import Mimic3DischargeNoteReader
-from forte_medical.processors.negation_context_analyzer import (
+from fortex.health.readers.mimic3_note_reader import Mimic3DischargeNoteReader
+from fortex.health.processors.negation_context_analyzer import (
     NegationContextAnalyzer,
 )
 

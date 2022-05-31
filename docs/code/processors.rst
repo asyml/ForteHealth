@@ -6,5 +6,5 @@ Processors
 
 :hidden:`NegationContextAnalyzer`
 -------------------------------------
-.. autoclass:: forte_medical.processors.negation_context_analyzer.NegationContextAnalyzer
+.. autoclass:: fortex.health.processors.negation_context_analyzer.NegationContextAnalyzer
     :members:
