@@ -23,7 +23,7 @@ from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import MedicalArticle
 
-from forte.health.processors.icd_coding_processor import (
+from fortex.health.processors.icd_coding_processor import (
     ICDCodingProcessor,
 )
 
