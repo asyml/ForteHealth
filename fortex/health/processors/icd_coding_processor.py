@@ -14,7 +14,7 @@
 """
 ICD Coding Processor
 """
-from typing import Dict, List, Set
+from typing import Dict, Set
 import importlib
 
 from transformers import pipeline
