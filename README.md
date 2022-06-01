@@ -37,7 +37,10 @@ To install some Forte adapter for some existing [libraries](https://github.com/a
 
 Install from PyPI:
 
-ForteHealth is not available through PyPI yet, however it will be in the near future.
+```bash
+pip install forte.health
+```
+
 Some tools are pre-requisites to a few tasks in our pipeline. For example, forte.spacy and stave maybe needed 
 for a pipeline that implements NER with visualisation and so on, depending on the use case.
  ```bash
