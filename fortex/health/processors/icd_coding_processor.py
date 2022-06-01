@@ -79,7 +79,7 @@ class ICDCodingProcessor(PackProcessor):
             article = MedicalArticle(
                 pack=input_pack, begin=0, end=entry_specified.span.end
             )
-            article.icd_version = 10 # For ICD-10 coding
+            article.icd_version = 10  # For ICD-10 coding
             article.icd_code = icd_code
 
     @classmethod
