@@ -136,6 +136,8 @@ class ICDCodingProcessor(PackProcessor):
             "icd_code",
         }
         if self.configs.entry_type in record_meta:
-            record_meta[self.configs.entry_type].add(self.configs.attribute_name)
+            record_meta[self.configs.entry_type].add(
+                self.configs.attribute_name
+            )
         else:
             record_meta[self.configs.entry_type] = {self.configs.attribute_name}
