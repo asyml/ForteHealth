@@ -72,12 +72,15 @@ class ICDCodingProcessor(PackProcessor):
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
+            if len(entry_specified.text) > 512:
+                print("Found an entry greater than 512 in length, skipping..")
+                continue
 
             result = self.extractor(inputs=entry_specified.text)
 
             icd_code = result[0]["label"]
             article = MedicalArticle(
-                pack=input_pack, begin=0, end=entry_specified.span.end
+                pack=input_pack, begin=entry_specified.span.begin, end=entry_specified.span.end
             )
             article.icd_version = 10  # For ICD-10 coding
             article.icd_code = icd_code
