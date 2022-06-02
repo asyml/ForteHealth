@@ -80,7 +80,9 @@ class ICDCodingProcessor(PackProcessor):
 
             icd_code = result[0]["label"]
             article = MedicalArticle(
-                pack=input_pack, begin=entry_specified.span.begin, end=entry_specified.span.end
+                pack=input_pack,
+                begin=entry_specified.span.begin,
+                end=entry_specified.span.end,
             )
             article.icd_version = 10  # For ICD-10 coding
             article.icd_code = icd_code
@@ -134,8 +136,6 @@ class ICDCodingProcessor(PackProcessor):
             "icd_code",
         }
         if self.configs.entry_type in record_meta:
-            record_meta[self.configs.entry_type].add(
-                self.configs.attribute_name
-            )
+            record_meta[self.configs.entry_type].add(self.configs.attribute_name)
         else:
             record_meta[self.configs.entry_type] = {self.configs.attribute_name}
