@@ -7,7 +7,8 @@ This project shows how we can run a pipeline retrieving information from MIMIC3 
 In command line, we run
 
 ```bash
-pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte-wrappers[elastic,spacy]
+pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.elastic\&subdirectory=src/elastic
+pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.spacy\&subdirectory=src/spacy
 ```
 
 ## Run demo
