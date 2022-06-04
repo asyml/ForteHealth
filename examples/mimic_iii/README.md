@@ -4,11 +4,17 @@ This project shows how we can run a pipeline retrieving information from MIMIC3 
  
 ## Install extra dependencies
 
-In command line, we run
+To install the latest code directly from source,
 
 ```bash
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.elastic\&subdirectory=src/elastic
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.spacy\&subdirectory=src/spacy
+```
+
+To install using ```pip```,
+```bash
+pip install forte.elastic
+pip install forte.spacy
 ```
 
 ## Run demo
