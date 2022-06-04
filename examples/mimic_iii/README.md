@@ -11,7 +11,7 @@ pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.elastic\&s
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.spacy\&subdirectory=src/spacy
 ```
 
-To install using ```pip```,
+To install from PyPI,
 ```bash
 pip install forte.elastic
 pip install forte.spacy
