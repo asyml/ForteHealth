@@ -22,6 +22,10 @@ from fortex.health.processors.negation_context_analyzer import (
     NegationContextAnalyzer,
 )
 
+from fortex.health.processors.icd_coding_processor import (
+    ICDCodingProcessor,
+)
+
 
 def main(
     input_path: str,
@@ -41,6 +45,8 @@ def main(
     config = Config(yaml.safe_load(open("config.yml", "r")), None)
     pl.add(SpacyProcessor(), config.Spacy)
     pl.add(NegationContextAnalyzer(), config.Negation)
+    pl.add(ICDCodingProcessor(), config.ICD)
+
 
     pl.add(
         PackIdJsonPackWriter(),
