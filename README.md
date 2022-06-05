@@ -74,10 +74,10 @@ from fortex.health.processors.negation_context_analyzer import (
 pl = Pipeline[DataPack]()
 pl.set_reader(PlainTextReader())
 pl.add(SpacyProcessor(), config={
-    processors: ["sentence", "tokenize", "pos", "ner", "umls_link"],
-    medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
-    umls_onto_type: "ftx.medical.clinical_ontology.UMLSConceptLink"
-    lang: "en_ner_bc5cdr_md"
+    "processors": ["sentence", "tokenize", "pos", "ner", "umls_link"],
+    "medical_onto_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
+    "umls_onto_type": "ftx.medical.clinical_ontology.UMLSConceptLink",
+    "lang": "en_ner_bc5cdr_md"
     })
 
 pl.add(NegationContextAnalyzer())
