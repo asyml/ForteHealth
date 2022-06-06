@@ -54,7 +54,8 @@ Some components or modules in forte may require some [extra requirements](https:
 ## Quick Start Guide
 Writing biomedical NLP pipelines with ForteHealth is easy. The following example creates a simple pipeline that analyzes the sentences, tokens, and medical named entities from a discharge note.
 
-Before we start, make sure the SpaCy wrapper is installed.
+Before we start, make sure the SpaCy wrapper is installed. 
+Also, make sure you have input text files in the ```input_path``` directory that are passed through to the processors.
 ```bash
 pip install forte.spacy
 ```
