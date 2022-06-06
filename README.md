@@ -54,7 +54,8 @@ Some components or modules in forte may require some [extra requirements](https:
 ## Quick Start Guide
 Writing biomedical NLP pipelines with ForteHealth is easy. The following example creates a simple pipeline that analyzes the sentences, tokens, and medical named entities from a discharge note.
 
-Before we start, make sure the SpaCy wrapper is installed.
+Before we start, make sure the SpaCy wrapper is installed. 
+Also, make sure you have input text files in the ```input_path``` directory that are passed through to the processors.
 ```bash
 pip install forte.spacy
 ```
@@ -74,10 +75,10 @@ from fortex.health.processors.negation_context_analyzer import (
 pl = Pipeline[DataPack]()
 pl.set_reader(PlainTextReader())
 pl.add(SpacyProcessor(), config={
-    processors: ["sentence", "tokenize", "pos", "ner", "umls_link"],
-    medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
-    umls_onto_type: "ftx.medical.clinical_ontology.UMLSConceptLink"
-    lang: "en_ner_bc5cdr_md"
+    "processors": ["sentence", "tokenize", "pos", "ner", "umls_link"],
+    "medical_onto_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
+    "umls_onto_type": "ftx.medical.clinical_ontology.UMLSConceptLink",
+    "lang": "en_ner_bc5cdr_md"
     })
 
 pl.add(NegationContextAnalyzer())
