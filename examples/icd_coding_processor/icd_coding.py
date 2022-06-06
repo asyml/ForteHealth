@@ -1,3 +1,4 @@
+# %%
 import sys
 import yaml
 # missing package: termcolor
@@ -8,7 +9,7 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
-from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention
+from ftx.medical.clinical_ontology import NegationContext, MedicalEntityMention, MedicalArticle
 
 from ft.onto.base_ontology import (
     Token,
@@ -26,7 +27,7 @@ from fortex.health.processors.icd_coding_processor import (
     ICDCodingProcessor,
 )
 
-
+# %%
 def main(
     input_path: str,
     output_path: str,
@@ -65,44 +66,30 @@ def main(
     for pack in packs:
         showData(pack)
 
-
+# %%
 def showData(pack: DataPack):
-    for sentence in pack.get(Sentence):
-        sent_text = sentence.text
-        print(colored("Sentence:", "red"), sent_text, "\n")
-
+    for article in pack.get(MedicalArticle):
+        article_text = article.text
         tokens = [
-            (token.text, token.pos) for token in pack.get(Token, sentence)
+            (token.text, token.pos) for token in pack.get(Token, article)
         ]
-        entities = [
-            (entity.text, entity.ner_type)
-            for entity in pack.get(EntityMention, sentence)
-        ]
-
-        medical_entities = []
-        for entity in pack.get(MedicalEntityMention, sentence):
-            for ent in entity.umls_entities:
-                medical_entities.append(ent)
-
-        negation_contexts = [
-            (negation_context.text, negation_context.polarity)
-            for negation_context in pack.get(NegationContext, sentence)
-        ]
+        icd_code = article.icd_code
+        
+        print(colored("Article:", "red"), article_text, "\n")
 
         print(colored("Tokens:", "red"), tokens, "\n")
-        print(colored("Entity Mentions:", "red"), entities, "\n")
         print(
-            colored("UMLS Entity Mentions detected:", "cyan"),
-            medical_entities,
-            "\n",
-        )
-        print(
-            colored("Entity Negation Contexts:", "cyan"),
-            negation_contexts,
+            colored("ICD Code:", "cyan"),
+            icd_code,
             "\n",
         )
 
         input(colored("Press ENTER to continue...\n", "green"))
 
+#%% $$
 
+# Example: 
+# python medical_pipeline.py sample_data/ /path_to_sample_output 1000 False
 main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4].lower() == "true")
+
+# %%
