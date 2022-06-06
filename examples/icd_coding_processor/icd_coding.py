@@ -25,15 +25,15 @@ from fortex.health.processors.icd_coding_processor import (
 )
 
 def main(
-    input_path: str, # path to input notes
-    output_path: str, # path to output
-    max_packs: int = -1, # max number of notes to read from mimic3 dataset
-    use_mimic3_reader: bool = True, # read from mimic3 dataset or input_path
+    input_path: str, # Path to mimic3 data if use_mimic3_reader=True else path to note directory
+    output_path: str, # Path to output directory
+    max_packs: int = -1, # Max number of notes to read from mimic3 dataset. Set to -1 to read all.
+    use_mimic3_reader: bool = True, # Read from mimic3 dataset or plain text
 ):
     # create a pipeline
     pl = Pipeline[DataPack]()
 
-    # select reader: read from mimic3 dataset or from file
+    # select reader: read from mimic3 dataset or from files
     if use_mimic3_reader is False:
         pl.set_reader(PlainTextReader())
     else:
@@ -100,7 +100,7 @@ def showData(pack: DataPack):
 # Examples: 
 #
 # Read from MIMIC3:
-# python icd_coding.py sample_data/ /path_to_sample_output 1000 True
+# python icd_coding.py /path/to/mimiciii/1.4/NOTEEVENTS.csv.gz /path_to_sample_output 1000 True
 # 
 # Read from sample_data:
 # python icd_coding.py sample_data/ /path_to_sample_output 1000 False
