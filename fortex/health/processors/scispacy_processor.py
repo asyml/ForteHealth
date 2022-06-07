@@ -14,7 +14,7 @@
 """
 SciSpacy Processor
 """
-from typing import Dict, List, Set
+from typing import Dict, Set
 import importlib
 
 import spacy
@@ -23,7 +23,7 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from scispacy.abbreviation import AbbreviationDetector
+#from scispacy.abbreviation import AbbreviationDetector
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation
 
 __all__ = [
@@ -46,11 +46,18 @@ class ScispaCyProcessor(PackProcessor):
         self.extractor = None
 
     def set_up(self):  # , configs: Config
-        device_num = self.configs["cuda_devices"]
+        #device_num = self.configs["cuda_devices"]
         self.extractor = spacy.load(  # using Spacy for Classification
             self.configs.model_name  # model name
         )
-        self.extractor.add_pipe(self.configs.pipe_name)  # pipe name
+        if self.configs.pipe_name == "abbreviation_detector":
+            self.extractor.add_pipe(
+                self.configs.pipe_name
+            )  # pipe name
+        else:  # hyponym
+            self.extractor.add_pipe(
+                self.configs.pipe_name, last=True, config={"extended": False}
+            )  # self.configs.pipe_config
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
@@ -72,18 +79,28 @@ class ScispaCyProcessor(PackProcessor):
 
             doc = self.extractor(entry_specified.text)
 
-            print("Abbreviation", "\t", "Definition")
-            list_of_abrvs = []
-            for abrv in doc._.abbreviations:
-                print(
-                    f"{abrv} \t ({abrv.start}, {abrv.end}) {abrv._.long_form}"
-                )
-                tmpAbrv = Abbreviation(
-                    pack=input_pack, begin=abrv.start, end=abrv.end
-                )
-                tmpAbrv.long_form = abrv._.long_form
-                # tmpAbrv.text = "" + abrv
-                list_of_abrvs.append(tmpAbrv)
+            if self.configs.pipe_name == "abbreviation_detector":
+                print("Abbreviation", "\t", "Definition")
+                list_of_abrvs = []
+                for abrv in doc._.abbreviations:
+                    print(
+                        f"{abrv} \t ({abrv.start}, {abrv.end}) {abrv._.long_form}"
+                    )
+                    tmpAbrv = Abbreviation(
+                        pack=input_pack, begin=abrv.start, end=abrv.end
+                    )
+                    tmpAbrv.long_form = abrv._.long_form
+                    # tmpAbrv.text = "" + abrv
+                    list_of_abrvs.append(tmpAbrv)
+
+            else:
+                print(doc._.hearst_patterns)
+                for item in doc._.hearst_patterns:
+                    print(
+                        f"{item} \t ({item.child}, {item.end}) {item._.hyponym_link}"
+                    )
+                    hlink = Hyponym(pack=input_pack, child=item.child)
+                    hlink.hyponym_link = item._.hyponym_link
 
     @classmethod
     def default_configs(cls):
@@ -103,6 +120,7 @@ class ScispaCyProcessor(PackProcessor):
             "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
+            #"pipe_config": {"extended": False},
             "cuda_devices": -1,
         }
 
@@ -133,6 +151,12 @@ class ScispaCyProcessor(PackProcessor):
         record_meta["ftx.medical.clinical_ontology.Abbreviation"] = {
             "long_form",
         }
+        record_meta["ftx.medical.clinical_ontology.hyponym"] = {
+            "hyponym_link",
+            "ParentType",
+            "ChildType",
+        }
+
         if self.configs.entry_type in record_meta:
             record_meta[self.configs.entry_type].add(
                 self.configs.attribute_name
