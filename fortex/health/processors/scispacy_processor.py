@@ -23,7 +23,7 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-#from scispacy.abbreviation import AbbreviationDetector
+# from scispacy.abbreviation import AbbreviationDetector
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation
 
 __all__ = [
@@ -46,14 +46,12 @@ class ScispaCyProcessor(PackProcessor):
         self.extractor = None
 
     def set_up(self):  # , configs: Config
-        #device_num = self.configs["cuda_devices"]
+        # device_num = self.configs["cuda_devices"]
         self.extractor = spacy.load(  # using Spacy for Classification
             self.configs.model_name  # model name
         )
         if self.configs.pipe_name == "abbreviation_detector":
-            self.extractor.add_pipe(
-                self.configs.pipe_name
-            )  # pipe name
+            self.extractor.add_pipe(self.configs.pipe_name)  # pipe name
         else:  # hyponym
             self.extractor.add_pipe(
                 self.configs.pipe_name, last=True, config={"extended": False}
@@ -120,7 +118,7 @@ class ScispaCyProcessor(PackProcessor):
             "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
-            #"pipe_config": {"extended": False},
+            # "pipe_config": {"extended": False},
             "cuda_devices": -1,
         }
 
