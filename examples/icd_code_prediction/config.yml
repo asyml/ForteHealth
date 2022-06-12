@@ -1,8 +1,5 @@
 Spacy:
   processors: ["sentence", "tokenize"]
 
-Negation:
-  negation_rules_path: ""
-
 ICD:
   
