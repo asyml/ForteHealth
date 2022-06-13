@@ -94,11 +94,11 @@ class ScispaCyProcessor(PackProcessor):
             else:
                 print(doc._.hearst_patterns)
                 for item in doc._.hearst_patterns:
-                    print(
-                        f"{item} \t ({item.child}, {item.end}) {item._.hyponym_link}"
-                    )
-                    hlink = Hyponym(pack=input_pack, child=item.child)
-                    hlink.hyponym_link = item._.hyponym_link
+                    # print(
+                    #     f"{item} \t link:{item[0]}, {item[1]}, {item[2]}"
+                    # )
+                    hlink = Hyponym(pack=input_pack)
+                    hlink.hyponym_link = item[0]
 
     @classmethod
     def default_configs(cls):
@@ -118,7 +118,6 @@ class ScispaCyProcessor(PackProcessor):
             "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
-            # "pipe_config": {"extended": False},
             "cuda_devices": -1,
         }
 

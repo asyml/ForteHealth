@@ -27,6 +27,9 @@ from fortex.health.processors.scispacy_processor import (
     ScispaCyProcessor,
 )
 
+import spacy
+from scispacy.hyponym_detector import HyponymDetector
+
 
 class TestScispaCyAbvProcessor(unittest.TestCase):
     def setUp(self):
@@ -69,6 +72,7 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
 
 class TestScispaCyHyponymProcessor(unittest.TestCase):
     def setUp(self):
+
         self.nlp = Pipeline[DataPack](enforce_consistency=False)  # True
         self.nlp.set_reader(StringReader())
         config = {
@@ -77,7 +81,6 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
             "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "hyponym_detector",
-            "pipe_config": {"extended": False},
             "cuda_devices": -1,
         }
 
@@ -89,13 +92,13 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
             "Keystone plant species such as fig trees are good for the soil."
         ]
         document = "".join(sentences)
-        print(document)
+        # print(document)
         pack = self.nlp.process(document)
 
         expected_value = [
             "such_as",
         ]
 
-        for idx, item in enumerate(pack.get(Hyponym)):
-            print(item._.hyponym_link)
-            self.assertEqual(item._.hyponym_link, expected_value[idx])
+        for idx, detected in enumerate(pack.get(Hyponym)):
+            # print(detected)
+            self.assertEqual(detected.hyponym_link, expected_value[idx])
