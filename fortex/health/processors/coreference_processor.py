@@ -17,14 +17,15 @@ Coreference Processor
 import os
 import re
 from typing import Dict, List, Set
+import importlib
 
-from forte.common import Resources
+from forte.common import Resources, ProcessExecutionException
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-# from ft.onto.base_ontology import TODO
-# from ftx.medical.clinical_ontology import TODO
+from ft.onto.base_ontology import CoreferenceGroup, Token
+from ftx.medical.clinical_ontology import MedicalEntityMention, MedicalArticle
 
 __all__ = [
     "CoreferenceProcessor",
@@ -39,10 +40,19 @@ class CoreferenceProcessor(PackProcessor):
     def __init__(self):
         super().__init__()
         # TODO
+        self.coref = None # TODO: add type
+        self.spacy_nlp = None # TODO: find an elegant way to set this.
 
     def set_up(self, configs: Config):
-        pass
-        # TODO
+        import neuralcoref
+        self.spacy_nlp = self.resources.get('spacy_processor').nlp
+        if self.spacy_nlp is None:
+            raise ProcessExecutionException(
+                "The SpaCy pipeline is not initialized, maybe you "
+                "haven't called the initialization function."
+            )
+        kwargs = {} # TODO
+        neuralcoref.add_to_pipe(self.spacy_nlp)
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
@@ -52,8 +62,38 @@ class CoreferenceProcessor(PackProcessor):
         r"""
         TODO: Add docstring
         """
-        pass
-        # TODO    
+        path_str, module_str = self.configs.entry_type.rsplit(".", 1)
+        # By default, path_str would be ft.onto.base_ontology and module_str would be Document # TODO: check
+
+        mod = importlib.import_module(path_str)
+        entry = getattr(mod, module_str)
+        for entry_specified in input_pack.get(entry_type=entry):
+            result = self.spacy_nlp(entry_specified.text)
+            tokens = [(token.text, token.pos) for token in input_pack.get(Token, entry_specified)]
+
+            article = MedicalArticle(
+                pack=input_pack,
+                begin=entry_specified.span.begin,
+                end=entry_specified.span.end,
+            )
+
+            if not result._.has_coref:
+                article.has_coref = False
+                article.coref_groups = []
+            else:
+                article.has_coref = True
+                article.coref_groups = []
+                for cluster in result._.coref_clusters:
+                    
+                    mentions = []
+                    for mention in cluster.mentions:
+                        mention = MedicalEntityMention(input_pack, mention.start, mention.end)
+                        mentions.append(mention)
+
+                    group = CoreferenceGroup(input_pack)    
+                    group.add_members(mentions)
+
+                    article.coref_groups.append(group)
 
     @classmethod
     def default_configs(cls):
@@ -61,7 +101,8 @@ class CoreferenceProcessor(PackProcessor):
         TODO: Add docstring
         """
         return {
-            # TODO
+            # TODO: remove unnecessaries
+            "entry_type": "ft.onto.base_ontology.Document",
         }
 
     def expected_types_and_attributes(self):
@@ -79,12 +120,16 @@ class CoreferenceProcessor(PackProcessor):
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
         Method to add output type record of `CoreferenceProcessor` which
-        is `"ftx.onto.clinical.TODO"` with attribute
-        `TODO`
+        is `"ftx.medical.clinical_ontology.MedicalArticle"` with attribute
+        `coref_clusters`
         to :attr:`forte.data.data_pack.Meta.record`.
 
         Args:
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
-        """
+        """ # TODO: check docstring
         # TODO
+        record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
+            "coref_groups",
+            "has_coref"
+        }        
