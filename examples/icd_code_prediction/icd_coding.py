@@ -84,7 +84,7 @@ def showData(pack: DataPack):
 
         # get parsed tokens
         tokens = [
-            (token.text, token.pos) for token in pack.get(Token, article)
+            (token.text) for token in pack.get(Token, article)
         ]
 
         # get the ICD code and its coding version
