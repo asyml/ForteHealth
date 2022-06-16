@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:../../../../../home/p1yadav/ForteHealth/fortex/health/ontology_specs/clinical_ontology.json***
+# ***source json:../fortex/health/ontology_specs/clinical_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
