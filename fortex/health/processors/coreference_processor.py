@@ -40,18 +40,19 @@ class CoreferenceProcessor(PackProcessor):
     def __init__(self):
         super().__init__()
         # TODO
-        self.coref = None # TODO: add type
-        self.spacy_nlp = None # TODO: find an elegant way to set this.
+        self.coref = None  # TODO: add type
+        self.spacy_nlp = None  # TODO: find an elegant way to set this.
 
     def set_up(self, configs: Config):
         import neuralcoref
-        self.spacy_nlp = self.resources.get('spacy_processor').nlp
+
+        self.spacy_nlp = self.resources.get("spacy_processor").nlp
         if self.spacy_nlp is None:
             raise ProcessExecutionException(
                 "The SpaCy pipeline is not initialized, maybe you "
                 "haven't called the initialization function."
             )
-        kwargs = {} # TODO
+        kwargs = {}  # TODO
         neuralcoref.add_to_pipe(self.spacy_nlp)
 
     def initialize(self, resources: Resources, configs: Config):
@@ -69,7 +70,7 @@ class CoreferenceProcessor(PackProcessor):
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
             result = self.spacy_nlp(entry_specified.text)
-            tokens = [(token.text, token.pos) for token in input_pack.get(Token, entry_specified)]
+            tokens = [(token) for token in input_pack.get(Token, entry_specified)]
 
             article = MedicalArticle(
                 pack=input_pack,
@@ -84,13 +85,17 @@ class CoreferenceProcessor(PackProcessor):
                 article.has_coref = True
                 article.coref_groups = []
                 for cluster in result._.coref_clusters:
-                    
+
                     mentions = []
                     for mention in cluster.mentions:
-                        mention = MedicalEntityMention(input_pack, mention.start, mention.end)
+                        mention = MedicalEntityMention(
+                            input_pack,
+                            tokens[mention.start].begin,
+                            tokens[mention.end - 1].end,
+                        )
                         mentions.append(mention)
 
-                    group = CoreferenceGroup(input_pack)    
+                    group = CoreferenceGroup(input_pack)
                     group.add_members(mentions)
 
                     article.coref_groups.append(group)
@@ -127,9 +132,9 @@ class CoreferenceProcessor(PackProcessor):
         Args:
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
-        """ # TODO: check docstring
+        """  # TODO: check docstring
         # TODO
         record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
             "coref_groups",
-            "has_coref"
-        }        
+            "has_coref",
+        }
