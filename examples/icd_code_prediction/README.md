@@ -4,22 +4,20 @@ This demo shows how we can build pipeline to predict ICD-10 codes for medical no
 
 The [International Classification of Diseases (ICD)](https://www.cdc.gov/nchs/icd/index.htm) is the classification used to code and classify mortality data from death certificates. We treat the ICD code prediction as a sequence classification task. That is, given an medical note, the model output its ICD code.
 
-A key component of this demo is `ICDCodingProcessor`, which is implemented based on [AkshatSurolia's pre-trained model](https://huggingface.co/AkshatSurolia/ICD-10-Code-Prediction).
+A key component of this demo is `ICDCodingProcessor`, which is implemented based on huggingface pre-trained models. In this demo, we use [AkshatSurolia/ICD-10-Code-Prediction](https://huggingface.co/AkshatSurolia/ICD-10-Code-Prediction). You can use other pre-trained models by changing the `model_name` config.
 
 ## Install extra dependencies
 
-We need to install `forte.elastic` and `forte.elastic`.
+We need to install `forte.spacy`.
 
 To install the latest code directly from source,
 
 ```bash
-pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.elastic\&subdirectory=src/elastic
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.spacy\&subdirectory=src/spacy
 ```
 
 To install from PyPI,
 ```bash
-pip install forte.elastic
 pip install forte.spacy
 ```
 

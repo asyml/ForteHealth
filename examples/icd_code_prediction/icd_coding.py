@@ -1,8 +1,6 @@
 import sys
-import yaml
 from termcolor import colored
 
-from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
@@ -33,10 +31,20 @@ def main(
     else:
         pl.set_reader(Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs})
 
-    config = Config(yaml.safe_load(open("config.yml", "r")), None)
-
-    pl.add(SpacyProcessor(), config.Spacy)
-    pl.add(ICDCodingProcessor(), config.ICD)
+    pl.add(
+        SpacyProcessor(),
+        {"processors": ["sentence"], "lang": "en_ner_bionlp13cg_md"},
+    )
+    pl.add(
+        ICDCodingProcessor(),
+        {
+            "entry_type": "ft.onto.base_ontology.Document",
+            "attribute_name": "classification",
+            "multi_class": True,
+            "model_name": "AkshatSurolia/ICD-10-Code-Prediction",  # You can use other ICD predictors here.
+            "cuda_devices": -1,
+        },
+    )
     pl.add(
         PackIdJsonPackWriter(),
         {
@@ -52,10 +60,10 @@ def main(
 
     packs = pl.process_dataset(input_path)
     for pack in packs:
-        showData(pack)
+        show_data(pack)
 
 
-def showData(pack: DataPack):
+def show_data(pack: DataPack):
     # The ICD processor predicts ICD code for each article.
     # The result is stored as article.icd_code.
     # The articles are packed into DataPack.
@@ -63,14 +71,12 @@ def showData(pack: DataPack):
 
     for article in pack.get(MedicalArticle):
         article_text = article.text
-        tokens = [(token.text) for token in pack.get(Token, article)]
 
         # get the ICD code and its coding version
         icd_code = article.icd_code
         icd_version = article.icd_version
 
         print(colored("Article:", "red"), article_text, "\n")
-        print(colored("Tokens:", "red"), tokens, "\n")
         print(colored(f"ICD-{icd_version} Code:", "cyan"), icd_code, "\n")
 
         input(colored("Press ENTER to continue...\n", "green"))

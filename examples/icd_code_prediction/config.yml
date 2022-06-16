@@ -1,6 +1,0 @@
-Spacy:
-  processors: ["sentence", "tokenize"]
-  lang: "en_ner_bionlp13cg_md"
-
-ICD:
-  
