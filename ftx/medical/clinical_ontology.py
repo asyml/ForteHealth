@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:../forte-medical/forte_medical/ontology_specs/clinical_ontology.json***
+# ***source json:../../../../../home/p1yadav/ForteHealth/fortex/health/ontology_specs/clinical_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
@@ -15,7 +15,7 @@ from forte.data.ontology.top import Annotation
 from forte.data.ontology.top import Generics
 from forte.data.ontology.top import Link
 from ft.onto.base_ontology import EntityMention
-from ft.onto.base_ontology import Token
+from ft.onto.base_ontology import Phrase
 from typing import Dict
 from typing import List
 from typing import Optional
@@ -486,8 +486,8 @@ class Hyponym(Link):
 
     hyponym_link: Optional[str]
 
-    ParentType = Token
-    ChildType = Token
+    ParentType = Phrase
+    ChildType = Phrase
 
     def __init__(self, pack: DataPack, parent: Optional[Entry] = None, child: Optional[Entry] = None):
         super().__init__(pack, parent, child)
