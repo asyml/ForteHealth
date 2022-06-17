@@ -16,7 +16,7 @@ Unit tests for CoreferenceProcessor
 """
 
 import unittest
-from ddt import data, ddt
+from ddt import data
 
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
@@ -58,24 +58,6 @@ class TestCoreferenceProcessor(unittest.TestCase):
         )
 
         self.pl.initialize()
-
-    @data("My sister has a dog. She loves him.")
-    def test_daily_language(self, input_data):
-        for pack in self.pl.process_dataset(input_data):
-            for article in pack.get(MedicalArticle):
-                has_coref = article.has_coref
-                assert has_coref == True
-
-                coref_groups = article.coref_groups
-                output_list = []
-                check_list = [["My sister", "She"], ["a dog", "him"]]
-                for group in coref_groups:
-                    members = [member for member in group.get_members()]
-                    members = sorted(members, key=lambda x: x.begin)
-
-                    mention_texts = [member.text for member in members]
-                    output_list.append(mention_texts)
-                assert output_list == check_list
 
     @data("My sister has a dog. She loves him.")
     def test_daily_language(self, input_data):
