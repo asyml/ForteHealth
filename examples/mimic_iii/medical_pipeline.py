@@ -56,10 +56,10 @@ def main(
 
     packs = pl.process_dataset(input_path)
     for pack in packs:
-        showData(pack)
+        show_data(pack)
 
 
-def showData(pack: DataPack):
+def show_data(pack: DataPack):
     for sentence in pack.get(Sentence):
         sent_text = sentence.text
         print(colored("Sentence:", "red"), sent_text, "\n")
