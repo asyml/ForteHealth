@@ -16,7 +16,7 @@ Unit tests for CoreferenceProcessor
 """
 
 import unittest
-from ddt import data
+from ddt import data, ddt
 
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
@@ -32,7 +32,7 @@ from fortex.health.processors.coreference_processor import (
     CoreferenceProcessor,
 )
 
-
+@ddt
 class TestCoreferenceProcessor(unittest.TestCase):
     def setUp(self):
         self.pl = Pipeline[DataPack](enforce_consistency=True)
