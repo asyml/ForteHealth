@@ -27,7 +27,7 @@ dataclasses~=0.8; python_version < '3.7'
 setuptools~=57.0.0
 transformers~=4.2.2
 
-spacy>=2.3.0, <=2.3.5
+# spacy>=2.3.0, <=2.3.5 # will be installed by forte.spacy
 cython>=0.25
 pytest
 # It is annoying that if we install neuralcoref and spacy at the same

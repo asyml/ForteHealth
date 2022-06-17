@@ -40,7 +40,7 @@ setuptools.setup(
         'dataclasses~=0.7;python_version<"3.7"',
         "fastapi==0.65.2",
         "uvicorn==0.14.0",
-        "spacy>=2.3.0, <=2.3.5",
+        # "spacy>=2.3.0, <=2.3.5", # will be installed by forte.spacy
         "cython>=0.25",
         "pytest",
     ],
