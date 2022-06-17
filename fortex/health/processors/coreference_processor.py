@@ -17,8 +17,6 @@ Coreference Processor
 from typing import Dict, Set
 import importlib
 
-from fortex.spacy.spacy_processors import load_lang_model
-
 import neuralcoref
 
 from forte.common import Resources, ProcessExecutionException
@@ -28,6 +26,8 @@ from forte.processors.base import PackProcessor
 
 from ft.onto.base_ontology import CoreferenceGroup
 from ftx.medical.clinical_ontology import MedicalArticle
+
+from fortex.spacy.spacy_processors import load_lang_model
 
 __all__ = [
     "CoreferenceProcessor",
