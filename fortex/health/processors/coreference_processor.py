@@ -26,7 +26,7 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from ft.onto.base_ontology import CoreferenceGroup, Token
+from ft.onto.base_ontology import CoreferenceGroup
 from ftx.medical.clinical_ontology import MedicalArticle
 
 __all__ = [
@@ -49,13 +49,9 @@ class CoreferenceProcessor(PackProcessor):
 
     def __init__(self):
         super().__init__()
-        self.spacy_nlp = None  # TODO: a more elegant way
+        self.spacy_nlp = None
 
     def set_up(self, configs: Config):
-        # TODO: remove these comments
-        # TODO: a more elegant way
-        # borrow nlp from SpacyProcessor
-        # self.spacy_nlp = self.resources.get("spacy_processor").nlp
         self.spacy_nlp = spacy.load(configs.lang)
 
         if self.spacy_nlp is None:
@@ -104,15 +100,6 @@ class CoreferenceProcessor(PackProcessor):
         for entry_specified in input_pack.get(entry_type=entry_type):
             result = self.spacy_nlp(entry_specified.text)
 
-            # TODO: remove these comments
-            # Marker155326
-            # When tokenization is different from SpacyProcessor, this will be a bug:
-            token_begins = []
-            token_ends = []
-            for token in input_pack.get(Token, entry_specified):
-                token_begins.append(token.begin)
-                token_ends.append(token.end)
-
             article = MedicalArticle(
                 pack=input_pack,
                 begin=entry_specified.span.begin,
@@ -135,8 +122,8 @@ class CoreferenceProcessor(PackProcessor):
                     for mention in cluster.mentions:
                         mention = mention_type(
                             input_pack,
-                            token_begins[mention.start],
-                            token_ends[mention.end - 1],
+                            mention.start_char,
+                            mention.end_char,
                         )
                         mentions.append(mention)
 
