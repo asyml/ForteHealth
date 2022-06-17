@@ -14,13 +14,13 @@
 """
 Coreference Processor
 """
-from lib2to3.pgen2 import token
 from typing import Dict, Optional, Set
 import importlib
-from numpy import append
 
 import spacy
 from spacy.language import Language
+
+import neuralcoref
 
 from forte.common import Resources, ProcessExecutionException
 from forte.common.configuration import Config
@@ -53,8 +53,6 @@ class CoreferenceProcessor(PackProcessor):
         self.spacy_nlp: Optional[Language] = None  # TODO: a more elegant way
 
     def set_up(self, configs: Config):
-        import neuralcoref
-
         # TODO: remove these comments
         # TODO: a more elegant way
         # self.spacy_nlp = self.resources.get("spacy_processor").nlp # borrow nlp from SpacyProcessor
