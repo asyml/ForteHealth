@@ -28,3 +28,4 @@ setuptools~=57.0.0
 transformers~=4.2.2
 # neuralcoref (build from source) for CoreferenceProcessor
 git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref
+cython>=0.25

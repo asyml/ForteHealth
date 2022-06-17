@@ -41,6 +41,7 @@ setuptools.setup(
         'dataclasses~=0.7;python_version<"3.7"',
         "fastapi==0.65.2",
         "uvicorn==0.14.0",
+        "cython>=0.25",
         "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
     ],
     extras_require={
