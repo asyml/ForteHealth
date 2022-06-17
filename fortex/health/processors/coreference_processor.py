@@ -17,7 +17,7 @@ Coreference Processor
 from typing import Dict, Set
 import importlib
 
-import spacy
+from fortex.spacy.spacy_processors import load_lang_model
 
 import neuralcoref
 
@@ -52,7 +52,7 @@ class CoreferenceProcessor(PackProcessor):
         self.spacy_nlp = None
 
     def set_up(self, configs: Config):
-        self.spacy_nlp = spacy.load(configs.lang)
+        self.spacy_nlp = load_lang_model(configs.lang)
 
         if self.spacy_nlp is None:
             raise ProcessExecutionException(
