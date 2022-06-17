@@ -121,9 +121,13 @@ class CoreferenceProcessor(PackProcessor):
             if not result._.has_coref:
                 article.has_coref = False
                 article.coref_groups = []
+                article.coref_resolved = result._.coref_resolved
+                article.coref_scores = {}
             else:
                 article.has_coref = True
                 article.coref_groups = []
+                article.coref_resolved = result._.coref_resolved
+                article.coref_scores = result._.coref_scores
                 for cluster in result._.coref_clusters:
 
                     mentions = []
@@ -146,18 +150,32 @@ class CoreferenceProcessor(PackProcessor):
         This defines a basic config structure for `CoreferenceProcessor`.
 
         Following are the keys for this dictionary:
-         - `entry_type`: Input entry type. Default `"ft.onto.base_ontology.Document"`.
-         - `mention_type`: Output mention type. Default `ftx.medical.clinical_ontology.MedicalEntityMention`.
-            It can also be set to `ft.onto.base_ontology.EntityMention`.
-         - `model`: the neural net model to be used by NeuralCoref. If set to `True`
-            (default), a new instance will be created with `NeuralCoref.Model()`
+         - `entry_type`: Input entry type. Default: `"ft.onto.base_ontology.Document"`.
+         - `mention_type`: Output mention type. 
+            Default: `"ftx.medical.clinical_ontology.MedicalEntityMention"`.
+            It can also be set to `"ft.onto.base_ontology.EntityMention"`.
+         - `model`: the neural net model to be used by NeuralCoref. If set to `True`,
+            a new instance will be created with `NeuralCoref.Model()`. Default: `True`.
             in `NeuralCoref.from_disk()` or `NeuralCoref.from_bytes()`.
-         - `greedyness`: TODO. Default `0.5`.
-         - `max_dist`: TODO. Default `50`.
-         - `max_dist_match`: TODO. Default `500`.
-         - `blacklist`: TODO. Default `True`.
-         - `store_scores`: TODO. Default `True`
-         - `conv_dict`: TODO. Default `None`.
+         - `greedyness` (`float`): A number between 0 and 1 determining how greedy 
+            the model is about making coreference decisions 
+            (more greedy means more coreference links). Default: `0.5`.
+         - `max_dist` (`int`): How many mentions back to look when considering possible 
+            antecedents of the current mention. Decreasing the value will cause 
+            the system to run faster but less accurately. Default: `50`.
+         - `max_dist_match` (`int`): The system will consider linking the current mention
+            to a preceding one further than max_dist away if they share a noun or
+            proper noun. In this case, it looks max_dist_match away instead. Default: `500`.
+         - `blacklist` (`bool`): Should the system resolve coreferences for pronouns in the
+            following list: ["i", "me", "my", "you", "your"]. Default `True`.
+         - `store_scores` (`bool`): Should the system store the scores for the coreferences
+            in annotations. Default: `True`
+         - `conv_dict` (`dict(str, list(str))`): A conversion dictionary that you can use
+            to replace the embeddings of rare words (keys) by an average of the embeddings
+             of a list of common words (values). Ex: `conv_dict={"Angela": ["woman", "girl"]}`
+             will help resolving coreferences for Angela by using the embeddings for the more
+             common woman and girl instead of the embedding of Angela.
+             This currently only works for single words (not for words groups). Default: `None`.
 
         Returns: A dictionary with the default config for this processor.
         """
@@ -188,7 +206,7 @@ class CoreferenceProcessor(PackProcessor):
         r"""
         Method to add output type record of `CoreferenceProcessor` which
         is `"ftx.medical.clinical_ontology.MedicalArticle"` with attribute
-        `coref_groups` and `has_coref`
+        `coref_groups`, `has_coref`, `coref_scores`, and `coref_resolved`
         to :attr:`forte.data.data_pack.Meta.record`.
 
         Args:
@@ -198,4 +216,6 @@ class CoreferenceProcessor(PackProcessor):
         record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
             "coref_groups",
             "has_coref",
+            "coref_scores",
+            "coref_resolved",
         }
