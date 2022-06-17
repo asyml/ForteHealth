@@ -26,6 +26,8 @@ git+https://git@github.com/asyml/forte-wrappers.git#egg=forte.huggingface&subdir
 dataclasses~=0.8; python_version < '3.7'
 setuptools~=57.0.0
 transformers~=4.2.2
-# neuralcoref (build from source) for CoreferenceProcessor
-git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref
-cython>=0.25
+
+# It is annoying that if we install neuralcoref and spacy at the same
+# time, neuralcoref will throw "Cython failed" during building.
+# Therefore, we must install neuralcoref after spacy is installed.
+# git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref

@@ -41,8 +41,6 @@ setuptools.setup(
         'dataclasses~=0.7;python_version<"3.7"',
         "fastapi==0.65.2",
         "uvicorn==0.14.0",
-        "cython>=0.25",
-        "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
     ],
     extras_require={
         "test": [
@@ -50,6 +48,10 @@ setuptools.setup(
             "testfixtures",
             "transformers==4.2.2",
             "protobuf==3.19.4",
+            # It is annoying that if we install neuralcoref and spacy at the same
+            # time, neuralcoref will throw "Cython failed" during building.
+            # Therefore, we must install neuralcoref after spacy is installed.
+            # "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
         ],
     },
     entry_points={
