@@ -14,10 +14,12 @@
 """
 Coreference Processor
 """
+from lib2to3.pgen2 import token
 from typing import Dict, Optional, Set
 import importlib
-from boto import config
+from numpy import append
 
+import spacy
 from spacy.language import Language
 
 from forte.common import Resources, ProcessExecutionException
@@ -25,7 +27,7 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from ft.onto.base_ontology import CoreferenceGroup, Token
+from ft.onto.base_ontology import CoreferenceGroup, Token, EntityMention
 from ftx.medical.clinical_ontology import MedicalEntityMention, MedicalArticle
 
 __all__ = [
@@ -50,7 +52,11 @@ class CoreferenceProcessor(PackProcessor):
     def set_up(self, configs: Config):
         import neuralcoref
 
-        self.spacy_nlp = self.resources.get("spacy_processor").nlp
+        # TODO: remove these comments
+        # TODO: a more elegant way
+        # self.spacy_nlp = self.resources.get("spacy_processor").nlp # borrow nlp from SpacyProcessor
+        self.spacy_nlp = spacy.load(configs.lang)
+
         if self.spacy_nlp is None:
             raise ProcessExecutionException(
                 "The SpaCy pipeline is not initialized, maybe you "
@@ -76,17 +82,35 @@ class CoreferenceProcessor(PackProcessor):
 
     def _process(self, input_pack: DataPack):
         r"""
-        TODO: Add docstring
-        """
-        path_str, module_str = self.configs.entry_type.rsplit(".", 1)
-        # By default, path_str would be ft.onto.base_ontology
-        # and module_str would be Document # TODO: check
+        Coreference resolution is done by
+        a spaCy pipeline with `NeuralCoref` in it.
 
-        mod = importlib.import_module(path_str)
-        entry_type = getattr(mod, module_str)
+        We translate the output to `CoreferenceGroup` and
+        `MedicalEntityMention`
+        """
+
+        def load_module(string):
+            path_str, module_str = string.rsplit(".", 1)
+            mod = importlib.import_module(path_str)
+            return getattr(mod, module_str)
+
+        # Default: Document
+        entry_type = load_module(self.configs.entry_type)
+
+        # Default: MedicalEntityMention
+        mention_type = load_module(self.configs.mention_type)
+
         for entry_specified in input_pack.get(entry_type=entry_type):
             result = self.spacy_nlp(entry_specified.text)
-            tokens = [(token) for token in input_pack.get(Token, entry_specified)]
+
+            # TODO: remove these comments
+            # Marker155326
+            # When tokenization is different from SpacyProcessor, this will be a bug:
+            token_begins = []
+            token_ends = []
+            for token in input_pack.get(Token, entry_specified):
+                token_begins.append(token.begin)
+                token_ends.append(token.end)
 
             article = MedicalArticle(
                 pack=input_pack,
@@ -104,10 +128,10 @@ class CoreferenceProcessor(PackProcessor):
 
                     mentions = []
                     for mention in cluster.mentions:
-                        mention = MedicalEntityMention(
+                        mention = mention_type(
                             input_pack,
-                            tokens[mention.start].begin,
-                            tokens[mention.end - 1].end,
+                            token_begins[mention.start],
+                            token_ends[mention.end - 1],
                         )
                         mentions.append(mention)
 
@@ -116,31 +140,6 @@ class CoreferenceProcessor(PackProcessor):
 
                     article.coref_groups.append(group)
 
-    # @classmethod
-    # def default_configs(cls):
-    #     r"""
-    #     This defines a basic config structure for `CoreferenceProcessor`.
-
-    #     Following are the keys for this dictionary:
-    #      - `entry_type`: input entry type,
-    #      - `model`: the neural net model to be used by NeuralCoref. If set to True
-    #         (default), a new instance will be created with `NeuralCoref.Model()`
-    #         in NeuralCoref.from_disk() or NeuralCoref.from_bytes().
-    #      - `cfg_inference`: A dict of configuration of inference. If set to an empty
-    #         dict, the default configuration in NeuralCoref will be used. Available
-    #         entries: `greedyness` (default 0.5), `max_dist` (default 50),
-    #         `max_dist_match` (default 500), `blacklist` (default True),
-    #         `store_scores` (default True), `conv_dict` (default None),
-
-    #     Returns: A dictionary with the default config for this processor.
-    #     """
-    #     return {
-    #         # TODO: remove unnecessaries
-    #         "entry_type": "ft.onto.base_ontology.Document",
-    #         "model": True,
-    #         "cfg_inference": {},
-    #     }
-
     @classmethod
     def default_configs(cls):
         r"""
@@ -148,6 +147,8 @@ class CoreferenceProcessor(PackProcessor):
 
         Following are the keys for this dictionary:
          - `entry_type`: Input entry type. Default `"ft.onto.base_ontology.Document"`.
+         - `mention_type`: Output mention type. Default `ftx.medical.clinical_ontology.MedicalEntityMention`.
+            It can also be set to `ft.onto.base_ontology.EntityMention`.
          - `model`: the neural net model to be used by NeuralCoref. If set to `True`
             (default), a new instance will be created with `NeuralCoref.Model()`
             in `NeuralCoref.from_disk()` or `NeuralCoref.from_bytes()`.
@@ -162,6 +163,8 @@ class CoreferenceProcessor(PackProcessor):
         """
         return {
             "entry_type": "ft.onto.base_ontology.Document",
+            "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
+            "lang": "en_core_web_sm",
             "model": True,
             "greedyness": 0.5,
             "max_dist": 50,
