@@ -79,7 +79,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
                 assert output_list == check_list
 
     @data(
-        "ADDENDUM:\n",
+        "ADDENDUM:\n"
         "RADIOLOGIC STUDIES: Radiologic studies also included "
         "a chest CT, which confirmed cavitary lesions "
         "in the left lung apex consistent with infectious process/tuberculosis.\n"
