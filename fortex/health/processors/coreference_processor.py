@@ -14,10 +14,11 @@
 """
 Coreference Processor
 """
-from typing import Dict, Set #, Optional
+from typing import Dict, Set  # , Optional
 import importlib
 
 import spacy
+
 # from spacy.language import Language
 
 import neuralcoref
