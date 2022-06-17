@@ -41,6 +41,8 @@ setuptools.setup(
         "fastapi==0.65.2",
         "uvicorn==0.14.0",
         "spacy>=2.3.0, <=2.3.5",
+        "cython>=0.25",
+        "pytest",
     ],
     extras_require={
         "test": [

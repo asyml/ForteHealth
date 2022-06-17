@@ -65,7 +65,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
         for pack in self.pl.process_dataset(input_data):
             for article in pack.get(MedicalArticle):
                 has_coref = article.has_coref
-                assert has_coref == True
+                assert has_coref is True
 
                 coref_groups = article.coref_groups
                 output_list = []
@@ -94,7 +94,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
         for pack in self.pl.process_dataset(input_data):
             for article in pack.get(MedicalArticle):
                 has_coref = article.has_coref
-                assert has_coref == True
+                assert has_coref is True
 
                 coref_groups = article.coref_groups
                 output_list = []
