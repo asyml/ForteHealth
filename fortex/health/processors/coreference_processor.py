@@ -39,8 +39,8 @@ class CoreferenceProcessor(PackProcessor):
     r"""
     Implementation of this CoreferenceProcessor has been based on huggingface
     NeuralCoref. You can find more details in the original repo.
-    
-    Note that official released NeuralCoref uses a dated spaCy
+
+    Note that the NeuralCoref package from PyPI uses a dated spaCy
     version (2.1), which can cause segmentation fault with the spaCy we use (2.3).
     Please install NeuralCoref by building from source.
 
@@ -154,17 +154,17 @@ class CoreferenceProcessor(PackProcessor):
 
         Following are the keys for this dictionary:
          - `entry_type`: Input entry type. Default: `"ft.onto.base_ontology.Document"`.
-         - `mention_type`: Output mention type. 
+         - `mention_type`: Output mention type.
             Default: `"ftx.medical.clinical_ontology.MedicalEntityMention"`.
             It can also be set to `"ft.onto.base_ontology.EntityMention"`.
          - `model`: the neural net model to be used by NeuralCoref. If set to `True`,
             a new instance will be created with `NeuralCoref.Model()`. Default: `True`.
             in `NeuralCoref.from_disk()` or `NeuralCoref.from_bytes()`.
-         - `greedyness` (`float`): A number between 0 and 1 determining how greedy 
-            the model is about making coreference decisions 
+         - `greedyness` (`float`): A number between 0 and 1 determining how greedy
+            the model is about making coreference decisions
             (more greedy means more coreference links). Default: `0.5`.
-         - `max_dist` (`int`): How many mentions back to look when considering possible 
-            antecedents of the current mention. Decreasing the value will cause 
+         - `max_dist` (`int`): How many mentions back to look when considering possible
+            antecedents of the current mention. Decreasing the value will cause
             the system to run faster but less accurately. Default: `50`.
          - `max_dist_match` (`int`): The system will consider linking the current mention
             to a preceding one further than max_dist away if they share a noun or
