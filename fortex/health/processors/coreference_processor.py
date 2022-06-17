@@ -38,10 +38,13 @@ __all__ = [
 class CoreferenceProcessor(PackProcessor):
     r"""
     Implementation of this CoreferenceProcessor has been based on huggingface
-    NeuralCoref. Note that official released NeuralCoref uses a dated spaCy
+    NeuralCoref. You can find more details in the original repo.
+    
+    Note that official released NeuralCoref uses a dated spaCy
     version (2.1), which can cause segmentation fault with the spaCy we use (2.3).
-    Please install NeuralCoref by building from source:
+    Please install NeuralCoref by building from source.
 
+    Referred repository link:
     https://github.com/huggingface/neuralcoref
     """
 
@@ -83,9 +86,9 @@ class CoreferenceProcessor(PackProcessor):
     def _process(self, input_pack: DataPack):
         r"""
         Coreference resolution is done by
-        a spaCy pipeline with `NeuralCoref` in it.
+        a spaCy pipeline with `NeuralCoref` added.
 
-        We translate the output to `CoreferenceGroup` and
+        Then we translate the output to `CoreferenceGroup` and
         `MedicalEntityMention`
         """
 
