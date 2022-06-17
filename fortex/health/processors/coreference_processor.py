@@ -27,8 +27,8 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from ft.onto.base_ontology import CoreferenceGroup, Token, EntityMention
-from ftx.medical.clinical_ontology import MedicalEntityMention, MedicalArticle
+from ft.onto.base_ontology import CoreferenceGroup, Token
+from ftx.medical.clinical_ontology import MedicalArticle
 
 __all__ = [
     "CoreferenceProcessor",
