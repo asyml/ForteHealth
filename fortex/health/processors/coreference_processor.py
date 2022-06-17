@@ -200,7 +200,7 @@ class CoreferenceProcessor(PackProcessor):
         Args:
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
-        """  # TODO: check docstring
+        """
         record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
             "coref_groups",
             "has_coref",
