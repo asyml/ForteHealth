@@ -80,14 +80,14 @@ class TestCoreferenceProcessor(unittest.TestCase):
 
     @data(
         "ADDENDUM:\n",
-        "RADIOLOGIC STUDIES: Radiologic studies also included ",
-        "a chest CT, which confirmed cavitary lesions ",
-        "in the left lung apex consistent with infectious process/tuberculosis.\n",
-        "This also moderate-sized left pleural effusion.\n",
-        "HEAD CT: Head CT showed no intracranial hemorrhage and no mass effect, ",
-        "but old infarction consistent with past medical history.\n",
-        "ABDOMINAL CT:  Abdominal CT showed no lesions of T10 and sacrum ",
-        "most likely secondary to steoporosis.\n",
+        "RADIOLOGIC STUDIES: Radiologic studies also included "
+        "a chest CT, which confirmed cavitary lesions "
+        "in the left lung apex consistent with infectious process/tuberculosis.\n"
+        "This also moderate-sized left pleural effusion.\n"
+        "HEAD CT: Head CT showed no intracranial hemorrhage and no mass effect, "
+        "but old infarction consistent with past medical history.\n"
+        "ABDOMINAL CT:  Abdominal CT showed no lesions of T10 and sacrum "
+        "most likely secondary to steoporosis.\n"
         "These can be followed by repeat imaging as an outpatient.",
     )
     def test_medical_notes(self, input_data):
