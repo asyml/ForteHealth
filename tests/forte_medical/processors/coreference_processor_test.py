@@ -26,8 +26,6 @@ from ftx.medical.clinical_ontology import MedicalArticle
 from ft.onto.base_ontology import (
     Token,
 )
-
-from fortex.spacy import SpacyProcessor
 from fortex.health.processors.coreference_processor import (
     CoreferenceProcessor,
 )
@@ -38,10 +36,6 @@ class TestCoreferenceProcessor(unittest.TestCase):
     def setUp(self):
         self.pl = Pipeline[DataPack](enforce_consistency=True)
         self.pl.set_reader(StringReader())
-        self.pl.add(
-            SpacyProcessor(),
-            {"processors": ["sentence", "tokenize"], "lang": "en_core_web_sm"},
-        )
         self.pl.add(
             CoreferenceProcessor(),
             {
