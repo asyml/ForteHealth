@@ -91,7 +91,7 @@ jobs:
 
     - name: Install NeuralCoref
       run: |
-        git install git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref
+        pip install git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref
 
     - name: Test with pytest and run coverage
       run: |
