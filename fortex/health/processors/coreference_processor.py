@@ -14,11 +14,11 @@
 """
 Coreference Processor
 """
-from typing import Dict, Optional, Set
+from typing import Dict, Set #, Optional
 import importlib
 
 import spacy
-from spacy.language import Language
+# from spacy.language import Language
 
 import neuralcoref
 
@@ -50,7 +50,7 @@ class CoreferenceProcessor(PackProcessor):
 
     def __init__(self):
         super().__init__()
-        self.spacy_nlp: Optional[Language] = None  # TODO: a more elegant way
+        self.spacy_nlp = None  # TODO: a more elegant way
 
     def set_up(self, configs: Config):
         # TODO: remove these comments
