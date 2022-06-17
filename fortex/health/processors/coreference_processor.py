@@ -55,7 +55,8 @@ class CoreferenceProcessor(PackProcessor):
     def set_up(self, configs: Config):
         # TODO: remove these comments
         # TODO: a more elegant way
-        # self.spacy_nlp = self.resources.get("spacy_processor").nlp # borrow nlp from SpacyProcessor
+        # borrow nlp from SpacyProcessor
+        # self.spacy_nlp = self.resources.get("spacy_processor").nlp
         self.spacy_nlp = spacy.load(configs.lang)
 
         if self.spacy_nlp is None:
