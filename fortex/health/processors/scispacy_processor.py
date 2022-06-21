@@ -45,9 +45,7 @@ class ScispaCyProcessor(PackProcessor):
         self.extractor = None
 
     def set_up(self):
-        self.extractor = spacy.load(
-            self.configs.model_name
-        )
+        self.extractor = spacy.load(self.configs.model_name)
         if self.configs.pipe_name == "abbreviation_detector":
             self.extractor.add_pipe(self.configs.pipe_name)
         else:  # hyponym
@@ -93,9 +91,13 @@ class ScispaCyProcessor(PackProcessor):
                 for item in doc._.hearst_patterns:
                     hlink = Hyponym(pack=input_pack)
                     hlink.hyponym_link = item[0]
-                    general_phase = Phrase(pack=input_pack, begin=item[1].start, end=item[1].end)
+                    general_phase = Phrase(
+                        pack=input_pack, begin=item[1].start, end=item[1].end
+                    )
                     hlink.parent = general_phase
-                    specific_phase = Phrase(pack=input_pack, begin=item[2].start, end=item[2].end)
+                    specific_phase = Phrase(
+                        pack=input_pack, begin=item[2].start, end=item[2].end
+                    )
                     hlink.child = specific_phase
 
     @classmethod

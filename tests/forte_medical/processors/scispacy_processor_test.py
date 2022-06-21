@@ -27,6 +27,7 @@ from fortex.health.processors.scispacy_processor import (
     ScispaCyProcessor,
 )
 
+
 class TestScispaCyAbvProcessor(unittest.TestCase):
     def setUp(self):
         self.nlp = Pipeline[DataPack](enforce_consistency=True)  #  True
