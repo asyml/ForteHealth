@@ -27,13 +27,9 @@ from fortex.health.processors.scispacy_processor import (
     ScispaCyProcessor,
 )
 
-import spacy
-from scispacy.hyponym_detector import HyponymDetector
-
-
 class TestScispaCyAbvProcessor(unittest.TestCase):
     def setUp(self):
-        self.nlp = Pipeline[DataPack](enforce_consistency=False)  #  True
+        self.nlp = Pipeline[DataPack](enforce_consistency=True)  #  True
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
@@ -92,7 +88,6 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
             "Keystone plant species such as fig trees are good for the soil."
         ]
         document = "".join(sentences)
-        # print(document)
         pack = self.nlp.process(document)
 
         expected_value = [
@@ -100,5 +95,4 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         ]
 
         for idx, detected in enumerate(pack.get(Hyponym)):
-            # print(detected)
             self.assertEqual(detected.hyponym_link, expected_value[idx])

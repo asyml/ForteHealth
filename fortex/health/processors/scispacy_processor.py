@@ -23,8 +23,7 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-# from scispacy.abbreviation import AbbreviationDetector
-from ftx.medical.clinical_ontology import Hyponym, Abbreviation
+from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
 
 __all__ = [
     "ScispaCyProcessor",
@@ -45,17 +44,16 @@ class ScispaCyProcessor(PackProcessor):
         super().__init__()
         self.extractor = None
 
-    def set_up(self):  # , configs: Config
-        # device_num = self.configs["cuda_devices"]
-        self.extractor = spacy.load(  # using Spacy for Classification
-            self.configs.model_name  # model name
+    def set_up(self):
+        self.extractor = spacy.load(
+            self.configs.model_name
         )
         if self.configs.pipe_name == "abbreviation_detector":
-            self.extractor.add_pipe(self.configs.pipe_name)  # pipe name
+            self.extractor.add_pipe(self.configs.pipe_name)
         else:  # hyponym
             self.extractor.add_pipe(
                 self.configs.pipe_name, last=True, config={"extended": False}
-            )  # self.configs.pipe_config
+            )
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
@@ -88,17 +86,17 @@ class ScispaCyProcessor(PackProcessor):
                         pack=input_pack, begin=abrv.start, end=abrv.end
                     )
                     tmpAbrv.long_form = abrv._.long_form
-                    # tmpAbrv.text = "" + abrv
                     list_of_abrvs.append(tmpAbrv)
 
             else:
                 print(doc._.hearst_patterns)
                 for item in doc._.hearst_patterns:
-                    # print(
-                    #     f"{item} \t link:{item[0]}, {item[1]}, {item[2]}"
-                    # )
                     hlink = Hyponym(pack=input_pack)
                     hlink.hyponym_link = item[0]
+                    general_phase = Phrase(pack=input_pack, begin=item[1].start, end=item[1].end)
+                    hlink.parent = general_phase
+                    specific_phase = Phrase(pack=input_pack, begin=item[2].start, end=item[2].end)
+                    hlink.child = specific_phase
 
     @classmethod
     def default_configs(cls):
