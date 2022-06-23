@@ -25,6 +25,12 @@ from forte.processors.base import PackProcessor
 
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
 
+from scispacy.abbreviation import AbbreviationDetector
+from scispacy.hyponym_detector import HyponymDetector
+
+nlp = spacy.load("en_core_sci_sm")
+nlp.add_pipe("hyponym_detector", last=True, config={"extended": False})
+
 __all__ = [
     "ScispaCyProcessor",
 ]
@@ -91,14 +97,14 @@ class ScispaCyProcessor(PackProcessor):
                 for item in doc._.hearst_patterns:
                     hlink = Hyponym(pack=input_pack)
                     hlink.hyponym_link = item[0]
-                    general_phase = Phrase(
+                    general_concept = Phrase(
                         pack=input_pack, begin=item[1].start, end=item[1].end
                     )
-                    hlink.parent = general_phase
-                    specific_phase = Phrase(
+                    hlink.parent = general_concept
+                    specific_concept = Phrase(
                         pack=input_pack, begin=item[2].start, end=item[2].end
                     )
-                    hlink.child = specific_phase
+                    hlink.child = specific_concept
 
     @classmethod
     def default_configs(cls):
