@@ -22,12 +22,15 @@ from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
-from ft.onto.base_ontology import Phrase
+
+from scispacy.abbreviation import (
+    AbbreviationDetector,
+)  # pylint: disable=unused-import
+from scispacy.hyponym_detector import (
+    HyponymDetector,
+)  # pylint: disable=unused-import
 
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
-
-from scispacy.abbreviation import AbbreviationDetector
-from scispacy.hyponym_detector import HyponymDetector
 
 nlp = spacy.load("en_core_sci_sm")
 nlp.add_pipe("hyponym_detector", last=True, config={"extended": False})
