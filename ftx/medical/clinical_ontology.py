@@ -15,13 +15,12 @@ from forte.data.ontology.top import Annotation
 from forte.data.ontology.top import Generics
 from forte.data.ontology.top import Link
 from ft.onto.base_ontology import EntityMention
-from ft.onto.base_ontology import Token
+from ft.onto.base_ontology import Phrase
 from typing import Dict
 from typing import List
 from typing import Optional
 
 __all__ = [
-    "Phrase",
     "ClinicalEntityMention",
     "Description",
     "Body",
@@ -50,22 +49,6 @@ __all__ = [
     "Hyponym",
 ]
 
-@dataclass
-class Phrase(Annotation):
-    """
-    A span based annotation `Phrase`.
-    Attributes:
-        phrase_type (Optional[str]):
-        headword (Optional[Token]):
-    """
-
-    phrase_type: Optional[str]
-    headword: Optional[Token]
-
-    def __init__(self, pack: DataPack, begin: int, end: int):
-        super().__init__(pack, begin, end)
-        self.phrase_type: Optional[str] = None
-        self.headword: Optional[Token] = None
 
 @dataclass
 class ClinicalEntityMention(EntityMention):
@@ -502,10 +485,10 @@ class Hyponym(Link):
     """
 
     hyponym_link: Optional[str]
-    Parent: Optional[Phrase]
+
     ParentType = Phrase
     ChildType = Phrase
 
-    def __init__(self, pack: DataPack, parent: Optional[Phrase] = None, child: Optional[Phrase] = None):
+    def __init__(self, pack: DataPack, parent: Optional[Entry] = None, child: Optional[Entry] = None):
         super().__init__(pack, parent, child)
         self.hyponym_link: Optional[str] = None

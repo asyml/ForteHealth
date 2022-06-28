@@ -22,6 +22,7 @@ from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
+from ft.onto.base_ontology import Phrase
 
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
 
@@ -80,7 +81,7 @@ class ScispaCyProcessor(PackProcessor):
             doc = self.extractor(entry_specified.text)
 
             if self.configs.pipe_name == "abbreviation_detector":
-                print("Abbreviation", "\t", "Definition")
+                # print("Abbreviation", "\t", "Definition")
                 list_of_abrvs = []
                 for abrv in doc._.abbreviations:
                     print(
@@ -93,18 +94,19 @@ class ScispaCyProcessor(PackProcessor):
                     list_of_abrvs.append(tmpAbrv)
 
             else:
-                print(doc._.hearst_patterns)
                 for item in doc._.hearst_patterns:
-                    hlink = Hyponym(pack=input_pack)
-                    hlink.hyponym_link = item[0]
-                    general_concept = Phrase(
+                    general_concept: Phrase = Phrase(
                         pack=input_pack, begin=item[1].start, end=item[1].end
                     )
-                    hlink.parent = general_concept
                     specific_concept = Phrase(
                         pack=input_pack, begin=item[2].start, end=item[2].end
                     )
-                    hlink.child = specific_concept
+                    hlink = Hyponym(
+                        pack=input_pack,
+                        parent=general_concept,
+                        child=specific_concept,
+                    )
+                    hlink.hyponym_link = item[0]
 
     @classmethod
     def default_configs(cls):

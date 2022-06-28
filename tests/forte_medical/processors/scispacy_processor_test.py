@@ -53,7 +53,7 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
             SBMA can be caused by this easily."
         ]
         document = "".join(sentences)
-        print(document)
+        #print(document)
         pack = self.nlp.process(document)
 
         expected_longform = [
