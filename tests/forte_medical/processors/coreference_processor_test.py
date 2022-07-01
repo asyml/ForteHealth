@@ -23,7 +23,7 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
-from ft.onto.base_ontology import Document, CoreferenceGroup
+from ft.onto.base_ontology import CoreferenceGroup
 from fortex.health.processors.coreference_processor import (
     CoreferenceProcessor,
 )
@@ -98,12 +98,12 @@ class TestCoreferenceProcessor(unittest.TestCase):
         for pack in self.pl.process_dataset(input_data):
             output_list = []
 
-            for document in pack.get(entry_type):
-                for group in document.get(CoreferenceGroup):
+            for entry in pack.get(entry_type):
+                for group in entry.get(CoreferenceGroup):
                     members = [member for member in group.get_members()]
                     members = sorted(members, key=lambda x: x.begin)
 
                     mention_texts = [member.text for member in members]
                     output_list.append(mention_texts)
 
-            self.assertEqual(output_list, check_list, f"input: {document.text}")
+            self.assertEqual(output_list, check_list, f"input: {entry.text}")
