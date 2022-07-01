@@ -65,7 +65,7 @@ class CoreferenceProcessor(PackProcessor):
             model = True
         cfg_inference = configs.cfg_inference
         neuralcoref.add_to_pipe(
-            self.spacy_nlp, model=model, cfg_inference=cfg_inference
+            self.spacy_nlp, model=model, **cfg_inference
         )
 
     def initialize(self, resources: Resources, configs: Config):
