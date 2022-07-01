@@ -32,29 +32,6 @@ from fortex.spacy import SpacyProcessor
 
 @ddt
 class TestCoreferenceProcessor(unittest.TestCase):
-    # def setUp(self):
-    #     self.pl = Pipeline[DataPack](enforce_consistency=True)
-    #     self.pl.set_reader(StringReader())
-    #     self.pl.add(
-    #         CoreferenceProcessor(),
-    #         {
-    #             "entry_type": "ft.onto.base_ontology.Document",
-    #             "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
-    #             "lang": "en_core_web_sm",
-    #             "model": "use_default_model",
-    #             "cfg_inference": {
-    #                 "greedyness": 0.5,
-    #                 "max_dist": 50,
-    #                 "max_dist_match": 500,
-    #                 "blacklist": True,
-    #                 "store_scores": True,
-    #                 "conv_dict": None,
-    #             },
-    #         },
-    #     )
-
-    #     self.pl.initialize()
-
     @data(
         (
             "ADDENDUM:\n"
@@ -104,7 +81,6 @@ class TestCoreferenceProcessor(unittest.TestCase):
                     "max_dist": 50,
                     "max_dist_match": 500,
                     "blacklist": True,
-                    "store_scores": True,
                     "conv_dict": None,
                 },
             },
