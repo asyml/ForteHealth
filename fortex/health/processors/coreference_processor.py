@@ -25,7 +25,6 @@ from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
 from ft.onto.base_ontology import CoreferenceGroup
-from ftx.medical.clinical_ontology import MedicalArticle
 
 from fortex.spacy.spacy_processors import load_lang_model
 
@@ -60,15 +59,8 @@ class CoreferenceProcessor(PackProcessor):
                 "haven't called the initialization function."
             )
 
-        model = configs.model
-        cfg_inference = {
-            "greedyness": configs.greedyness,
-            "max_dist": configs.max_dist,
-            "max_dist_match": configs.max_dist_match,
-            "blacklist": configs.blacklist,
-            "store_scores": configs.store_scores,
-            "conv_dict": configs.conv_dict,
-        }
+        model = configs.model if configs.model != "use_default_model" else True
+        cfg_inference = configs.cfg_inference
         neuralcoref.add_to_pipe(
             self.spacy_nlp, model=model, cfg_inference=cfg_inference
         )
@@ -82,8 +74,7 @@ class CoreferenceProcessor(PackProcessor):
         Coreference resolution is done by
         a spaCy pipeline with `NeuralCoref` added.
 
-        Then we translate the output to `CoreferenceGroup` and
-        `MedicalEntityMention`
+        Then we translate the output to `CoreferenceGroup`.
         """
 
         def load_module(string):
@@ -100,22 +91,9 @@ class CoreferenceProcessor(PackProcessor):
         for entry_specified in input_pack.get(entry_type=entry_type):
             result = self.spacy_nlp(entry_specified.text)
 
-            article = MedicalArticle(
-                pack=input_pack,
-                begin=entry_specified.span.begin,
-                end=entry_specified.span.end,
-            )
-
             if not result._.has_coref:
-                article.has_coref = False
-                article.coref_groups = []
-                article.coref_resolved = result._.coref_resolved
-                article.coref_scores = {}
+                continue
             else:
-                article.has_coref = True
-                article.coref_groups = []
-                article.coref_resolved = result._.coref_resolved
-                article.coref_scores = result._.coref_scores
                 for cluster in result._.coref_clusters:
 
                     mentions = []
@@ -130,40 +108,33 @@ class CoreferenceProcessor(PackProcessor):
                     group = CoreferenceGroup(input_pack)
                     group.add_members(mentions)
 
-                    article.coref_groups.append(group)
-
     @classmethod
     def default_configs(cls):
         r"""
         This defines a basic config structure for `CoreferenceProcessor`.
 
         Following are the keys for this dictionary:
-         - `entry_type`: Input entry type. Default: `"ft.onto.base_ontology.Document"`.
-         - `mention_type`: Output mention type.
-            Default: `"ftx.medical.clinical_ontology.MedicalEntityMention"`.
-            It can also be set to `"ft.onto.base_ontology.EntityMention"`.
-         - `model`: the neural net model to be used by NeuralCoref. If set to `True`,
-            a new instance will be created with `NeuralCoref.Model()`. Default: `True`.
-            in `NeuralCoref.from_disk()` or `NeuralCoref.from_bytes()`.
-         - `greedyness` (`float`): A number between 0 and 1 determining how greedy
-            the model is about making coreference decisions
-            (more greedy means more coreference links). Default: `0.5`.
-         - `max_dist` (`int`): How many mentions back to look when considering possible
-            antecedents of the current mention. Decreasing the value will cause
-            the system to run faster but less accurately. Default: `50`.
-         - `max_dist_match` (`int`): The system will consider linking the current mention
-            to a preceding one further than max_dist away if they share a noun or
-            proper noun. In this case, it looks max_dist_match away instead. Default: `500`.
-         - `blacklist` (`bool`): Should the system resolve coreferences for pronouns in the
-            following list: ["i", "me", "my", "you", "your"]. Default `True`.
-         - `store_scores` (`bool`): Should the system store the scores for the coreferences
-            in annotations. Default: `True`
-         - `conv_dict` (`dict(str, list(str))`): A conversion dictionary that you can use
-            to replace the embeddings of rare words (keys) by an average of the embeddings
-             of a list of common words (values). Ex: `conv_dict={"Angela": ["woman", "girl"]}`
-             will help resolving coreferences for Angela by using the embeddings for the more
-             common woman and girl instead of the embedding of Angela.
-             This currently only works for single words (not for words groups). Default: `None`.
+        - `entry_type`: Input entry type. You can change the context of
+          coreference resolution by setting this parameter. For example,
+          if you want to do coreference resolution within documents, set
+          it to `"ft.onto.base_ontology.Document"`. If you want to do
+          coreference resolution within sentences, set it to
+          `"ft.onto.base_ontology.Sentence"`.
+          Default: `"ft.onto.base_ontology.Document"`.
+        - `mention_type`: The type of members in `CoreferenceGroup`.
+          Default: `"ftx.medical.clinical_ontology.MedicalEntityMention"`.
+          It can also be set to `"ft.onto.base_ontology.EntityMention"`.
+        - `model`: the neural net model to be used by NeuralCoref. If set to
+          `"use_default_model"`, a pre-trained neural net will be downloaded and cached.
+          If set to your customized model, the model needs to be a tuple containing a
+          `single_model` and a `pairs_model`. See `NeuralCoref.Model` method in
+          https://github.com/huggingface/neuralcoref/blob/master/neuralcoref/neuralcoref.pyx
+          for reference of how the default model is defined.
+          Default: `"use_default_model"`.
+        - `cfg_inference`: A dict containing the inference configs of NeuralCoref. See
+          `get_default_cfg_inference` for default values, and see
+          https://github.com/huggingface/neuralcoref/blob/master/README.md#parameters
+          for the meaing of these parameters.
 
         Returns: A dictionary with the default config for this processor.
         """
@@ -171,7 +142,45 @@ class CoreferenceProcessor(PackProcessor):
             "entry_type": "ft.onto.base_ontology.Document",
             "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
             "lang": "en_core_web_sm",
-            "model": True,
+            "model": "use_default_model",
+            "cfg_inference": cls.get_default_cfg_inference(),
+        }
+
+    @classmethod
+    def get_default_cfg_inference(cls):
+        """
+        This defines the default inference config of NeuralCoref.
+
+        Following are the keys for this dictionary:
+         - `greedyness` (`float`): A number between 0 and 1 determining how greedy
+            the model is about making coreference decisions
+            (more greedy means more coreference links).
+            Default: `0.5`.
+         - `max_dist` (`int`): How many mentions back to look when considering possible
+            antecedents of the current mention. Decreasing the value will cause
+            the system to run faster but less accurately.
+            Default: `50`.
+         - `max_dist_match` (`int`): The system will consider linking the current mention
+            to a preceding one further than max_dist away if they share a noun or
+            proper noun. In this case, it looks max_dist_match away instead.
+            Default: `500`.
+         - `blacklist` (`bool`): Should the system resolve coreferences for pronouns in the
+            following list: ["i", "me", "my", "you", "your"].
+            Default `True`.
+         - `store_scores` (`bool`): Should the system store the scores for the coreferences
+            in annotations.
+            Default: `True`
+         - `conv_dict` (`dict(str, list(str))`): A conversion dictionary that you can use
+            to replace the embeddings of rare words (keys) by an average of the embeddings
+            of a list of common words (values). Ex: `conv_dict={"Angela": ["woman", "girl"]}`
+            will help resolving coreferences for Angela by using the embeddings for the more
+            common woman and girl instead of the embedding of Angela.
+            This currently only works for single words (not for words groups).
+            Default: `None`.
+
+        Returns: A dictionary with the default inference config of NeuralCoref.
+        """
+        return {
             "greedyness": 0.5,
             "max_dist": 50,
             "max_dist_match": 500,
@@ -188,22 +197,16 @@ class CoreferenceProcessor(PackProcessor):
         :meth:`~forte.pipeline.Pipeline.enforce_consistency` was enabled for
         the pipeline.
         """
-        return {"ft.onto.base_ontology.Document": set()}
+        return {self.configs.entry_type: set("text")}
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
         Method to add output type record of `CoreferenceProcessor` which
-        is `"ftx.medical.clinical_ontology.MedicalArticle"` with attribute
-        `coref_groups`, `has_coref`, `coref_scores`, and `coref_resolved`
-        to :attr:`forte.data.data_pack.Meta.record`.
+        is `"ftx.medical.clinical_ontology.CoreferenceGroup"` with attribute
+        `members` to :attr:`forte.data.data_pack.Meta.record`.
 
         Args:
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
         """
-        record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
-            "coref_groups",
-            "has_coref",
-            "coref_scores",
-            "coref_resolved",
-        }
+        record_meta["ft.onto.base_ontology.CoreferenceGroup"] = {"members"}
