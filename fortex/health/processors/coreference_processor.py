@@ -141,7 +141,7 @@ class CoreferenceProcessor(PackProcessor):
           containing a `single_model` and a `pairs_model`.
           See `NeuralCoref.Model` method in
           https://github.com/huggingface/neuralcoref/blob/master/neuralcoref/neuralcoref.pyx
-          for reference of how the default model is defined.
+          for reference of how to define such a model.
           Default: `"use_default_model"`.
         - `cfg_inference`: A dict containing the inference configs of
           NeuralCoref. See `get_default_cfg_inference` for default values, and see
