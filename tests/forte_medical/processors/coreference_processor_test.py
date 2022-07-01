@@ -16,16 +16,13 @@ Unit tests for CoreferenceProcessor
 """
 
 import unittest
-from ddt import data, ddt
+from ddt import data, ddt, unpack
 
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import MedicalArticle
-from ft.onto.base_ontology import (
-    Token,
-)
 from fortex.health.processors.coreference_processor import (
     CoreferenceProcessor,
 )
@@ -54,37 +51,27 @@ class TestCoreferenceProcessor(unittest.TestCase):
 
         self.pl.initialize()
 
-    @data("My sister has a dog. She loves him.")
-    def test_daily_language(self, input_data):
-        for pack in self.pl.process_dataset(input_data):
-            for article in pack.get(MedicalArticle):
-                has_coref = article.has_coref
-                assert has_coref is True
-
-                coref_groups = article.coref_groups
-                output_list = []
-                check_list = [["My sister", "She"], ["a dog", "him"]]
-                for group in coref_groups:
-                    members = [member for member in group.get_members()]
-                    members = sorted(members, key=lambda x: x.begin)
-
-                    mention_texts = [member.text for member in members]
-                    output_list.append(mention_texts)
-                assert output_list == check_list
-
     @data(
-        "ADDENDUM:\n"
-        "RADIOLOGIC STUDIES: Radiologic studies also included "
-        "a chest CT, which confirmed cavitary lesions "
-        "in the left lung apex consistent with infectious process/tuberculosis.\n"
-        "This also moderate-sized left pleural effusion.\n"
-        "HEAD CT: Head CT showed no intracranial hemorrhage and no mass effect, "
-        "but old infarction consistent with past medical history.\n"
-        "ABDOMINAL CT:  Abdominal CT showed no lesions of T10 and sacrum "
-        "most likely secondary to steoporosis.\n"
-        "These can be followed by repeat imaging as an outpatient.",
+        (
+            "ADDENDUM:\n"
+            "RADIOLOGIC STUDIES: Radiologic studies also included "
+            "a chest CT, which confirmed cavitary lesions "
+            "in the left lung apex consistent with infectious process/tuberculosis.\n"
+            "This also moderate-sized left pleural effusion.\n"
+            "HEAD CT: Head CT showed no intracranial hemorrhage and no mass effect, "
+            "but old infarction consistent with past medical history.\n"
+            "ABDOMINAL CT:  Abdominal CT showed no lesions of T10 and sacrum "
+            "most likely secondary to steoporosis.\n"
+            "These can be followed by repeat imaging as an outpatient.",
+            [["HEAD CT", "Head CT", "Abdominal CT"]],
+        ),
+        (
+            "My sister has a dog. She loves him.",
+            [["My sister", "She"], ["a dog", "him"]],
+        ),
     )
-    def test_medical_notes(self, input_data):
+    @unpack
+    def test_medical_notes(self, input_data, check_list):
         for pack in self.pl.process_dataset(input_data):
             for article in pack.get(MedicalArticle):
                 has_coref = article.has_coref
@@ -92,7 +79,6 @@ class TestCoreferenceProcessor(unittest.TestCase):
 
                 coref_groups = article.coref_groups
                 output_list = []
-                check_list = [["HEAD CT", "Head CT", "Abdominal CT"]]
                 for group in coref_groups:
                     members = [member for member in group.get_members()]
                     members = sorted(members, key=lambda x: x.begin)
