@@ -104,10 +104,12 @@ class CoreferenceProcessor(PackProcessor):
                             mention.start_char + entry_specified.begin,
                             mention.end_char + entry_specified.begin,
                         )
-                        assert (mention.text == mention_text, # TODO: remove assertion?
-                        f"The processor extracted mention {mention.text}" 
-                        f" which is different from the original mention {mention_text}."
-                        f"The offeset calculation is wrong.") 
+                        assert (
+                            mention.text == mention_text,  # TODO: remove assertion?
+                            f"The processor extracted mention {mention.text}"
+                            f" which is different from the original mention {mention_text}."
+                            f"The offeset calculation is wrong.",
+                        )
                         mentions.append(mention)
 
                     group = CoreferenceGroup(input_pack)
