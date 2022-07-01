@@ -22,7 +22,7 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
-from ftx.medical.clinical_ontology import MedicalArticle
+from ft.onto.base_ontology import Document, CoreferenceGroup
 from fortex.health.processors.coreference_processor import (
     CoreferenceProcessor,
 )
@@ -39,13 +39,15 @@ class TestCoreferenceProcessor(unittest.TestCase):
                 "entry_type": "ft.onto.base_ontology.Document",
                 "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
                 "lang": "en_core_web_sm",
-                "model": True,
-                "greedyness": 0.5,
-                "max_dist": 50,
-                "max_dist_match": 500,
-                "blacklist": True,
-                "store_scores": True,
-                "conv_dict": None,
+                "model": "use_default_model",
+                "cfg_inference": {
+                    "greedyness": 0.5,
+                    "max_dist": 50,
+                    "max_dist_match": 500,
+                    "blacklist": True,
+                    "store_scores": True,
+                    "conv_dict": None,
+                },
             },
         )
 
@@ -73,13 +75,9 @@ class TestCoreferenceProcessor(unittest.TestCase):
     @unpack
     def test_medical_notes(self, input_data, check_list):
         for pack in self.pl.process_dataset(input_data):
-            for article in pack.get(MedicalArticle):
-                has_coref = article.has_coref
-                assert has_coref is True
-
-                coref_groups = article.coref_groups
+            for document in pack.get(Document):
                 output_list = []
-                for group in coref_groups:
+                for group in pack.get(CoreferenceGroup, document):
                     members = [member for member in group.get_members()]
                     members = sorted(members, key=lambda x: x.begin)
 

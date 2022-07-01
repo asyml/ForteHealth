@@ -200,7 +200,7 @@ class CoreferenceProcessor(PackProcessor):
         :meth:`~forte.pipeline.Pipeline.enforce_consistency` was enabled for
         the pipeline.
         """
-        return {self.configs.entry_type: set("text")}
+        return {self.configs.entry_type: {"text"}}
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
