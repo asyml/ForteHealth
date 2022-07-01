@@ -129,8 +129,9 @@ class CoreferenceProcessor(PackProcessor):
           `"ft.onto.base_ontology.Sentence"`.
           Default: `"ft.onto.base_ontology.Document"`.
         - `mention_type`: The type of members in `CoreferenceGroup`.
+          It can be set to `"ft.onto.base_ontology.EntityMention"` or
+          its subclasses.
           Default: `"ftx.medical.clinical_ontology.MedicalEntityMention"`.
-          It can also be set to `"ft.onto.base_ontology.EntityMention"`.
         - `lang`: The SpaCy pipeline to be used. The pipeline does the
           preprocessing steps for NeuralCoref.
           Default: `"en_core_web_sm"`.
