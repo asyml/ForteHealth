@@ -188,9 +188,6 @@ class CoreferenceProcessor(PackProcessor):
         - `blacklist` (`bool`): Should the system resolve coreferences
            for pronouns in the following list: ["i", "me", "my", "you", "your"].
            Default `True`.
-        - `store_scores` (`bool`): Should the system store the scores
-           for the coreferences in annotations.
-           Default: `True`
         - `conv_dict` (`dict(str, list(str))`): A conversion dictionary
            that you can use
            to replace the embeddings of rare words (keys) by an average
@@ -209,7 +206,6 @@ class CoreferenceProcessor(PackProcessor):
             "max_dist": 50,
             "max_dist_match": 500,
             "blacklist": True,
-            "store_scores": True,
             "conv_dict": None,
         }
 
