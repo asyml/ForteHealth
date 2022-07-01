@@ -56,6 +56,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
             "My sister loves her dog. My aunt also loves him.",
             [["My sister", "her"], ["My aunt", "him"]],
             "ft.onto.base_ontology.Sentence",
+            # Sentence-level coref resolution.
         ),
         (
             "My sister loves her dog. My aunt also loves him.",
@@ -65,7 +66,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
         ),
     )
     @unpack
-    def test_medical_notes(self, input_data, check_list, entry_type):
+    def test_inputs_and_entry_types(self, input_data, check_list, entry_type):
         self.pl = Pipeline[DataPack](enforce_consistency=True)
         self.pl.set_reader(StringReader())
         self.pl.add(SpacyProcessor(), config={"lang": "en_core_web_sm"})
@@ -82,6 +83,64 @@ class TestCoreferenceProcessor(unittest.TestCase):
                     "max_dist_match": 500,
                     "blacklist": True,
                     "conv_dict": None,
+                },
+            },
+        )
+
+        self.pl.initialize()
+
+        def load_module(string):
+            path_str, module_str = string.rsplit(".", 1)
+            mod = importlib.import_module(path_str)
+            return getattr(mod, module_str)
+
+        entry_type = load_module(entry_type)
+
+        for pack in self.pl.process_dataset(input_data):
+            output_list = []
+
+            for entry in pack.get(entry_type):
+                for group in entry.get(CoreferenceGroup):
+                    members = [member for member in group.get_members()]
+                    members = sorted(members, key=lambda x: x.begin)
+
+                    mention_texts = [member.text for member in members]
+                    output_list.append(mention_texts)
+
+            self.assertEqual(output_list, check_list, f"input: {entry.text}")
+
+    @data(
+        (
+            "Deepika has a dog. She loves him. The movie star has always been fond of animals",
+            [["Deepika", "She", "him", "The movie star"]],
+            {},
+        ),
+        (
+            "Deepika has a dog. She loves him. The movie star has always been fond of animals",
+            [["Deepika", "She", "The movie star"], ["a dog", "him"]],
+            {"Deepika": ["woman", "actress"]},
+        ),
+    )
+    @unpack
+    def test_conv_dict(self, input_data, check_list, conv_dict):
+        entry_type = "ft.onto.base_ontology.Document"
+
+        self.pl = Pipeline[DataPack](enforce_consistency=True)
+        self.pl.set_reader(StringReader())
+        self.pl.add(SpacyProcessor(), config={"lang": "en_core_web_sm"})
+        self.pl.add(
+            CoreferenceProcessor(),
+            {
+                "entry_type": entry_type,
+                "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
+                "lang": "en_core_web_sm",
+                "model": "use_default_model",
+                "cfg_inference": {
+                    "greedyness": 0.5,
+                    "max_dist": 50,
+                    "max_dist_match": 500,
+                    "blacklist": True,
+                    "conv_dict": conv_dict,
                 },
             },
         )
