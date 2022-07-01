@@ -124,6 +124,9 @@ class CoreferenceProcessor(PackProcessor):
         - `mention_type`: The type of members in `CoreferenceGroup`.
           Default: `"ftx.medical.clinical_ontology.MedicalEntityMention"`.
           It can also be set to `"ft.onto.base_ontology.EntityMention"`.
+        - `lang`: The SpaCy pipeline to be used. The pipeline does the preprocessing
+          steps for NeuralCoref.
+          Default: `"en_core_web_sm"`.
         - `model`: the neural net model to be used by NeuralCoref. If set to
           `"use_default_model"`, a pre-trained neural net will be downloaded and cached.
           If set to your customized model, the model needs to be a tuple containing a
