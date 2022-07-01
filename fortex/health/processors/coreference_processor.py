@@ -92,9 +92,7 @@ class CoreferenceProcessor(PackProcessor):
         for entry_specified in input_pack.get(entry_type=entry_type):
             result = self.spacy_nlp(entry_specified.text)
 
-            if not result._.has_coref:
-                continue
-            else:
+            if result._.has_coref:
                 for cluster in result._.coref_clusters:
 
                     mentions = []
@@ -107,11 +105,11 @@ class CoreferenceProcessor(PackProcessor):
                         )
 
                         # TODO: remove assertion?
-                        assert (
-                            mention.text == mention_text
-                        ), f"The processor extracted mention {mention.text}"
-                        f" which is different from the original mention"
-                        f" {mention_text}. The offeset calculation is wrong."
+                        assert mention.text == mention_text, (
+                            f"The processor extracted mention {mention.text}"
+                            " which is different from the original mention"
+                            f" {mention_text}. The offeset calculation is wrong."
+                        )
                         mentions.append(mention)
 
                     group = CoreferenceGroup(input_pack)
