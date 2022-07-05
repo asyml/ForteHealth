@@ -81,7 +81,6 @@ class ScispaCyProcessor(PackProcessor):
             doc = self.extractor(entry_specified.text)
 
             if self.configs.pipe_name == "abbreviation_detector":
-                # print("Abbreviation", "\t", "Definition")
                 list_of_abrvs = []
                 for abrv in doc._.abbreviations:
                     print(
@@ -111,11 +110,13 @@ class ScispaCyProcessor(PackProcessor):
     @classmethod
     def default_configs(cls):
         r"""
-        This defines a basic config structure for `ICDCodingProcessor`.
+        This defines a basic config structure for `ScispaCyProcessor`.
 
         Following are the keys for this dictionary:
-         - `entry_type`: input entry type,
-         - `model_name`: the higgingface transformer model name to be
+         - `entry_type`: input entry type for classification
+         - `model_name`: the ScispaCy model name to be
+                         used for classification,
+         - `pipe_name`: the Spacy model pipe name to be
                          used for classification,
 
         Returns: A dictionary with the default config for this processor.
@@ -139,14 +140,13 @@ class ScispaCyProcessor(PackProcessor):
         """
         return {
             "ft.onto.base_ontology.Document": set(),
-            "forte.data.ontology.top.Annotation": set(),
         }
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
-        Method to add output type record of `ICDCodeProcessor` which
-        is `"ftx.medical.clinical_ontology.MedicalArticle"` with attributes:
-         `icd_version` and `icd_code`
+        Method to add output type record of `ScispaCyProcessor` which
+        is `"ftx.medical.clinical_ontology.hyponym"` with attributes:
+         `hyponym_link`
         to :attr:`forte.data.data_pack.Meta.record`.
 
         Args:
@@ -158,8 +158,6 @@ class ScispaCyProcessor(PackProcessor):
         }
         record_meta["ftx.medical.clinical_ontology.hyponym"] = {
             "hyponym_link",
-            "ParentType",
-            "ChildType",
         }
 
         if self.configs.entry_type in record_meta:

@@ -30,7 +30,7 @@ from fortex.health.processors.scispacy_processor import (
 
 class TestScispaCyAbvProcessor(unittest.TestCase):
     def setUp(self):
-        self.nlp = Pipeline[DataPack](enforce_consistency=True)  #  True
+        self.nlp = Pipeline[DataPack](enforce_consistency=True)
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
@@ -53,7 +53,7 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
             SBMA can be caused by this easily."
         ]
         document = "".join(sentences)
-        # print(document)
+        #    print(document)
         pack = self.nlp.process(document)
 
         expected_longform = [
@@ -70,7 +70,7 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
 class TestScispaCyHyponymProcessor(unittest.TestCase):
     def setUp(self):
 
-        self.nlp = Pipeline[DataPack](enforce_consistency=False)  # True
+        self.nlp = Pipeline[DataPack](enforce_consistency=True)
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
@@ -85,6 +85,7 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         self.nlp.initialize()
 
     def test_ScispaCy_Hypomym_processor(self):
+
         sentences = [
             "Keystone plant species such as fig trees are good for the soil."
         ]
