@@ -13,7 +13,7 @@ BioBERTNERPredictor:
   ignore_labels: ["O"]
 
 LastUtteranceSearcher:
-  stave_db_path: "C://Users//Leo//.stave//db.sqlite3"
+  stave_db_path: "//home//name//.stave//db.sqlite3"
   url: "http://localhost:8899"
 
 Remote:
