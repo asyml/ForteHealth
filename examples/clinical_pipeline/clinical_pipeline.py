@@ -71,7 +71,7 @@ def main(
     print("Starting demo pipeline example..")
     config = yaml.safe_load(open("clinical_config.yml", "r"))
     config = Config(config, default_hparams=None)
-    print("Running NER pipeline...")
+    print("Running pipeline...")
     pl = Pipeline[DataPack]()
     if use_mimiciii_reader == 1:
         pl.set_reader(
