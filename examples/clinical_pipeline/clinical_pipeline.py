@@ -5,7 +5,7 @@ import time
 import yaml
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
-from forte.data.readers import RawDataDeserializeReader, RawPackReader
+from forte.data.readers import RawDataDeserializeReader, PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
 from fortex.elastic import ElasticSearchPackIndexProcessor
@@ -78,7 +78,7 @@ def main(
             Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs}
         )
     else:
-        pl.set_reader(RawPackReader())
+        pl.set_reader(PlainTextReader())
 
     pl.add(SpacyProcessor(), {"processors": ["sentence", "tokenize"]})
     pl.add(NLTKPOSTagger())
