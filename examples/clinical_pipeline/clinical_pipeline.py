@@ -82,9 +82,7 @@ def main(
 
     pl.add(SpacyProcessor(), {"processors": ["sentence", "tokenize"]})
     pl.add(NLTKPOSTagger())
-
     pl.add(BioBERTNERPredictor(), config=config.BioBERTNERPredictor)
-    pl.add(SpacyProcessor(), config.Spacy)
     pl.add(NegationContextAnalyzer())
     pl.add(
         ICDCodingProcessor(),
