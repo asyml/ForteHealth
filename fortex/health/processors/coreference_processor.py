@@ -60,12 +60,8 @@ class CoreferenceProcessor(PackProcessor):
                 "haven't called the initialization function."
             )
 
-        if configs.model != "use_default_model":
-            model = configs.model
-        else:
-            model = True
         cfg_inference = configs.cfg_inference
-        neuralcoref.add_to_pipe(self.spacy_nlp, model=model, **cfg_inference)
+        neuralcoref.add_to_pipe(self.spacy_nlp, model=True, **cfg_inference)
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
@@ -131,15 +127,6 @@ class CoreferenceProcessor(PackProcessor):
         - `lang`: The SpaCy pipeline to be used. The pipeline does the
           preprocessing steps for NeuralCoref.
           Default: `"en_core_web_sm"`.
-        - `model`: the neural net model to be used by NeuralCoref. If set
-          to `"use_default_model"`, a pre-trained neural net will be
-          downloaded and cached.
-          If set to your customized model, the model needs to be a tuple
-          containing a `single_model` and a `pairs_model`.
-          See `NeuralCoref.Model` method in
-          https://github.com/huggingface/neuralcoref/blob/master/neuralcoref/neuralcoref.pyx
-          for reference of how to define such a model.
-          Default: `"use_default_model"`.
         - `cfg_inference`: A dict containing the inference configs of
           NeuralCoref. See `get_default_cfg_inference` for default values, and see
           https://github.com/huggingface/neuralcoref/blob/master/README.md#parameters
@@ -151,7 +138,6 @@ class CoreferenceProcessor(PackProcessor):
             "entry_type": "ft.onto.base_ontology.Document",
             "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
             "lang": "en_core_web_sm",
-            "model": "use_default_model",
             "cfg_inference": cls.get_default_cfg_inference(),
         }
 
