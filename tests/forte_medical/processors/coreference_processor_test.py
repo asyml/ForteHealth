@@ -15,7 +15,6 @@
 Unit tests for CoreferenceProcessor
 """
 
-import importlib
 import unittest
 from ddt import data, ddt, unpack
 
@@ -77,7 +76,6 @@ class TestCoreferenceProcessor(unittest.TestCase):
                 "entry_type": entry_type,
                 "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
                 "lang": "en_core_web_sm",
-                "model": "use_default_model",
                 "cfg_inference": {
                     "greedyness": 0.5,
                     "max_dist": 50,
@@ -130,7 +128,6 @@ class TestCoreferenceProcessor(unittest.TestCase):
                 "entry_type": entry_type,
                 "mention_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
                 "lang": "en_core_web_sm",
-                "model": "use_default_model",
                 "cfg_inference": {
                     "greedyness": 0.5,
                     "max_dist": 50,

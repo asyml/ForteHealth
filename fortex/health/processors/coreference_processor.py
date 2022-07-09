@@ -15,7 +15,6 @@
 Coreference Processor
 """
 from typing import Dict, Set
-import importlib
 
 import neuralcoref
 
