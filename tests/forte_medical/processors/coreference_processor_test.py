@@ -22,6 +22,7 @@ from ddt import data, ddt, unpack
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
+from forte.utils import get_class
 
 from ft.onto.base_ontology import CoreferenceGroup
 from fortex.health.processors.coreference_processor import (
@@ -89,12 +90,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
 
         self.pl.initialize()
 
-        def load_module(string):
-            path_str, module_str = string.rsplit(".", 1)
-            mod = importlib.import_module(path_str)
-            return getattr(mod, module_str)
-
-        entry_type = load_module(entry_type)
+        entry_type = get_class(entry_type)
 
         for pack in self.pl.process_dataset(input_data):
             output_list = []
@@ -147,12 +143,7 @@ class TestCoreferenceProcessor(unittest.TestCase):
 
         self.pl.initialize()
 
-        def load_module(string):
-            path_str, module_str = string.rsplit(".", 1)
-            mod = importlib.import_module(path_str)
-            return getattr(mod, module_str)
-
-        entry_type = load_module(entry_type)
+        entry_type = get_class(entry_type)
 
         for pack in self.pl.process_dataset(input_data):
             output_list = []

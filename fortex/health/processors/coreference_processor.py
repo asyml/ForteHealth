@@ -23,6 +23,7 @@ from forte.common import Resources, ProcessExecutionException
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
+from forte.utils import get_class
 
 from ft.onto.base_ontology import CoreferenceGroup
 
@@ -78,16 +79,11 @@ class CoreferenceProcessor(PackProcessor):
         Then we translate the output to `CoreferenceGroup`.
         """
 
-        def load_module(string):
-            path_str, module_str = string.rsplit(".", 1)
-            mod = importlib.import_module(path_str)
-            return getattr(mod, module_str)
-
         # Default: Document
-        entry_type = load_module(self.configs.entry_type)
+        entry_type = get_class(self.configs.entry_type)
 
         # Default: MedicalEntityMention
-        mention_type = load_module(self.configs.mention_type)
+        mention_type = get_class(self.configs.mention_type)
 
         for entry_specified in input_pack.get(entry_type=entry_type):
             result = self.spacy_nlp(entry_specified.text)
