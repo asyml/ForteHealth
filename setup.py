@@ -1,12 +1,33 @@
 import sys
 from pathlib import Path
 import setuptools
+import subprocess
+import os
 
 
 long_description = (Path(__file__).parent / "README.md").read_text()
 
 if sys.version_info < (3, 6):
     sys.exit("Python>=3.6 is required by forte-medical.")
+
+# If we install neuralcoref and spacy at the same
+# time, neuralcoref will throw "Cython failed" during building,
+# which is because neuralcoref does not set cython as dependency
+# properly.
+# Therefore, we must install neuralcoref after cython and spacy
+# are installed.
+p = subprocess.call(
+    [
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "cython>=0.25",
+    ],
+    env=os.environ,
+)
+if p != 0:
+    raise RuntimeError("Installing NeuralCoref dependencies failed.")
 
 setuptools.setup(
     name="forte.health",
@@ -20,61 +41,14 @@ setuptools.setup(
         include=["fortex.health", "ftx.*"], exclude=["scripts*", "examples*", "tests*"]
     ),
     namespace_packages=["fortex"],
-    setup_requires=[
-        "forte.spacy", # TODO: version
-        "cython>=0.25",
-        "pytest",
-    ],
     install_requires=[
-        "enum34==1.1.10;python_version<'3.4'",
-        # "sortedcontainers>=2.1.0",`
-        # "numpy>=1.16.6",
-        # "jsonpickle>=1.4",
-        # "pyyaml>=5.4",
-        # "smart-open>=1.8.4",
-        # "typed_astunparse>=2.1.4",
-        # "funcsigs>=1.0.2",
-        # "typed_ast>=1.5.0",
-        # "jsonschema>=3.0.2",
-        # 'typing>=3.7.4;python_version<"3.5"',
-        # "typing-inspect>=0.6.0",
-        # 'dataclasses~=0.7;python_version<"3.7"',
-        # 'importlib-resources>=5.1.4;python`_version<"3.7"',
-        "asyml-utilities",
-
-
         "forte~=0.2.0",
-        # "sortedcontainers==2.1.0",
-        # "numpy>=1.16.6",
-        # "jsonpickle==1.4",
-        # "pyyaml==5.4",
-        # "smart-open>=1.8.4",
-        # "typed_astunparse==2.1.4",
-        # "funcsigs==1.0.2",
         "mypy_extensions==0.4.3",
-        # "typed_ast>=1.4.3",
-        # "jsonschema==3.0.2",
         "texar-pytorch",
-        # 'typing>=3.7.4;python_version<"3.5"',
-        # "typing-inspect>=0.6.0",
-        # 'dataclasses~=0.7;python_version<"3.7"',
-        # 'importlib-resources==5.1.4;python_version<"3.7"',S
-        # 'dataclasses~=0.7;python_version<"3.7"',
         "fastapi==0.65.2",
         "uvicorn==0.14.0",
-        # # "spacy>=2.3.0, <=2.3.5", # will be installed by forte.spacy
-        "forte.spacy", # TODO: version
+        "forte.spacy",  # TODO: version
         "cython>=0.25",
-        "pytest",
-
-        "ddt",
-            "testfixtures",
-            "transformers==4.2.2",
-            "protobuf==3.19.4",
-            # It is annoying that if we install neuralcoref and spacy at the same
-            # time, neuralcoref will throw "Cython failed" during building.
-            # Therefore, we must install neuralcoref after spacy is installed.
-        "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
     ],
     extras_require={
         "test": [
@@ -82,10 +56,8 @@ setuptools.setup(
             "testfixtures",
             "transformers==4.2.2",
             "protobuf==3.19.4",
-            # It is annoying that if we install neuralcoref and spacy at the same
-            # time, neuralcoref will throw "Cython failed" during building.
-            # Therefore, we must install neuralcoref after spacy is installed.
-            # "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
+            "pytest",
+            "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
         ],
     },
     entry_points={
