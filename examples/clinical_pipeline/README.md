@@ -98,7 +98,7 @@ python clinical_processing_pipeline.py sample_data/ path_to_sample_output/ -1 0
 
 If we just need to check the remote pipeline connection to Stave. 
 
-You can mask out Line 74 to Line 116 in `clinical_processing_pipeline.py`.
+You can mask out Line 76 to Line 118 in `clinical_processing_pipeline.py`.
 
 Hence, if you just wish to run the demo pipeline with existing database entries, and wish to just connect with Stave for visualization, You can mask out Line 74 to Line 118 in `clinical_processing_pipeline.py` and run this command:
 
