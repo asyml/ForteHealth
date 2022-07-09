@@ -85,14 +85,20 @@ Here, you need to make sure `LastUtteranceSearcher.url` and `Stave.url` in `clin
 
 Now, open a new terminal, other than the one running stave server. You can run the following command to parse some files and index them.
 ```bash
-python clinical_pipeline.py /path_to_mimiciii/1.4/NOTEEVENTS.csv.gz /path_to_sample_output 100 1
+python clinical_processing_pipeline.py path_to_mimiciii/1.4/NOTEEVENTS.csv.gz path_to_mimiciii_output 100 1
 ```
 
 The last argument, `use_mimiciii_reader` is whether to use the `Mimic3DischargeNoteReader()`. If you set the argument to `1`, you will need to make sure the input data is mimic iii dataset, else `0` for `PlainTextReader()`.
 
+If you do not have the mimic iii datasets and just want to test the function, you can run the following command to test the function with the given sample data:
+
+```bash
+python clinical_processing_pipeline.py sample_data/ path_to_sample_output/ -1 0
+```
+
 If we just need to check the remote pipeline connection to Stave. 
 
-You can mask out Line 74 to Line 118 in `clinical_processing_pipeline.py`.
+You can mask out Line 74 to Line 116 in `clinical_processing_pipeline.py`.
 
 Hence, if you just wish to run the demo pipeline with existing database entries, and wish to just connect with Stave for visualization, You can mask out Line 74 to Line 118 in `clinical_processing_pipeline.py` and run this command:
 
