@@ -60,6 +60,12 @@ setuptools.setup(
             "pytest",
             "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
         ],
+        "icd_coding": [
+            "transformers",
+        ],
+        "coreference": [
+            "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
+        ],
     },
     entry_points={
         "console_scripts": [
