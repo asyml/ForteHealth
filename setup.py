@@ -12,7 +12,7 @@ if sys.version_info < (3, 6):
 
 # If we install neuralcoref and spacy at the same
 # time, neuralcoref will throw "Cython failed" during building,
-# which is because neuralcoref does not set cython as dependency
+# which is because neuralcoref does not set them as dependencies
 # properly.
 # Therefore, we must install neuralcoref after cython and spacy
 # are installed.
@@ -22,6 +22,7 @@ p = subprocess.call(
         "-m",
         "pip",
         "install",
+        "forte.spacy",  # TODO: version
         "cython>=0.25",
     ],
     env=os.environ,
