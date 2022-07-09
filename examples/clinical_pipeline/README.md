@@ -1,7 +1,6 @@
 ## A Clinical Information Processing Example
 
-This example shows how we  can construct a project to make ForteHealth and Stave work
- side by side.
+This example shows how we can construct a project to make ForteHealth and Stave work side by side.
 
 ## Install extra dependencies
 
@@ -11,6 +10,8 @@ To install the latest code directly from source,
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.elastic\&subdirectory=src/elastic
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.spacy\&subdirectory=src/spacy
 pip install git+https://git@github.com/asyml/forte-wrappers#egg=forte.spacy\&subdirectory=src/nltk
+pip install git+https://github.com/asyml/ForteHealth.git
+pip install git+https://github.com/astml/stave.git
 ```
 
 To install from PyPI,
@@ -18,6 +19,8 @@ To install from PyPI,
 pip install forte.elastic
 pip install forte.spacy
 pip install forte.nltk
+pip install forte.health
+pip install stave
 ```
 
 ## Downloading the models
@@ -89,9 +92,9 @@ The last argument, `use_mimiciii_reader` is whether to use the `Mimic3DischargeN
 
 If we just need to check the remote pipeline connection to Stave. 
 
-You can mask out Line 74 to Line 118 in `clinical_pipeline.py`.
+You can mask out Line 74 to Line 118 in `clinical_processing_pipeline.py`.
 
-Hence, if you just wish to run the demo pipeline with existing database entries, and wish to just connect with Stave for visualization, You can mask out Line 74 to Line 118 in `clinical_pipeline.py` and run this command:
+Hence, if you just wish to run the demo pipeline with existing database entries, and wish to just connect with Stave for visualization, You can mask out Line 74 to Line 118 in `clinical_processing_pipeline.py` and run this command:
 
 ```bash
 python clinical_processing_pipeline.py ./ ./ 100 0
