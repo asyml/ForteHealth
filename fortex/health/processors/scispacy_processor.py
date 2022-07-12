@@ -139,7 +139,7 @@ class ScispaCyProcessor(PackProcessor):
         the pipeline.
         """
         return {
-            "ft.onto.base_ontology.Document": set(),
+            self.configs.entry_type: set(),
         }
 
     def record(self, record_meta: Dict[str, Set[str]]):
@@ -156,8 +156,10 @@ class ScispaCyProcessor(PackProcessor):
         record_meta["ftx.medical.clinical_ontology.Abbreviation"] = {
             "long_form",
         }
-        record_meta["ftx.medical.clinical_ontology.hyponym"] = {
+        record_meta["ftx.medical.clinical_ontology.Hyponym"] = {
             "hyponym_link",
+            "parent",
+            "child",
         }
 
         if self.configs.entry_type in record_meta:
