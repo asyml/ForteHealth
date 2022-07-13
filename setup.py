@@ -52,9 +52,9 @@ setuptools.setup(
     },
     entry_points={
         'console_scripts': [
-            "forte-medical-train=forte_medical_cli.train:main",
-            "forte-medical-process=forte_medical_cli.process:main",
-            "forte-medical-evaluate=forte_medical_cli.evaluate:main",
+            "forte-medical-train=ForteHealth_cli.train:main",
+            "forte-medical-process=ForteHealth_cli.process:main",
+            "forte-medical-evaluate=ForteHealth_cli.evaluate:main",
         ]
     },
     include_package_data=True,
