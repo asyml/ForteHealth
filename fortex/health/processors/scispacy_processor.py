@@ -19,6 +19,7 @@ import importlib
 
 import spacy
 from forte.common import Resources
+from forte.utils import get_class
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
@@ -28,9 +29,6 @@ from scispacy.abbreviation import AbbreviationDetector
 from scispacy.hyponym_detector import HyponymDetector
 
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
-
-nlp = spacy.load("en_core_sci_sm")
-nlp.add_pipe("hyponym_detector", last=True, config={"extended": False})
 
 __all__ = [
     "ScispaCyProcessor",
@@ -73,9 +71,9 @@ class ScispaCyProcessor(PackProcessor):
         """
 
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
-
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
+        # entry = get_class(class_name=module_str, module_paths=path_str)
         for entry_specified in input_pack.get(entry_type=entry):
 
             doc = self.extractor(entry_specified.text)
@@ -83,14 +81,11 @@ class ScispaCyProcessor(PackProcessor):
             if self.configs.pipe_name == "abbreviation_detector":
                 list_of_abrvs = []
                 for abrv in doc._.abbreviations:
-                    print(
-                        f"{abrv} \t ({abrv.start}, {abrv.end}) {abrv._.long_form}"
-                    )
-                    tmpAbrv = Abbreviation(
+                    tmp_abrv = Abbreviation(
                         pack=input_pack, begin=abrv.start, end=abrv.end
                     )
-                    tmpAbrv.long_form = abrv._.long_form
-                    list_of_abrvs.append(tmpAbrv)
+                    tmp_abrv.long_form = abrv._.long_form
+                    list_of_abrvs.append(tmp_abrv)
 
             else:
                 for item in doc._.hearst_patterns:
@@ -115,19 +110,18 @@ class ScispaCyProcessor(PackProcessor):
         Following are the keys for this dictionary:
          - `entry_type`: input entry type for classification
          - `model_name`: the ScispaCy model name to be
-                         used for classification,
-         - `pipe_name`: the Spacy model pipe name to be
-                         used for classification,
+                         used for classification, default to
+                         en_core_sci_sm
+         - `pipe_name`: the Spacy model pipe name for
+                         classification, only 2 options here:
+                         abbreviation_detector or hyponym_detector
 
         Returns: A dictionary with the default config for this processor.
         """
         return {
             "entry_type": "ft.onto.base_ontology.Document",
-            "attribute_name": "classification",
-            "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
-            "cuda_devices": -1,
         }
 
     def expected_types_and_attributes(self):

@@ -34,11 +34,8 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
-            "attribute_name": "classification",
-            "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
-            "cuda_devices": -1,
         }
         # nlp.add_pipe("hyponym_detector", last=True, config={"extended": False})
 
@@ -53,7 +50,6 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
             SBMA can be caused by this easily."
         ]
         document = "".join(sentences)
-        #    print(document)
         pack = self.nlp.process(document)
 
         expected_longform = [
@@ -63,7 +59,6 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
         ]
 
         for idx, abv_item in enumerate(pack.get(Abbreviation)):
-            # print(abv_item.long_form.text)
             self.assertEqual(abv_item.long_form.text, expected_longform[idx])
 
 
@@ -74,11 +69,8 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
-            "attribute_name": "classification",
-            "multi_class": True,
             "model_name": "en_core_sci_sm",
             "pipe_name": "hyponym_detector",
-            "cuda_devices": -1,
         }
 
         self.nlp.add(ScispaCyProcessor(), config=config)  # , config=config
