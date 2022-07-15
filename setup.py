@@ -23,13 +23,7 @@ setuptools.setup(
     namespace_packages=["fortex"],
     install_requires=[
         'forte~=0.2.0',
-        "sortedcontainers==2.1.0",
-        "mypy_extensions==0.4.3",
-        "typed_ast>=1.4.3",
         "texar-pytorch",
-        'dataclasses~=0.7;python_version<"3.7"',
-        "fastapi==0.65.2",
-        "uvicorn==0.14.0",
     ],
     extras_require={
         "test": [
@@ -38,13 +32,6 @@ setuptools.setup(
             "transformers==4.2.2",
             "protobuf==3.19.4",
         ],
-    },
-    entry_points={
-        'console_scripts': [
-            "forte-medical-train=ForteHealth_cli.train:main",
-            "forte-medical-process=ForteHealth_cli.process:main",
-            "forte-medical-evaluate=ForteHealth_cli.evaluate:main",
-        ]
     },
     include_package_data=True,
     python_requires='>=3.6'
