@@ -43,6 +43,7 @@ setuptools.setup(
     ),
     namespace_packages=["fortex"],
     install_requires=[
+        "forte~=0.2.0",
         "forte.spacy",  # TODO: version
         "cython>=0.25",
     ],
