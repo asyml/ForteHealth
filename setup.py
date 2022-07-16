@@ -43,11 +43,6 @@ setuptools.setup(
     ),
     namespace_packages=["fortex"],
     install_requires=[
-        "forte~=0.2.0",
-        "mypy_extensions==0.4.3",
-        "texar-pytorch",
-        "fastapi==0.65.2",
-        "uvicorn==0.14.0",
         "forte.spacy",  # TODO: version
         "cython>=0.25",
     ],
@@ -66,13 +61,6 @@ setuptools.setup(
         "coreference": [
             "neuralcoref @ git+https://git@github.com/huggingface/neuralcoref.git@4.0.0#egg=neuralcoref",
         ],
-    },
-    entry_points={
-        "console_scripts": [
-            "forte-medical-train=forte_medical_cli.train:main",
-            "forte-medical-process=forte_medical_cli.process:main",
-            "forte-medical-evaluate=forte_medical_cli.evaluate:main",
-        ]
     },
     include_package_data=True,
     python_requires=">=3.6",
