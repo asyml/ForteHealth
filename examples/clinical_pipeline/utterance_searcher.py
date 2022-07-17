@@ -83,7 +83,6 @@ class LastUtteranceSearcher(PackProcessor):
 
                 db_id = sqlite_insert(conn, "stave_backend_document", item)
                 answers += [db_id]
-                print(pack_id, db_id)
 
             if len(answers) == 0:
                 create_utterance(
@@ -97,7 +96,6 @@ class LastUtteranceSearcher(PackProcessor):
                     "I found the following results: <br> -- "
                     + "<br> -- ".join(links)
                 )
-                print(response_text)
 
                 create_utterance(input_pack, response_text, "ai")
         else:
