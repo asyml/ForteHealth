@@ -1,0 +1,13 @@
+BioBERTNERPredictor:
+  model_path: "resources/NCBI-disease"
+  ner_type: "DISEASE"
+  ignore_labels: ["O"]
+
+BERTTokenizer:
+  model_path: "resources/NCBI-disease"
+
+Stave:
+  stave_db_path: "C://Users//Leo//.stave//db.sqlite3"
+  url: "http://localhost:8899"
+  username: admin
+  pw: admin
