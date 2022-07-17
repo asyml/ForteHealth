@@ -1,7 +1,7 @@
-import streamlit as st
 import sqlite3
-from forte.common.configuration import Config
 from typing import List
+import streamlit as st
+from forte.common.configuration import Config
 import yaml
 from elasticsearch import Elasticsearch
 from search_utils import all_search, index_search
