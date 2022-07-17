@@ -79,7 +79,6 @@ if search:
         answers += [db_id]
 
         docs.append(highlight)
-        print(highlight)
 
     links: List[str] = create_links(config.Stave.url, answers)
 
