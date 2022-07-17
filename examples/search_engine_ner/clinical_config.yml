@@ -1,0 +1,7 @@
+BioBERTNERPredictor:
+  model_path: "resources/NCBI-disease"
+  ner_type: "DISEASE"
+  ignore_labels: ["O"]
+
+BERTTokenizer:
+  model_path: "resources/NCBI-disease"
