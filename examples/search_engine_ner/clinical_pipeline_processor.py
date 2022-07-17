@@ -1,5 +1,9 @@
-import time
+"""
+build clinical pipeline processors
+"""
 
+import time
+import sys
 
 import yaml
 from forte.common.configuration import Config
@@ -9,14 +13,14 @@ from forte.processors.writers import PackIdJsonPackWriter
 from fortex.elastic import ElasticSearchPackIndexProcessor
 from fortex.huggingface import BioBERTNERPredictor
 from fortex.huggingface.transformers_processor import BERTTokenizer
-
-from mimic3_note_reader import Mimic3DischargeNoteReader
 from fortex.nltk import NLTKSentenceSegmenter
+from mimic3_note_reader import Mimic3DischargeNoteReader
 
 
 def main(
     input_path: str, output_path: str, max_packs: int = -1
     ):
+    """main function"""
 
     config = yaml.safe_load(open("clinical_config.yml", "r"))
     config = Config(config, default_hparams=None)
@@ -54,3 +58,6 @@ def main(
     for idx, pack in enumerate(pl.process_dataset(input_path)):
         if (idx + 1) % 50 == 0:
             print(f"{time.strftime('%m-%d %H:%M')}: Processed {idx + 1} packs")
+
+
+main(sys.argv[1], sys.argv[2], int(sys.argv[3]))
