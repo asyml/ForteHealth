@@ -75,8 +75,6 @@ class Mimic3DischargeNoteReader(PackReader):
 
     @classmethod
     def default_configs(cls):
-        config = super().default_configs()
         # If this is set (>0), the reader will only read up to
         # the number specified.
-        config["max_num_notes"] = -1
-        return config
+        return {'max_num_notes':-1}
