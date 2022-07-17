@@ -14,7 +14,7 @@ st.set_page_config(page_title="ForteHealth_Search_Engine", layout="wide")
 es = Elasticsearch(hosts=["http://localhost:9200/"])
 INDEX = "elastic_indexer"
 
-config = yaml.safe_load(open("clinical_config.yml", "r"))
+config = yaml.safe_load(open("stave_config.yml", "r"))
 config = Config(config, default_hparams=None)
 
 default_project_json = get_json("default_onto_project.json")
