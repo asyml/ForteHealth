@@ -15,14 +15,14 @@
 import csv
 import logging
 from pathlib import Path
-from typing import Any, Iterator, Union, List
+from typing import Any, Iterator, List, Union
 
+from forte.data.base_reader import PackReader
+from forte.data.data_pack import DataPack
+from ft.onto.base_ontology import Document
 from smart_open import open
 
-from demo.clinical import Description, Body
-from forte.data.data_pack import DataPack
-from forte.data.base_reader import PackReader
-from ft.onto.base_ontology import Document
+from demo.clinical import Body, Description
 
 
 class Mimic3DischargeNoteReader(PackReader):

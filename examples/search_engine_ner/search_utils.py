@@ -1,3 +1,8 @@
+'''
+This file defines the search functions for elasticsearch
+'''
+
+
 def all_search(es, index: str) -> dict:
     """
     Args:
@@ -50,7 +55,3 @@ def index_search(es, index: str, keywords: str) -> dict:
     res = es.search(index=index, body=body)
 
     return res
-
-
-def do():
-    return "no"

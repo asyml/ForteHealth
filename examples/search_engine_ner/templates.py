@@ -1,3 +1,8 @@
+'''
+This file defines HTML templates
+'''
+
+
 def number_of_results(total_hits: int, duration: float) -> str:
     """HTML scripts to display number of results and duration."""
     return f"""
