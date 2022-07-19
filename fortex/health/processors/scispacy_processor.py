@@ -52,7 +52,7 @@ class ScispaCyProcessor(PackProcessor):
         if self.configs.require_gpu:
             spacy.require_gpu(self.configs.gpu_id)
         if self.configs.prefer_gpu:
-            spacy.prefer_gpu(self.configs.gpu_id) 
+            spacy.prefer_gpu(self.configs.gpu_id)
         self.extractor = spacy.load(self.configs.model_name)
         if self.configs.pipe_name == "abbreviation_detector":
             self.extractor.add_pipe(self.configs.pipe_name)
