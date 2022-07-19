@@ -49,6 +49,10 @@ class ScispaCyProcessor(PackProcessor):
         self.extractor = None
 
     def set_up(self):
+        if self.configs.require_gpu:
+            spacy.require_gpu(self.configs.gpu_id)  # type: ignore
+        if self.configs.prefer_gpu:
+            spacy.prefer_gpu(self.configs.gpu_id)  # type: ignore
         self.extractor = spacy.load(self.configs.model_name)
         if self.configs.pipe_name == "abbreviation_detector":
             self.extractor.add_pipe(self.configs.pipe_name)
@@ -107,13 +111,17 @@ class ScispaCyProcessor(PackProcessor):
         This defines a basic config structure for `ScispaCyProcessor`.
 
         Following are the keys for this dictionary:
-         - `entry_type`: input entry type for classification
-         - `model_name`: the ScispaCy model name to be
-                         used for classification, default to
-                         en_core_sci_sm
+         - `entry_type`: should be ft.onto.base_ontology.Document
+         - `model_name`: the scispaCy model name to be
+                         used for classification, please refer to :
+                         https://pythonlang.dev/repo/allenai-scispacy/
+                         "Available models" sections for detail
          - `pipe_name`: the Spacy model pipe name for
                          classification, only 2 options here:
                          abbreviation_detector or hyponym_detector
+         - `prefer_gpu`: the flag if prefer using gpu
+         - `require_gpu`: the flag if require using gpu
+         - `gpu_id`: the id of gpu
 
         Returns: A dictionary with the default config for this processor.
         """
@@ -121,6 +129,9 @@ class ScispaCyProcessor(PackProcessor):
             "entry_type": "ft.onto.base_ontology.Document",
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
+            "prefer_gpu": True,
+            "require_gpu": False,
+            "gpu_id": 0,
         }
 
     def expected_types_and_attributes(self):
