@@ -21,7 +21,9 @@ from ddt import data, ddt
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
-from fortex.health.processors.ner_label_processor import NERLabelProcessor
+from fortex.health.processors.ner_label_processor import (
+    NERLabelProcessor
+)
 from ftx.medical.clinical_ontology import Chemical, Disease
 
 
