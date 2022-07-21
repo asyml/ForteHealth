@@ -1,12 +1,13 @@
 """
-this file defines sqlite3 related utils for inserting data to the database of stave.
+this file defines sqlite3 related utils for inserting data to
+the database of stave.
 """
 import json
-import yaml
 from typing import List
+import sqlite3
+import yaml
 from stave_backend.lib.stave_session import StaveSession
 from forte.common import Config
-import sqlite3
 
 
 def sqlite_insert(conn, table, row):
@@ -18,7 +19,7 @@ def sqlite_insert(conn, table, row):
     """
     cols: str = ", ".join('"{}"'.format(col) for col in row.keys())
     vals: str = ", ".join(":{}".format(col) for col in row.keys())
-    sql: str = 'INSERT INTO "{0}" ({1}) VALUES ({2})'.format(table, cols, vals)
+    sql: str = f'INSERT INTO "{table}" ({cols}) VALUES ({vals})'
     cursor = conn.cursor()
     cursor.execute(sql, row)
     conn.commit()
@@ -65,9 +66,7 @@ def update_stave_db(default_project_json, config):
         projects = session.get_project_list().json()
         project_names = [project["name"] for project in projects]
 
-        if (
-            default_project_json["name"] in project_names
-            ):
+        if default_project_json["name"] in project_names:
 
             base_project = [
                 proj
@@ -84,16 +83,28 @@ def update_stave_db(default_project_json, config):
         con = sqlite3.connect(config.Stave.stave_db_path)
 
         cursorObj = con.cursor()
-        cursorObj.execute('SELECT ontology, config FROM stave_backend_project WHERE id = {0}'.format(project_id_base))
+        cursorObj.execute(
+            f"SELECT ontology, config FROM stave_backend_project WHERE id = {project_id_base}"
+        )
         results = cursorObj.fetchall()
         onto = results[0][0]
         conf = results[0][1]
 
-        onto_new = onto.replace("\'","\"")
-        conf_new = conf.replace("\'", "\"").replace("True", "true").replace("False", "false")
+        onto_new = onto.replace("'", '"')
+        conf_new = (
+            conf.replace("'", '"').replace("True", "true").replace("False", "false")
+        )
 
-        cursorObj.execute("UPDATE stave_backend_project SET ontology ='" + onto_new + "' WHERE id = {0}".format(project_id_base))
-        cursorObj.execute("UPDATE stave_backend_project SET config ='" + conf_new + "' WHERE id = {0}".format(project_id_base))
+        cursorObj.execute(
+            "UPDATE stave_backend_project SET ontology ='"
+            + onto_new
+            + f"' WHERE id = {project_id_base}"
+        )
+        cursorObj.execute(
+            "UPDATE stave_backend_project SET config ='"
+            + conf_new
+            + f"' WHERE id = {project_id_base}"
+        )
 
         con.commit()
 

@@ -19,9 +19,7 @@ config = Config(config, default_hparams=None)
 
 default_project_json = get_json("default_onto_project.json")
 
-base_project_id = update_stave_db(
-        default_project_json, config
-    )
+base_project_id = update_stave_db(default_project_json, config)
 
 st.title("Search the MIMIC III Data...")
 search = st.text_input("Enter search words:")
@@ -41,10 +39,10 @@ if not search:
 
         # Now you can write the pack into the database and generate url.
         item = {
-                    "name": f"clinical_results_{idx}",
-                    "textPack": raw_pack_str,
-                    "project_id": base_project_id,
-                }
+            "name": f"clinical_results_{idx}",
+            "textPack": raw_pack_str,
+            "project_id": base_project_id,
+        }
 
         db_id = sqlite_insert(conn, "stave_backend_document", item)
         answers += [db_id]
@@ -70,10 +68,10 @@ if search:
         highlight = "...".join(hit["highlight"]["content"])
         # Now you can write the pack into the database and generate url.
         item = {
-                    "name": f"clinical_results_{idx}",
-                    "textPack": raw_pack_str,
-                    "project_id": base_project_id,
-                }
+            "name": f"clinical_results_{idx}",
+            "textPack": raw_pack_str,
+            "project_id": base_project_id,
+        }
 
         db_id = sqlite_insert(conn, "stave_backend_document", item)
         answers += [db_id]
@@ -82,12 +80,9 @@ if search:
 
     links: List[str] = create_links(config.Stave.url, answers)
 
-    for i in range(len(links)):
+    for i, _ in enumerate(links):
         st.write(links[i], unsafe_allow_html=True)
         st.write(
-        templates.search_result(
-            docs[i]
-            .replace("\n", " ")
-        ),
-        unsafe_allow_html=True,
-    )
+            templates.search_result(docs[i].replace("\n", " ")),
+            unsafe_allow_html=True,
+        )
