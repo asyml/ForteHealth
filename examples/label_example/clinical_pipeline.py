@@ -5,16 +5,24 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import PlainTextReader
 from forte.pipeline import Pipeline
 from forte.processors.writers import PackIdJsonPackWriter
-from mimic3_note_reader import Mimic3DischargeNoteReader
+from fortex.health.readers import Mimic3DischargeNoteReader
 from fortex.elastic import ElasticSearchPackIndexProcessor
 from fortex.health.processors.ner_label_processor import NERLabelProcessor
 
 
-def main(input_path: str, output_path: str, max_packs: int = -1, use_mimiciii_reader=1):
+def main(
+    input_path: str,
+    output_path: str,
+    max_packs: int = -1,
+    use_mimiciii_reader=1
+    ):
 
     pl = Pipeline[DataPack]()
     if use_mimiciii_reader == 1:
-        pl.set_reader(Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs})
+        pl.set_reader(
+            Mimic3DischargeNoteReader(),
+            config={"max_num_notes": max_packs}
+        )
     else:
         pl.set_reader(PlainTextReader())
 
