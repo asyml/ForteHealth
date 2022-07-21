@@ -47,11 +47,9 @@ class NERLabelProcessor(PackProcessor):
         super().__init__()
         self.nlp = None
 
-    def set_up(self):
-        download("en_ner_bc5cdr_md")
-
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
+        download("en_ner_bc5cdr_md")
         self.nlp = spacy.load("en_ner_bc5cdr_md")
 
     def _process(self, input_pack: DataPack):
