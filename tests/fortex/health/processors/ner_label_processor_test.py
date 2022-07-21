@@ -51,7 +51,3 @@ class TestNERLabelProcessor(unittest.TestCase):
             chemical.append(c.text)
 
         assert exp_chemical == chemical
-
-
-if __name__ == "__main__":
-    unittest.main()
