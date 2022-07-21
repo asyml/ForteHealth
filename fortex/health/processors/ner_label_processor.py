@@ -14,11 +14,13 @@
 """
 NER Labeling Processor
 """
+import importlib
 from typing import Dict, Set
 import subprocess
 import sys
 import os
 import spacy
+from spacy.cli.download import download
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 from forte.common.configuration import Config
@@ -49,12 +51,7 @@ class NERLabelProcessor(PackProcessor):
         self.nlp = None
 
     def set_up(self):
-        download_url = """https://s3-us-west-2.amazonaws.com/
-        ai2-s2-scispacy/releases/v0.5.0/en_ner_bc5cdr_md-0.5.0.tar.gz"""
-        command = [sys.executable, "-m", "pip", "install"] + [download_url]
-        subprocess.run(
-            command, env=os.environ.copy(), encoding="utf8", check=False
-        )
+        download("en_ner_bc5cdr_md")
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
