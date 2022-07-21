@@ -2,8 +2,10 @@
 this file defines sqlite3 related utils for inserting data to the database of stave.
 """
 import json
+import yaml
 from typing import List
 from stave_backend.lib.stave_session import StaveSession
+from forte.common import Config
 import sqlite3
 
 
@@ -76,4 +78,23 @@ def update_stave_db(default_project_json, config):
 
         resp1 = session.create_project(default_project_json)
         project_id_base = json.loads(resp1.text)["id"]
+
+        config = yaml.safe_load(open("stave_config.yml", "r"))
+        config = Config(config, default_hparams=None)
+        con = sqlite3.connect(config.Stave.stave_db_path)
+
+        cursorObj = con.cursor()
+        cursorObj.execute('SELECT ontology, config FROM stave_backend_project WHERE id = {0}'.format(project_id_base))
+        results = cursorObj.fetchall()
+        onto = results[0][0]
+        conf = results[0][1]
+
+        onto_new = onto.replace("\'","\"")
+        conf_new = conf.replace("\'", "\"").replace("True", "true").replace("False", "false")
+
+        cursorObj.execute("UPDATE stave_backend_project SET ontology ='" + onto_new + "' WHERE id = {0}".format(project_id_base))
+        cursorObj.execute("UPDATE stave_backend_project SET config ='" + conf_new + "' WHERE id = {0}".format(project_id_base))
+
+        con.commit()
+
     return project_id_base
