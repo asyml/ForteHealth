@@ -32,6 +32,49 @@ __all__ = [
     "NERLabelProcessor",
 ]
 
+CUSTOM_SPACYMODEL_URL = {
+    "en_core_sci_sm": "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy"
+    "/releases/v0.3.0/en_core_sci_sm-0.3.0.tar.gz",
+    "en_core_sci_md": "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy"
+    "/releases/v0.3.0/en_core_sci_md-0.3.0.tar.gz",
+    "en_core_sci_lg": "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy"
+    "/releases/v0.3.0/en_core_sci_lg-0.3.0.tar.gz",
+    "en_ner_craft_md": "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy"
+    "/releases/v0.3.0/en_ner_craft_md-0.3.0.tar.gz",
+    "en_ner_jnlpba_md": "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy"
+    "/releases/v0.3.0/en_ner_jnlpba_md-0.3.0.tar.gz",
+    "en_ner_bc5cdr_md": "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy"
+    "/releases/v0.3.0/en_ner_bc5cdr_md-0.3.0.tar.gz",
+    "en_ner_bionlp13cg_md": "https://s3-us-west-2.amazonaws.com/ai2-s2"
+    "-scispacy/releases/v0.3.0/en_ner_bionlp13cg_md-0"
+    ".3.0.tar.gz",
+}
+
+def load_lang_model(lang_model):
+    # pylint: disable=import-outside-toplevel
+    if lang_model in CUSTOM_SPACYMODEL_URL:
+        # download ScispaCy model using URL
+        import subprocess
+        import sys
+        import os
+        import importlib
+
+        download_url = CUSTOM_SPACYMODEL_URL[lang_model]
+        command = [sys.executable, "-m", "pip", "install"] + [download_url]
+        subprocess.run(
+            command, env=os.environ.copy(), encoding="utf8", check=False
+        )
+        cls = importlib.import_module(lang_model)
+        return cls.load()  # type: ignore
+    else:
+        # Use spaCy download
+        try:
+            nlp = spacy.load(lang_model)  # type: ignore
+        except OSError:
+            download(lang_model)
+            nlp = spacy.load(lang_model)  # type: ignore
+    return nlp
+
 
 class NERLabelProcessor(PackProcessor):
     r"""
@@ -49,8 +92,7 @@ class NERLabelProcessor(PackProcessor):
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
-        download("en_ner_bc5cdr_md")
-        self.nlp = spacy.load("en_ner_bc5cdr_md")
+        self.nlp = load_lang_model("en_ner_bc5cdr_md")
 
     def _process(self, input_pack: DataPack):
         r"""
