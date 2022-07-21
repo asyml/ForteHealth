@@ -21,24 +21,17 @@ from ddt import data, ddt
 from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
-from fortex.health.processors.ner_label_processor import (
-    NERLabelProcessor
-)
+from fortex.health.processors.ner_label_processor import NERLabelProcessor
 from ftx.medical.clinical_ontology import Chemical, Disease
 
 
 @ddt
 class TestNERLabelProcessor(unittest.TestCase):
-
-    @data(
-        "He got cancer, and he needs oxygen."
-    )
+    @data("He got cancer, and he needs oxygen.")
     def test_ner_label_processor(self, input_data):
         self.nlp = Pipeline[DataPack]()
         self.nlp.set_reader(StringReader())
-        config = {
-            "labels": ["disease", "chemical"]
-        }
+        config = {"labels": ["disease", "chemical"]}
 
         self.nlp.add(NERLabelProcessor(), config=config)
         self.nlp.initialize()
