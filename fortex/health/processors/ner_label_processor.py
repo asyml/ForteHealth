@@ -14,11 +14,8 @@
 """
 NER Labeling Processor
 """
-import importlib
+
 from typing import Dict, Set
-import subprocess
-import sys
-import os
 import spacy
 from spacy.cli.download import download
 from forte.data.data_pack import DataPack
