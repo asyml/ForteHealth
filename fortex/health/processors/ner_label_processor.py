@@ -14,9 +14,8 @@
 """
 NER Labeling Processor
 """
-
-import spacy
 from typing import Dict, Set
+import spacy
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 from forte.common.configuration import Config
@@ -94,9 +93,7 @@ class NERLabelProcessor(PackProcessor):
 
         Returns: A dictionary with the default config for this processor.
         """
-        return {
-            "labels":["disease","chemical"]
-        }
+        return {"labels": ["disease", "chemical"]}
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
