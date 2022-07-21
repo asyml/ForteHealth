@@ -69,18 +69,14 @@ class NERLabelProcessor(PackProcessor):
             for ent in result.ents:
                 if ent.label_ == "DISEASE":
                     Disease(
-                        pack=input_pack,
-                        begin=ent.start_char,
-                        end=ent.end_char
+                        pack=input_pack, begin=ent.start_char, end=ent.end_char
                     )
 
         if "chemical" in labels:
             for ent in result.ents:
                 if ent.label_ == "CHEMICAL":
                     Chemical(
-                        pack=input_pack,
-                        begin=ent.start_char,
-                        end=ent.end_char
+                        pack=input_pack, begin=ent.start_char, end=ent.end_char
                     )
 
     @classmethod
