@@ -66,14 +66,14 @@ def load_lang_model(lang_model):
             command, env=os.environ.copy(), encoding="utf8", check=False
         )
         cls = importlib.import_module(lang_model)
-        return cls.load()  # type: ignore
+        return cls.load()
     else:
         # Use spaCy download
         try:
-            nlp = spacy.load(lang_model)  # type: ignore
+            nlp = spacy.load(lang_model)
         except OSError:
             download(lang_model)
-            nlp = spacy.load(lang_model)  # type: ignore
+            nlp = spacy.load(lang_model)
     return nlp
 
 
