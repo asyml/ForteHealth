@@ -50,6 +50,7 @@ CUSTOM_SPACYMODEL_URL = {
     ".3.0.tar.gz",
 }
 
+
 def load_lang_model(lang_model):
     # pylint: disable=import-outside-toplevel
     if lang_model in CUSTOM_SPACYMODEL_URL:
