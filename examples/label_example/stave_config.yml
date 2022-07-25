@@ -1,0 +1,5 @@
+Stave:
+  stave_db_path: "$HOME//.stave//db.sqlite3"
+  url: "http://localhost:8899"
+  username: admin
+  pw: admin
