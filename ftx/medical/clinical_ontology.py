@@ -1,4 +1,4 @@
-# ***automatically_generated**
+# ***automatically_generated***
 # ***source json:../fortex/health/ontology_specs/clinical_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
