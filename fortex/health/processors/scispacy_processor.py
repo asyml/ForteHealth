@@ -165,10 +165,4 @@ class ScispaCyProcessor(PackProcessor):
             "parent",
             "child",
         }
-
-        if self.configs.entry_type in record_meta:
-            record_meta[self.configs.entry_type].add(
-                self.configs.attribute_name
-            )
-        else:
-            record_meta[self.configs.entry_type] = {self.configs.attribute_name}
+        record_meta["ft.onto.base_ontology.Phrase"] = {}
