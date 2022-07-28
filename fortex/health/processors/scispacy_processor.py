@@ -14,7 +14,7 @@
 """
 SciSpacy Processor
 """
-from typing import Dict, Set
+from typing import Dict, Set, Any
 import importlib
 
 import spacy
