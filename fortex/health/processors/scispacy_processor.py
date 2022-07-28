@@ -165,4 +165,6 @@ class ScispaCyProcessor(PackProcessor):
             "parent",
             "child",
         }
-        record_meta["ft.onto.base_ontology.Phrase"] = {}  # type: Dict[str, Any]
+        record_meta[
+            "ft.onto.base_ontology.Phrase"
+        ] = {}  # type: Dict[str, Any]  # noqa: F821
