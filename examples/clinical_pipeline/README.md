@@ -69,6 +69,20 @@ You can also follow the online blog for more information:
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html
 
+## Generate ontologies and config
+We also need to generate the Stave configuration file.
+
+See the three json files in the directory:
+1. `clinical_pipeline_ontology.json`: this file defines the ontology we define in clinical domain.
+2. `stave_chat_config.json`: this file defines the configuration of the chatbox in stave.
+3. `stave_chat_config.json`: this file defines the configuration of the defualt nlp interface in stave.
+
+Now run
+```bash
+python generate_stave_config.py
+```
+
+This command can merge clinical ontologies and base ontologies, and generate the configuration of the stave project. If it executes successfully, you can see two new json files in current directory: `defualt_onto_project.json` and `chat_project.json`.
 
 ## Run indexer and Stave
 First, you should start an Elastic Indexer backend.
@@ -79,6 +93,7 @@ stave -s start -o -l -n 8899
 ```
 
 Here, you need to make sure `LastUtteranceSearcher.url` and `Stave.url` in `clinical_config.yml` are both `"http://localhost:8899"`. Or you can change the port 8899 to any port you like.
+
 
 
 ## Run demo pipeline
