@@ -1,0 +1,49 @@
+{
+    "name": "clinical_pipeline_ontology",
+    "definitions": [
+        {
+            "entry_name": "ftx.medical.clinical_ontology.NegationContext",
+            "parent_entry": "forte.data.ontology.top.Annotation",
+            "description": "A span based annotation `NegationContext`, used to represent the negation context of a named entity.",
+            "attributes": [
+                {
+                    "name": "polarity",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "entry_name": "ftx.medical.clinical_ontology.MedicalEntityMention",
+            "parent_entry": "ft.onto.base_ontology.EntityMention",
+            "description": "A span based annotation class MedicalEntityMention, used to represent an Entity Mention in medical domain",
+            "attributes": [
+                {
+                    "name": "umls_link",
+                    "type": "str"
+                },
+                {
+                    "name": "umls_entities",
+                    "type": "List",
+                    "item_type": "ftx.medical.clinical_ontology.UMLSConceptLink"
+                }
+            ]
+        },
+        {
+            "entry_name": "ftx.medical.clinical_ontology.MedicalArticle",
+            "parent_entry": "forte.data.ontology.top.Annotation",
+            "description": "An annotation based representation for the whole medical text chunk/document",
+            "attributes": [
+                {
+                    "name": "icd_version",
+                    "type": "int",
+                    "description": "The version of ICD-Coding being used."
+                },
+                {
+                    "name": "icd_code",
+                    "type": "str",
+                    "description": "The ICD code assigned to current medical article."
+                }
+            ]
+        }
+    ]
+}

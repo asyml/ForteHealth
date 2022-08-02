@@ -1,0 +1,31 @@
+BERTTokenizer:
+  model_path: "resources/NCBI-disease"
+
+Spacy:
+  processors: ["sentence", "tokenize", "pos", "dep", "ner", "umls_link"]
+  medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
+  umls_onto_type: "ftx.medical.clinical_ontology.UMLSConceptLink"
+  lang: "en_ner_bc5cdr_md"
+
+BioBERTNERPredictor:
+  model_path: "resources/NCBI-disease"
+  ner_type: "DISEASE"
+  ignore_labels: ["O"]
+
+LastUtteranceSearcher:
+  stave_db_path: "//home//name//.stave//db.sqlite3"
+  url: "http://localhost:8899"
+
+Remote:
+  port: 8008
+  input_format: "DataPack"
+  service_name: "Medical_Chatbot"
+
+Stave:
+  url: "http://localhost:8899"
+  username: admin
+  pw: admin
+
+viewer_project_json: "default_onto_project.json"
+chat_project_json: "chat_project.json"
+chat_document_json: "chat_query_document.json"
