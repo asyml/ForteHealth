@@ -74,6 +74,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             result = self.extractor(inputs=entry_specified.text)
 
             temporal_mention = result[0]["word"]
+            print("Nik", result)
             print(temporal_mention)
             article = MedicalArticle(
                 pack=input_pack,

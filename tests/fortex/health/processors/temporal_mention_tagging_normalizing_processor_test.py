@@ -23,7 +23,7 @@ from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import MedicalArticle
 
-from fortex.health.processors.temporal_mention_tagging_normalizing_processor import (
+from temporal_mention_tagging_normalizing_processor import (
     TemporalMentionTaggingAndNormalizingProcessor,
 )
 
@@ -48,14 +48,25 @@ class TestTemporalMentionTaggingAndNormalizingProcessor(unittest.TestCase):
     def test_huggingface_TemporalMentionTaggingAndNormalizingProcessor(self):
         sentences = [
             "Due to lockdown restrictions, 2020 might go down as the worst economic year in over a decade.",
+            "Today is monday, but tomorrow might be 12th july.",
+            "A century ago, I was supposed to be here 1 day before that time.",
+            "Before the diagnosis, the patient was declared dead, five hours ago at 10:23.",
+            "April 23, 2014: The patient did not have any postoperative bleeding so we’ll resume chemotherapy with a larger bolus on Friday even if there is slight nausea."
             # "Other related medical statements.",  # if this line is added the classification changed to T34.99
         ]
-        document = "".join(sentences)
+        document = " ".join(sentences)
         print(document)
-        pack = self.nlp.process(document)
+        for sent in sentences:
+            self.nlp.process(sent)
+        
+        #pack = self.nlp.process(document)
 
         expected_mention = "2020"
 
         for idx, icd_coding_item in enumerate(pack.get(MedicalArticle)):
-            # print(icd_coding_item.icd_code, idx)
-            self.assertEqual(icd_coding_item.icd_code, expected_mention)
+            print(icd_coding_item.icd_code, idx)
+            #self.assertEqual(icd_coding_item.icd_code, expected_mention)
+
+test = TestTemporalMentionTaggingAndNormalizingProcessor()
+test.setUp()
+test.test_huggingface_TemporalMentionTaggingAndNormalizingProcessor()
