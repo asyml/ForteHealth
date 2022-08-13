@@ -15,7 +15,6 @@ def number_of_results(total_hits: int, duration: float) -> str:
 def search_result(highlights: str) -> str:
     """HTML scripts to display search results."""
     return f"""
-
         <div style="font-size:100%; white-space: pre-line;">
         {highlights}
         </div>
