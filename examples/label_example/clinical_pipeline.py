@@ -26,7 +26,10 @@ def main(
     else:
         pl.set_reader(PlainTextReader())
 
-    config_for_ner = {"labels": ["disease", "chemical"]}
+    config_for_ner = {
+        "labels": ["disease", "chemical"],
+        "lang": "en_ner_bc5cdr_md"
+        }
     pl.add(NERLabelProcessor(), config=config_for_ner)
 
     pl.add(

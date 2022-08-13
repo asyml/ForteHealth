@@ -31,7 +31,10 @@ class TestNERLabelProcessor(unittest.TestCase):
     def test_ner_label_processor(self, input_data):
         self.nlp = Pipeline[DataPack]()
         self.nlp.set_reader(StringReader())
-        config = {"labels": ["disease", "chemical"]}
+        config = {
+            "labels": ["disease", "chemical"],
+            "lang": "en_ner_bc5cdr_md"
+            }
 
         self.nlp.add(NERLabelProcessor(), config=config)
         self.nlp.initialize()
