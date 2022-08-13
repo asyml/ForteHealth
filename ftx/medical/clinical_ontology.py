@@ -47,6 +47,8 @@ __all__ = [
     "MedicalArticle",
     "Abbreviation",
     "Hyponym",
+    "Disease",
+    "Chemical"
 ]
 
 
@@ -492,3 +494,23 @@ class Hyponym(Link):
     def __init__(self, pack: DataPack, parent: Optional[Entry] = None, child: Optional[Entry] = None):
         super().__init__(pack, parent, child)
         self.hyponym_link: Optional[str] = None
+
+
+@dataclass
+class Disease(Annotation):
+    """
+    A span based annotation `Disease`, used to represent the diseases in a piece of clinical text.
+    """
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+
+
+@dataclass
+class Chemical(Annotation):
+    """
+    A span based annotation `Chemical`, used to represent the chemical in a piece of clinical text.
+    """
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
