@@ -62,7 +62,9 @@ def load_lang_model(lang_model):
 
         download_url = CUSTOM_SPACYMODEL_URL[lang_model]
         command = [sys.executable, "-m", "pip", "install"] + [download_url]
-        subprocess.run(command, env=os.environ.copy(), encoding="utf8", check=False)
+        subprocess.run(
+            command, env=os.environ.copy(), encoding="utf8", check=False
+        )
         cls = importlib.import_module(lang_model)
         return cls.load()
     else:
@@ -112,10 +114,14 @@ class NERLabelProcessor(PackProcessor):
         for ent in result.ents:
             if "disease" in labels:
                 if ent.label_ == "DISEASE":
-                    Disease(pack=input_pack, begin=ent.start_char, end=ent.end_char)
+                    Disease(
+                        pack=input_pack, begin=ent.start_char, end=ent.end_char
+                    )
             if "chemical" in labels:
                 if ent.label_ == "CHEMICAL":
-                    Chemical(pack=input_pack, begin=ent.start_char, end=ent.end_char)
+                    Chemical(
+                        pack=input_pack, begin=ent.start_char, end=ent.end_char
+                    )
 
     @classmethod
     def default_configs(cls):
