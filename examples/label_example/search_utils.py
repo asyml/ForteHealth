@@ -47,8 +47,6 @@ def index_search(es, index: str, keywords: str) -> dict:
             "post_tags": ["</font>"],
             "fields": {"content": {}},
         },
-        # "from": from_i,
-        # "size": size,
         "aggs": {"match_count": {"value_count": {"field": "_id"}}},
     }
 
