@@ -93,7 +93,7 @@ class NERLabelProcessor(PackProcessor):
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
-        self.nlp = load_lang_model("en_ner_bc5cdr_md")
+        self.nlp = load_lang_model(configs.lang)
 
     def _process(self, input_pack: DataPack):
         r"""
@@ -111,15 +111,13 @@ class NERLabelProcessor(PackProcessor):
             )
         result = self.nlp(doc)
 
-        if "disease" in labels:
-            for ent in result.ents:
+        for ent in result.ents:
+            if "disease" in labels:
                 if ent.label_ == "DISEASE":
                     Disease(
                         pack=input_pack, begin=ent.start_char, end=ent.end_char
                     )
-
-        if "chemical" in labels:
-            for ent in result.ents:
+            if "chemical" in labels:
                 if ent.label_ == "CHEMICAL":
                     Chemical(
                         pack=input_pack, begin=ent.start_char, end=ent.end_char
@@ -135,7 +133,10 @@ class NERLabelProcessor(PackProcessor):
 
         Returns: A dictionary with the default config for this processor.
         """
-        return {"labels": ["disease", "chemical"]}
+        return {
+            "labels": ["disease", "chemical"],
+            "lang": "en_ner_bc5cdr_md"
+            }
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
