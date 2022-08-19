@@ -423,8 +423,8 @@
           "description": "The hyponym link."
         }
       ],
-      "parent_type": "ft.onto.base_ontology.Token",
-      "child_type": "ft.onto.base_ontology.Token"
+      "parent_type": "ft.onto.base_ontology.Phrase",
+      "child_type": "ft.onto.base_ontology.Phrase"
      }
     ]
   }

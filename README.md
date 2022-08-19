@@ -2,6 +2,7 @@
 
 <p align="center">
    <a href="https://github.com/asyml/ForteHealth/actions/workflows/main.yml"><img src="https://github.com/asyml/ForteHealth/actions/workflows/main.yml/badge.svg" alt="build"></a>
+      <a href="https://codecov.io/gh/asyml/ForteHealth"><img src="https://codecov.io/gh/asyml/ForteHealth/branch/master/graph/badge.svg" alt="test coverage"></a>
    <a href="https://github.com/asyml/ForteHealth/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="apache license"></a>
    <a href="https://gitter.im/asyml/community"><img src="http://img.shields.io/badge/gitter.im-asyml/forte-blue.svg" alt="gitter"></a>
    <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="code style: black"></a>
@@ -54,7 +55,8 @@ Some components or modules in forte may require some [extra requirements](https:
 ## Quick Start Guide
 Writing biomedical NLP pipelines with ForteHealth is easy. The following example creates a simple pipeline that analyzes the sentences, tokens, and medical named entities from a discharge note.
 
-Before we start, make sure the SpaCy wrapper is installed.
+Before we start, make sure the SpaCy wrapper is installed. 
+Also, make sure you have input text files in the ```input_path``` directory that are passed through to the processors.
 ```bash
 pip install forte.spacy
 ```
@@ -74,10 +76,10 @@ from fortex.health.processors.negation_context_analyzer import (
 pl = Pipeline[DataPack]()
 pl.set_reader(PlainTextReader())
 pl.add(SpacyProcessor(), config={
-    processors: ["sentence", "tokenize", "pos", "ner", "umls_link"],
-    medical_onto_type: "ftx.medical.clinical_ontology.MedicalEntityMention"
-    umls_onto_type: "ftx.medical.clinical_ontology.UMLSConceptLink"
-    lang: "en_ner_bc5cdr_md"
+    "processors": ["sentence", "tokenize", "pos", "ner", "umls_link"],
+    "medical_onto_type": "ftx.medical.clinical_ontology.MedicalEntityMention",
+    "umls_onto_type": "ftx.medical.clinical_ontology.UMLSConceptLink",
+    "lang": "en_ner_bc5cdr_md"
     })
 
 pl.add(NegationContextAnalyzer())
