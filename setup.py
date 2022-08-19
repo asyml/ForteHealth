@@ -49,6 +49,11 @@ setuptools.setup(
             "transformers==4.2.2",
             "protobuf==3.19.4",
         ],
+        "test_scispacy": [
+            "protobuf==3.19.4",
+            "scispacy==0.5.0",
+            "sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz"
+        ],
     },
     entry_points={
         'console_scripts': [
