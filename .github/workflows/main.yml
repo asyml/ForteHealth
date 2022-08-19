@@ -16,34 +16,40 @@ jobs:
         python-version: [ 3.6, 3.7 ]
         torch-version: [ 1.5.0, 1.6.0 ]
         tensorflow-version: [ 1.15.0 ]
-        test-file-conflict: [ tests/forte_medical/processors/scispacy_processor_test.py ]
-        test-file: [ tests/forte_medical/processors/icd_coding_processor_test.py,
-                     tests/forte_medical/processors/negation_context_analysis_test.py ]
+        test-details:
+          - { testfile: tests/forte_medical/processors/icd_coding_processor_test.py }
+          - { testfile: tests/forte_medical/processors/negation_context_analysis_test.py }
+          - { testfile-conflict: tests/forte_medical/processors/scispacy_processor_test.py }
+          
         include:
           - python-version: 3.8
             torch-version: 1.7.1
             tensorflow-version: 2.2.0
-            test-file-conflict: [ tests/forte_medical/processors/scispacy_processor_test.py ]
-            test-file: [ tests/forte_medical/processors/icd_coding_processor_test.py,
-                     tests/forte_medical/processors/negation_context_analysis_test.py ]
+            test-details:
+              - { testfile: tests/forte_medical/processors/icd_coding_processor_test.py }
+              - { testfile: tests/forte_medical/processors/negation_context_analysis_test.py }
+              - { testfile-conflict: tests/forte_medical/processors/scispacy_processor_test.py }
           - python-version: 3.8
             torch-version: 1.8.1
             tensorflow-version: 2.2.0
-            test-file-conflict: [ tests/forte_medical/processors/scispacy_processor_test.py ]
-            test-file: [ tests/forte_medical/processors/icd_coding_processor_test.py,
-                     tests/forte_medical/processors/negation_context_analysis_test.py ]
+            test-details:
+              - { testfile: tests/forte_medical/processors/icd_coding_processor_test.py }
+              - { testfile: tests/forte_medical/processors/negation_context_analysis_test.py }
+              - { testfile-conflict: tests/forte_medical/processors/scispacy_processor_test.py }
           - python-version: 3.9
             torch-version: 1.7.1
             tensorflow-version: 2.5.0
-            test-file-conflict: [ tests/forte_medical/processors/scispacy_processor_test.py ]
-            test-file: [ tests/forte_medical/processors/icd_coding_processor_test.py,
-                     tests/forte_medical/processors/negation_context_analysis_test.py ]
+            test-details:
+              - { testfile: tests/forte_medical/processors/icd_coding_processor_test.py }
+              - { testfile: tests/forte_medical/processors/negation_context_analysis_test.py }
+              - { testfile-conflict: tests/forte_medical/processors/scispacy_processor_test.py }
           - python-version: 3.9
             torch-version: 1.8.1
             tensorflow-version: 2.5.0
-            test-file-conflict: [ tests/forte_medical/processors/scispacy_processor_test.py ]
-            test-file: [ tests/forte_medical/processors/icd_coding_processor_test.py,
-                     tests/forte_medical/processors/negation_context_analysis_test.py ]
+            test-details:
+              - { testfile: tests/forte_medical/processors/icd_coding_processor_test.py }
+              - { testfile: tests/forte_medical/processors/negation_context_analysis_test.py }
+              - { testfile-conflict: tests/forte_medical/processors/scispacy_processor_test.py }
     steps:
     - uses: actions/checkout@v2
 
@@ -106,7 +112,7 @@ jobs:
 
     - name: Test with pytest and run coverage
       run: |
-        coverage run -m pytest ${{ matrix.test-file }}
+        coverage run -m pytest ${{ matrix.test-details.testfile}}
 #        coverage run --append -m pytest --doctest-modules fortex/
 
     - name: Reset requirements for conflict files
@@ -116,7 +122,7 @@ jobs:
 
     - name: Test with pytest and run coverage for conflict files
       run: |
-        if [[ ${{ matrix.python-version }} == "3.6" || ${{ matrix.python-version }} == "3.7" ]]; then coverage run -m pytest ${{ matrix.test-file-conflict }} ; fi
+        if [[ ${{ matrix.python-version }} == "3.6" || ${{ matrix.python-version }} == "3.7" ]]; then coverage run -m pytest ${{ matrix.test-details.testfile-conflict}} ; fi
     
     - uses: codecov/codecov-action@v2
       with:
