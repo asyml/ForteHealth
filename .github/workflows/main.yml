@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ 3.6, 3.7, 3.8, 3.9 ]
+        python-version: [ 3.6, 3.7 ]
         torch-version: [ 1.5.0, 1.6.0 ]
         tensorflow-version: [ 1.15.0 ]
         test-details:
@@ -25,9 +25,19 @@ jobs:
           - python-version: 3.8
             torch-version: [ 1.7.1, 1.8.1]
             tensorflow-version: 2.2.0
+            test-details:
+              - { dep: forte-wrapper, testfile: tests/fortex/health/processors/icd_coding_processor_test.py }
+              - { dep: forte-wrapper, testfile: tests/fortex/health/processors/negation_context_analysis_test.py }
+              - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
+              - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
           - python-version: 3.9
             torch-version: [ 1.7.1, 1.8.1]
             tensorflow-version: 2.5.0
+            test-details:
+              - { dep: forte-wrapper, testfile: tests/fortex/health/processors/icd_coding_processor_test.py }
+              - { dep: forte-wrapper, testfile: tests/fortex/health/processors/negation_context_analysis_test.py }
+              - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
+              - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
     steps:
     - uses: actions/checkout@v2
 
