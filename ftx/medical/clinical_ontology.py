@@ -1,5 +1,5 @@
 # ***automatically_generated***
-# ***source json:../fortex/health/ontology_specs/clinical_ontology.json***
+# ***source json:ForteHealth/fortex/health/ontology_specs/clinical_ontology.json***
 # flake8: noqa
 # mypy: ignore-errors
 # pylint: skip-file
@@ -47,6 +47,8 @@ __all__ = [
     "MedicalArticle",
     "Abbreviation",
     "Hyponym",
+    "TemporalTag",
+    "NormalizedTemporalForm",
 ]
 
 
@@ -464,7 +466,7 @@ class MedicalArticle(Annotation):
 @dataclass
 class Abbreviation(Annotation):
     """
-    A span based annotation `Abbreviation`, used to represent an abbreviated token..
+    A span based annotation `Abbreviation`, used to represent an abbreviated token
     Attributes:
         long_form (Optional[str]):
     """
@@ -492,3 +494,36 @@ class Hyponym(Link):
     def __init__(self, pack: DataPack, parent: Optional[Entry] = None, child: Optional[Entry] = None):
         super().__init__(pack, parent, child)
         self.hyponym_link: Optional[str] = None
+
+
+@dataclass
+class TemporalTag(Annotation):
+    """
+    A span based annotation `TemporalTag`, used to represent temporal tags of words
+    Attributes:
+        entity (Optional[str]):
+    """
+
+    entity: Optional[str]
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+        self.entity: Optional[str] = None
+
+
+@dataclass
+class NormalizedTemporalForm(Annotation):
+    """
+    A span based annotation `NormalizedTemporalForm`, used to represent normalized forms of temporal tokens
+    Attributes:
+        type (Optional[str]):
+        value (Optional[str]):
+    """
+
+    type: Optional[str]
+    value: Optional[str]
+
+    def __init__(self, pack: DataPack, begin: int, end: int):
+        super().__init__(pack, begin, end)
+        self.type: Optional[str] = None
+        self.value: Optional[str] = None

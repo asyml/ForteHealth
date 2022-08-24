@@ -404,7 +404,7 @@
       {
       "entry_name": "ftx.medical.clinical_ontology.Abbreviation",
       "parent_entry": "forte.data.ontology.top.Annotation",
-      "description": "A span based annotation `Abbreviation`, used to represent an abbreviated token..",
+      "description": "A span based annotation `Abbreviation`, used to represent an abbreviated token",
       "attributes": [
         {
           "name": "long_form",
@@ -425,6 +425,32 @@
       ],
       "parent_type": "ft.onto.base_ontology.Phrase",
       "child_type": "ft.onto.base_ontology.Phrase"
+     },
+     {
+      "entry_name": "ftx.medical.clinical_ontology.TemporalTag",
+      "parent_entry": "forte.data.ontology.top.Annotation",
+      "description": "A span based annotation `TemporalTag`, used to represent temporal tags of words",
+      "attributes": [
+        {
+          "name": "entity",
+          "type": "str"
+        }
+      ]
+     },
+     {
+      "entry_name": "ftx.medical.clinical_ontology.NormalizedTemporalForm",
+      "parent_entry": "forte.data.ontology.top.Annotation",
+      "description": "A span based annotation `NormalizedTemporalForm`, used to represent normalized forms of temporal tokens",
+      "attributes": [
+        {
+          "name": "type",
+          "type": "str"
+        },
+        {
+          "name": "value",
+          "type": "str"
+        }
+      ]
      }
     ]
   }
