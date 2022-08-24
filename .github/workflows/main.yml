@@ -24,12 +24,14 @@ jobs:
         exclude:
           - python-version: [ 3.6, 3.7 ]
             torch-version: [ 1.7.1, 1.8.1 ]
+          - python-version: [ 3.6, 3.7 ]
             tensorflow-version: [ 2.2.0, 2.5.0 ]
           - python-version: [ 3.8, 3.9 ]
             torch-version: [ 1.5.0, 1.6.0 ]
-            tensorflow-version: [ 1.15.0 ]
           - python-version: [ 3.8 ]
-            tensorflow-version: [ 2.2.0 ]
+            tensorflow-version: [ 1.15.0, 2.5.0 ]
+          - python-version: [ 3.9 ]
+            tensorflow-version: [ 1.15.0, 2.2.0 ]
     steps:
     - uses: actions/checkout@v2
 
