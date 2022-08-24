@@ -40,13 +40,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     
-    - name: Cache version compatibility
-      if: ${{(matrix.python-version == '3.6' ||
-              matrix.python-version == '3.7') &&
-             (matrix.torch-version == '1.7.1' ||
-              matrix.torch-version == '1.8.1') &&  }}
-      run: |
-        pylint fortex/ tests/
+    # - name: Cache version compatibility
+    #   if: ${{(matrix.python-version == '3.6' ||
+    #           matrix.python-version == '3.7') &&
+    #          (matrix.torch-version == '1.7.1' ||
+    #           matrix.torch-version == '1.8.1') &&  }}
+    #   run: |
+    #     pylint fortex/ tests/
 
     - name: Cache pip
       uses: actions/cache@v2
