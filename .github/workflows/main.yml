@@ -24,6 +24,19 @@ jobs:
         exclude:
           - python-version: 3.6
             torch-version: 1.7.1
+          - python-version: 3.6
+            torch-version: 1.8.1
+          - python-version: 3.6
+            tensorflow-version: 2.2.0
+          - python-version: [ 3.6, 3.7 ]
+            tensorflow-version: 2.5.0
+          - python-version: 3.7
+            torch-version: 1.7.1
+          - python-version: 3.7
+            torch-version: 1.8.1
+          - python-version: 3.7
+            tensorflow-version: 2.2.0
+
           - python-version: [ 3.6, 3.7 ]
             tensorflow-version: [ 2.2.0, 2.5.0 ]
           - python-version: [ 3.8, 3.9 ]
