@@ -22,8 +22,8 @@ jobs:
           - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
           - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
         exclude:
-          - python-version: [ 3.6, 3.7 ]
-            torch-version: [ 1.7.1, 1.8.1 ]
+          - python-version: 3.6
+            torch-version: 1.7.1
           - python-version: [ 3.6, 3.7 ]
             tensorflow-version: [ 2.2.0, 2.5.0 ]
           - python-version: [ 3.8, 3.9 ]
@@ -39,6 +39,14 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+    
+    - name: Cache version compatibility
+      if: ${{(matrix.python-version == '3.6' ||
+              matrix.python-version == '3.7') &&
+             (matrix.torch-version == '1.7.1' ||
+              matrix.torch-version == '1.8.1') &&  }}
+      run: |
+        pylint fortex/ tests/
 
     - name: Cache pip
       uses: actions/cache@v2
