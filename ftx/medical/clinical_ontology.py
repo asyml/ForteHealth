@@ -514,7 +514,7 @@ class TemporalTag(Annotation):
 @dataclass
 class NormalizedTemporalForm(Annotation):
     """
-    A span based annotation `TemporalTag`, used to represent temporal tags of words
+    A span based annotation `NormalizedTemporalForm`, used to represent normalized forms of temporal tokens
     Attributes:
         type (Optional[str]):
         value (Optional[str]):

@@ -440,7 +440,7 @@
      {
       "entry_name": "ftx.medical.clinical_ontology.NormalizedTemporalForm",
       "parent_entry": "forte.data.ontology.top.Annotation",
-      "description": "A span based annotation `TemporalTag`, used to represent temporal tags of words",
+      "description": "A span based annotation `NormalizedTemporalForm`, used to represent normalized forms of temporal tokens",
       "attributes": [
         {
           "name": "type",
