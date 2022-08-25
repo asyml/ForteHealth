@@ -23,10 +23,6 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-# pylint: disable=unused-import
-from scispacy.abbreviation import AbbreviationDetector
-from scispacy.hyponym_detector import HyponymDetector
-
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
 
 __all__ = [
@@ -56,7 +52,7 @@ class ScispaCyProcessor(PackProcessor):
         self.extractor = spacy.load(self.configs.model_name)
         if self.configs.pipe_name == "abbreviation_detector":
             self.extractor.add_pipe(self.configs.pipe_name)
-        else:  # hyponym
+        elif self.configs.pipe_name == "hyponym_detector":
             self.extractor.add_pipe(
                 self.configs.pipe_name, last=True, config={"extended": False}
             )
@@ -76,7 +72,6 @@ class ScispaCyProcessor(PackProcessor):
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
-        # entry = get_class(class_name=module_str, module_paths=path_str)
         for entry_specified in input_pack.get(entry_type=entry):
 
             doc = self.extractor(entry_specified.text)
@@ -157,12 +152,14 @@ class ScispaCyProcessor(PackProcessor):
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
         """
-        record_meta["ftx.medical.clinical_ontology.Abbreviation"] = {
-            "long_form",
-        }
-        record_meta["ftx.medical.clinical_ontology.Hyponym"] = {
-            "hyponym_link",
-            "parent",
-            "child",
-        }
-        record_meta["ft.onto.base_ontology.Phrase"] = {}  # type: ignore
+        if self.configs.pipe_name == "abbreviation_detector":
+            record_meta["ftx.medical.clinical_ontology.Abbreviation"] = {
+                "long_form",
+            }
+        elif self.configs.pipe_name == "hyponym_detector":
+            record_meta["ftx.medical.clinical_ontology.Hyponym"] = {
+                "hyponym_link",
+                "parent",
+                "child",
+            }
+            record_meta["ft.onto.base_ontology.Phrase"] = {}  # type: ignore

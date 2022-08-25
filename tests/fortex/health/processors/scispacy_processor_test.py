@@ -37,9 +37,7 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
             "model_name": "en_core_sci_sm",
             "pipe_name": "abbreviation_detector",
         }
-        # nlp.add_pipe("hyponym_detector", last=True, config={"extended": False})
-
-        self.nlp.add(ScispaCyProcessor(), config=config)  # , config=config
+        self.nlp.add(ScispaCyProcessor(), config=config)
         self.nlp.initialize()
 
     def test_ScispaCy_Abv_processor(self):
@@ -72,8 +70,7 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
             "model_name": "en_core_sci_sm",
             "pipe_name": "hyponym_detector",
         }
-
-        self.nlp.add(ScispaCyProcessor(), config=config)  # , config=config
+        self.nlp.add(ScispaCyProcessor(), config=config)
         self.nlp.initialize()
 
     def test_ScispaCy_Hypomym_processor(self):
