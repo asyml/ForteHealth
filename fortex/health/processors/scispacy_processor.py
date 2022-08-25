@@ -23,6 +23,10 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
+# pylint: disable=unused-import
+from scispacy.abbreviation import AbbreviationDetector
+from scispacy.hyponym_detector import HyponymDetector
+
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
 
 __all__ = [
