@@ -24,6 +24,7 @@ from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 from ftx.medical.clinical_ontology import TemporalTag
 
 
@@ -37,12 +38,14 @@ class TemporalMentionTaggingProcessor(PackProcessor):
     Implementation of this TemporalMentionTaggingProcessor has
 =======
 from ftx.medical.clinical_ontology import TemporalTag, NormalizedTemporalForm
+=======
+from ftx.medical.clinical_ontology import TemporalTag
+>>>>>>> 8caff18 (add test)
 
 
 __all__ = [
-    "TemporalMentionTaggingAndNormalizingProcessor",
+    "TemporalMentionTaggingProcessor",
 ]
-
 
 class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
     r"""
@@ -200,9 +203,12 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             "entity",
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         record_meta["ftx.medical.clinical_ontology.NormalizedTemporalForm"] = {
             "type",
             "value"
         }
 >>>>>>> 5be02e5 (Add tagging processor)
+=======
+>>>>>>> 8caff18 (add test)
