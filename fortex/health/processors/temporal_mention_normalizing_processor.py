@@ -23,7 +23,7 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from ftx.medical.clinical_ontology import MedicalArticle
+from ftx.medical.clinical_ontology import TemporalTag, NormalizedTemporalForm
 
 
 __all__ = [
@@ -72,16 +72,27 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
             result = self.extractor(inputs=entry_specified.text)
-
+            print("here", result)
+            words = [[result[0]["word"], result[0]["start"], result[0]["end"]]]
+            for i in range(1,len(result)):
+                if result[i]["index"] == result[i-1]["index"] + 1:
+                    words[-1][0] += " " + result[i]["word"]
+                    words[-1][2] = result[i]["end"]
+                else:
+                    words.append([result[i]["word"], result[i]["start"], result[i]["end"]])
+            print(words)
             temporal_mention = result[0]["word"]
-            print(temporal_mention)
-            article = MedicalArticle(
-                pack=input_pack,
-                begin=entry_specified.span.begin,
-                end=entry_specified.span.end,
-            )
-            # article.icd_version = 10  # For ICD-10 coding
-            article.icd_code = temporal_mention
+            #print("temporal", temporal_mention)
+            temporal_mentions = []
+            for word, begin, end in words:
+                temporal_context = TemporalTag(
+                    pack=input_pack,
+                    begin=begin,
+                    end=end,
+                )
+                temporal_context.entity = word
+                temporal_mentions.append(temporal_context)
+            print(len(temporal_mentions))
 
     @classmethod
     def default_configs(cls):
@@ -124,6 +135,10 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
         """
-        record_meta["ftx.medical.clinical_ontology.MedicalArticle"] = {
-            "icd_code",
+        record_meta["ftx.medical.clinical_ontology.TemporalTag"] = {
+            "entity",
+        }
+        record_meta["ftx.medical.clinical_ontology.NormalizedTemporalForm"] = {
+            "type",
+            "value"
         }
