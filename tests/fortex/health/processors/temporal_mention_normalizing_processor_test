@@ -46,12 +46,16 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
     def test_TemporalMentionNormalizingProcessor(self):
         sentences = [
             "10.10.2010",
-            "2 pm",
+            "2:00 pm",
             "10 days ago",
             "5 years later"
         ]
         document = " ".join(sentences)
         pack = self.nlp.process(document)
+
+        # for pack in self.nlp.process_dataset(sentences):
+        #     print(pack)
+        #     print(pack.get(NormalizedTemporalForm))
 
         # expected_longform = [
         #     "Spinal and bulbar muscular atrophy",

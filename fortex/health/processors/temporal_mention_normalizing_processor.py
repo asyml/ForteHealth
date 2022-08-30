@@ -18,6 +18,7 @@ from typing import Dict, Set
 import importlib
 
 import spacy
+from timexy import Timexy
 from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
@@ -62,40 +63,25 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         trained model for Hyponym, Abbreviation
 
         """
-        print("here")
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
             print(entry_specified.text)
             doc = self.extractor(entry_specified.text)
-            print(doc)
-            for abrv in doc:
-                print(abrv)
-
-            if self.configs.pipe_name == "abbreviation_detector":
-                list_of_abrvs = []
-                for abrv in doc._.abbreviations:
-                    tmp_abrv = Abbreviation(
-                        pack=input_pack, begin=abrv.start, end=abrv.end
-                    )
-                    tmp_abrv.long_form = abrv._.long_form
-                    list_of_abrvs.append(tmp_abrv)
-
-            else:
-                for item in doc._.hearst_patterns:
-                    general_concept: Phrase = Phrase(
-                        pack=input_pack, begin=item[1].start, end=item[1].end
-                    )
-                    specific_concept = Phrase(
-                        pack=input_pack, begin=item[2].start, end=item[2].end
-                    )
-                    hlink = Hyponym(
-                        pack=input_pack,
-                        parent=general_concept,
-                        child=specific_concept,
-                    )
-                    hlink.hyponym_link = item[0]
+            #print(doc)
+            normalized_text = []
+            for e in doc.ents:
+                print(f"{e.text}\t{e.label_}\t{e.kb_id_}")
+                tmp_txt = NormalizedTemporalForm(
+                    pack=input_pack,
+                    begin=0,
+                    end=len(e.text)
+                )
+                tmp_txt.type = e.label_
+                tmp_txt.value = e.kb_id_
+                normalized_text.append(tmp_txt)
+            print(len(normalized_text))
 
     @classmethod
     def default_configs(cls):
