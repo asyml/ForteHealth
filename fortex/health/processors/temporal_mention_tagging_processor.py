@@ -23,13 +23,12 @@ from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from ftx.medical.clinical_ontology import TemporalTag, NormalizedTemporalForm
+from ftx.medical.clinical_ontology import TemporalTag
 
 
 __all__ = [
-    "TemporalMentionTaggingAndNormalizingProcessor",
+    "TemporalMentionTaggingProcessor",
 ]
-
 
 class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
     r"""
@@ -137,8 +136,4 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
         """
         record_meta["ftx.medical.clinical_ontology.TemporalTag"] = {
             "entity",
-        }
-        record_meta["ftx.medical.clinical_ontology.NormalizedTemporalForm"] = {
-            "type",
-            "value"
         }

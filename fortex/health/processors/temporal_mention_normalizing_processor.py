@@ -12,48 +12,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Temporal Mention Tagger and Normalizer
+SciSpacy Processor
 """
 from typing import Dict, Set
 import importlib
 
-from transformers import pipeline
+import spacy
 from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
 
-from ftx.medical.clinical_ontology import TemporalTag, NormalizedTemporalForm
-
+from ftx.medical.clinical_ontology import NormalizedTemporalForm
 
 __all__ = [
-    "TemporalMentionTaggingAndNormalizingProcessor",
+    "TemporalMentionNormalizingProcessor",
 ]
 
-
-class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
+class TemporalMentionNormalizingProcessor(PackProcessor):
     r"""
-    Implementation of this TemporalMentionTaggingAndNormalizingProcessor has
-    been based on Temporal Mention Tagger pretained model (of huggingface
-    transformers),  A rendition of it that exists on github has been referred
+    Implementation of this TemporalMentionNormalizingProcessor has
+    been based on Timexy rule based model (based on spacy),  A rendition of it that exists on github has been referred
     to as well.
+
     Referred repository link:
-    https://huggingface.co/models?sort=downloads&search=temporal
+    https://github.com/paulrinckens/timexy
     """
 
     def __init__(self):
         super().__init__()
         self.extractor = None
 
-    def set_up(self):  # , configs: Config
-        device_num = self.configs["cuda_devices"]
-        self.extractor = pipeline(  # using transformer for token classification Sequence2Sequence
-            "ner",  # this is the actual pipeline name for token-Classification
-            model=self.configs.model_name,  # satyaalmasian/temporal_tagger_BERT_tokenclassifier
-            tokenizer=self.configs.model_name,
-            framework="pt",
-            device=device_num,
-        )
+    def set_up(self):
+        if self.configs.require_gpu:
+            spacy.require_gpu(self.configs.gpu_id)
+        if self.configs.prefer_gpu:
+            spacy.prefer_gpu(self.configs.gpu_id)
+        self.extractor = spacy.load(self.configs.model_name)
+        self.extractor.add_pipe(self.configs.pipe_name, before="ner")
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
@@ -61,55 +57,73 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
 
     def _process(self, input_pack: DataPack):
         r"""
-        TemporalMentionTaggingAndNormalizingProcessor is done on the basis of
-        using huggingface Transformer and the corresponding
-        trained model for Temporal Mention Tagging And Normalizing
+        ScispaCyProcessor is done on the basis of
+        using SciSpacy and the corresponding
+        trained model for Hyponym, Abbreviation
+
         """
-
+        print("here")
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
-
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
-            result = self.extractor(inputs=entry_specified.text)
-            print("here", result)
-            words = [[result[0]["word"], result[0]["start"], result[0]["end"]]]
-            for i in range(1,len(result)):
-                if result[i]["index"] == result[i-1]["index"] + 1:
-                    words[-1][0] += " " + result[i]["word"]
-                    words[-1][2] = result[i]["end"]
-                else:
-                    words.append([result[i]["word"], result[i]["start"], result[i]["end"]])
-            print(words)
-            temporal_mention = result[0]["word"]
-            #print("temporal", temporal_mention)
-            temporal_mentions = []
-            for word, begin, end in words:
-                temporal_context = TemporalTag(
-                    pack=input_pack,
-                    begin=begin,
-                    end=end,
-                )
-                temporal_context.entity = word
-                temporal_mentions.append(temporal_context)
-            print(len(temporal_mentions))
+            print(entry_specified.text)
+            doc = self.extractor(entry_specified.text)
+            print(doc)
+            for abrv in doc:
+                print(abrv)
+
+            if self.configs.pipe_name == "abbreviation_detector":
+                list_of_abrvs = []
+                for abrv in doc._.abbreviations:
+                    tmp_abrv = Abbreviation(
+                        pack=input_pack, begin=abrv.start, end=abrv.end
+                    )
+                    tmp_abrv.long_form = abrv._.long_form
+                    list_of_abrvs.append(tmp_abrv)
+
+            else:
+                for item in doc._.hearst_patterns:
+                    general_concept: Phrase = Phrase(
+                        pack=input_pack, begin=item[1].start, end=item[1].end
+                    )
+                    specific_concept = Phrase(
+                        pack=input_pack, begin=item[2].start, end=item[2].end
+                    )
+                    hlink = Hyponym(
+                        pack=input_pack,
+                        parent=general_concept,
+                        child=specific_concept,
+                    )
+                    hlink.hyponym_link = item[0]
 
     @classmethod
     def default_configs(cls):
         r"""
-        This defines a basic config structure for `ICDCodingProcessor`.
+        This defines a basic config structure for `ScispaCyProcessor`.
+
         Following are the keys for this dictionary:
-         - `entry_type`: input entry type,
-         - `model_name`: the higgingface transformer model name to be
-                         used for classification,
+         - `entry_type`: should be ft.onto.base_ontology.Document
+         - `model_name`: the scispaCy model name to be
+                         used for classification, please refer to :
+                         https://pythonlang.dev/repo/allenai-scispacy/
+                         "Available models" sections for detail
+         - `pipe_name`: the Spacy model pipe name for
+                         classification, only 2 options here:
+                         abbreviation_detector or hyponym_detector
+         - `prefer_gpu`: the flag if prefer using gpu
+         - `require_gpu`: the flag if require using gpu
+         - `gpu_id`: the id of gpu
+
         Returns: A dictionary with the default config for this processor.
         """
         return {
             "entry_type": "ft.onto.base_ontology.Document",
-            "attribute_name": "classification",
-            "multi_class": True,
-            "model_name": "AkshatSurolia/ICD-10-Code-Prediction",
-            "cuda_devices": -1,
+            "model_name": "en_core_sci_sm",
+            "pipe_name": "abbreviation_detector",
+            "prefer_gpu": True,
+            "require_gpu": False,
+            "gpu_id": 0,
         }
 
     def expected_types_and_attributes(self):
@@ -121,23 +135,20 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
         the pipeline.
         """
         return {
-            "ft.onto.base_ontology.Document": set(),
-            "forte.data.ontology.top.Annotation": set(),
+            self.configs.entry_type: set(),
         }
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
-        Method to add output type record of `ICDCodeProcessor` which
-        is `"ftx.medical.clinical_ontology.MedicalArticle"` with attributes:
-         `icd_version` and `icd_code`
+        Method to add output type record of `ScispaCyProcessor` which
+        is `"ftx.medical.clinical_ontology.hyponym"` with attributes:
+         `hyponym_link`
         to :attr:`forte.data.data_pack.Meta.record`.
+
         Args:
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
         """
-        record_meta["ftx.medical.clinical_ontology.TemporalTag"] = {
-            "entity",
-        }
         record_meta["ftx.medical.clinical_ontology.NormalizedTemporalForm"] = {
             "type",
             "value"
