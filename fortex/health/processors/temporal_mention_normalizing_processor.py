@@ -22,6 +22,7 @@ import re
 
 import spacy
 from timexy import Timexy
+<<<<<<< HEAD
 =======
 Temporal Mention Tagger and Normalizer
 =======
@@ -37,6 +38,8 @@ from transformers import pipeline
 =======
 import spacy
 >>>>>>> 8caff18 (add test)
+=======
+>>>>>>> bc52fda (add test for normalizer)
 from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
@@ -156,7 +159,6 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
 =======
 >>>>>>> 8caff18 (add test)
         """
-        print("here")
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
@@ -188,6 +190,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
 =======
             print(entry_specified.text)
             doc = self.extractor(entry_specified.text)
+<<<<<<< HEAD
             print(doc)
             for abrv in doc:
                 print(abrv)
@@ -216,6 +219,21 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
                     )
                     hlink.hyponym_link = item[0]
 >>>>>>> 8caff18 (add test)
+=======
+            #print(doc)
+            normalized_text = []
+            for e in doc.ents:
+                print(f"{e.text}\t{e.label_}\t{e.kb_id_}")
+                tmp_txt = NormalizedTemporalForm(
+                    pack=input_pack,
+                    begin=0,
+                    end=len(e.text)
+                )
+                tmp_txt.type = e.label_
+                tmp_txt.value = e.kb_id_
+                normalized_text.append(tmp_txt)
+            print(len(normalized_text))
+>>>>>>> bc52fda (add test for normalizer)
 
     @classmethod
     def default_configs(cls):
