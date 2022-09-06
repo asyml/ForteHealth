@@ -21,17 +21,17 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
-from ftx.medical.clinical_ontology import MedicalArticle
+from ftx.medical.clinical_ontology import TemporalTag
 
-import sys
-sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
+# import sys
+# sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
 
-from temporal_mention_tagging_normalizing_processor import (
-    TemporalMentionTaggingAndNormalizingProcessor,
+from fortex.health.processors.temporal_mention_tagging_processor import (
+    TemporalMentionTaggingProcessor,
 )
 
 
-class TestTemporalMentionTaggingAndNormalizingProcessor(unittest.TestCase):
+class TestTemporalMentionTaggingProcessor(unittest.TestCase):
     def setUp(self):
         self.nlp = Pipeline[DataPack](enforce_consistency=False)  # False
         self.nlp.set_reader(StringReader())
@@ -44,26 +44,28 @@ class TestTemporalMentionTaggingAndNormalizingProcessor(unittest.TestCase):
         }
 
         self.nlp.add(
-            TemporalMentionTaggingAndNormalizingProcessor(), config=config
+            TemporalMentionTaggingProcessor(), config=config
         )  # , config=config
         self.nlp.initialize()
 
-    def test_huggingface_TemporalMentionTaggingAndNormalizingProcessor(self):
+    def test_huggingface_TemporalMentionTaggingProcessor(self):
         sentences = [
             "Due to lockdown restrictions, 2020 might go down as the worst economic year in over a decade.",
             "Is the the final year of the man behind the tomorrows killing at 2 pm in morning"
             # "Other related medical statements.",  # if this line is added the classification changed to T34.99
         ]
         document = "".join(sentences)
-        print(document)
+        # print(document)
         pack = self.nlp.process(document)
 
-        expected_mention = "2020"
+        expected_mention = [
+            "2020",
+            "over a decade",
+            "final year",
+            "2 pm",
+            "morning",
+        ]
 
-        for idx, icd_coding_item in enumerate(pack.get(MedicalArticle)):
-            # print(icd_coding_item.icd_code, idx)
-            self.assertEqual(icd_coding_item.icd_code, expected_mention)
-
-class1 = TestTemporalMentionTaggingAndNormalizingProcessor()
-class1.setUp()
-class1.test_huggingface_TemporalMentionTaggingAndNormalizingProcessor()
+        for idx, tag in enumerate(pack.get(TemporalTag)):
+            # print(tag.entity, idx)
+            self.assertEqual(tag.entity, expected_mention[idx])

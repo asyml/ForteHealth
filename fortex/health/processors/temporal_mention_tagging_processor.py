@@ -30,9 +30,10 @@ __all__ = [
     "TemporalMentionTaggingProcessor",
 ]
 
-class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
+
+class TemporalMentionTaggingProcessor(PackProcessor):
     r"""
-    Implementation of this TemporalMentionTaggingAndNormalizingProcessor has
+    Implementation of this TemporalMentionTaggingProcessor has
     been based on Temporal Mention Tagger pretained model (of huggingface
     transformers),  A rendition of it that exists on github has been referred
     to as well.
@@ -46,9 +47,9 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
 
     def set_up(self):  # , configs: Config
         device_num = self.configs["cuda_devices"]
-        self.extractor = pipeline(  # using transformer for token classification Sequence2Sequence
+        self.extractor = pipeline(  # using transformer for token classification
             "ner",  # this is the actual pipeline name for token-Classification
-            model=self.configs.model_name,  # satyaalmasian/temporal_tagger_BERT_tokenclassifier
+            model=self.configs.model_name,
             tokenizer=self.configs.model_name,
             framework="pt",
             device=device_num,
@@ -60,9 +61,9 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
 
     def _process(self, input_pack: DataPack):
         r"""
-        TemporalMentionTaggingAndNormalizingProcessor is done on the basis of
+        TemporalMentionTaggingProcessor is done on the basis of
         using huggingface Transformer and the corresponding
-        trained model for Temporal Mention Tagging And Normalizing
+        trained model for Temporal Mention Tagging
         """
 
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
@@ -73,15 +74,20 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             result = self.extractor(inputs=entry_specified.text)
             print("here", result)
             words = [[result[0]["word"], result[0]["start"], result[0]["end"]]]
-            for i in range(1,len(result)):
-                if result[i]["index"] == result[i-1]["index"] + 1:
+            for i in range(1, len(result)):
+                if result[i]["index"] == result[i - 1]["index"] + 1:
                     words[-1][0] += " " + result[i]["word"]
                     words[-1][2] = result[i]["end"]
                 else:
-                    words.append([result[i]["word"], result[i]["start"], result[i]["end"]])
+                    words.append(
+                        [
+                            result[i]["word"],
+                            result[i]["start"],
+                            result[i]["end"],
+                        ]
+                    )
             print(words)
             temporal_mention = result[0]["word"]
-            #print("temporal", temporal_mention)
             temporal_mentions = []
             for word, begin, end in words:
                 temporal_context = TemporalTag(
@@ -91,12 +97,12 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
                 )
                 temporal_context.entity = word
                 temporal_mentions.append(temporal_context)
-            print(len(temporal_mentions))
+            # print(len(temporal_mentions))
 
     @classmethod
     def default_configs(cls):
         r"""
-        This defines a basic config structure for `ICDCodingProcessor`.
+        This defines a basic config structure for `TemporalMentionTaggingProcessor`.
         Following are the keys for this dictionary:
          - `entry_type`: input entry type,
          - `model_name`: the higgingface transformer model name to be
@@ -107,7 +113,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             "entry_type": "ft.onto.base_ontology.Document",
             "attribute_name": "classification",
             "multi_class": True,
-            "model_name": "AkshatSurolia/ICD-10-Code-Prediction",
+            "model_name": "satyaalmasian/temporal_tagger_BERT_tokenclassifier",
             "cuda_devices": -1,
         }
 
@@ -126,9 +132,9 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
-        Method to add output type record of `ICDCodeProcessor` which
-        is `"ftx.medical.clinical_ontology.MedicalArticle"` with attributes:
-         `icd_version` and `icd_code`
+        Method to add output type record of `TemporalMentionTaggingProcessor` which
+        is `"ftx.medical.clinical_ontology.TemporalTag"` with attributes:
+         `entity`
         to :attr:`forte.data.data_pack.Meta.record`.
         Args:
             record_meta: the field in the datapack for type record that need to
