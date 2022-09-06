@@ -138,6 +138,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
+<<<<<<< HEAD
             doc = self.extractor(entry_specified.text)
             normalized_text = []
             for e in doc.ents:
@@ -221,6 +222,9 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
 >>>>>>> 8caff18 (add test)
 =======
             #print(doc)
+=======
+            doc = self.extractor(entry_specified.text)
+>>>>>>> 1c3274e (Add new normalizer unit test)
             normalized_text = []
             for e in doc.ents:
                 print(f"{e.text}\t{e.label_}\t{e.kb_id_}")
@@ -228,12 +232,19 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
                     pack=input_pack,
                     begin=0,
                     end=len(e.text)
-                )
-                tmp_txt.type = e.label_
-                tmp_txt.value = e.kb_id_
+                )      
+                m = re.findall(r'type="(.*?)"', e.kb_id_)
+                if m:
+                    tmp_txt.type = m[0]
+                m = re.findall(r'value="(.*?)"', e.kb_id_)
+                if m:
+                    tmp_txt.value = m[0]
                 normalized_text.append(tmp_txt)
+<<<<<<< HEAD
             print(len(normalized_text))
 >>>>>>> bc52fda (add test for normalizer)
+=======
+>>>>>>> 1c3274e (Add new normalizer unit test)
 
     @classmethod
     def default_configs(cls):

@@ -44,7 +44,15 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         self.nlp.initialize()
 
     def test_TemporalMentionNormalizingProcessor(self):
+<<<<<<< HEAD
         sentences = ["10.10.2010", "10 days ago", "5 years later"]
+=======
+        sentences = [
+            "10.10.2010",
+            "10 days ago",
+            "5 years later"
+        ]
+>>>>>>> 1c3274e (Add new normalizer unit test)
         expected_normalization = [
             "2010-10-10T00:00:00",
             "P10D",
@@ -53,9 +61,13 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         pred_normalization = []
 
         for pack in self.nlp.process_dataset(sentences):
+<<<<<<< HEAD
             for idx, normalized_item in enumerate(
                 pack.get(NormalizedTemporalForm)
             ):
+=======
+            for idx, normalized_item in enumerate(pack.get(NormalizedTemporalForm)):
+>>>>>>> 1c3274e (Add new normalizer unit test)
                 pred_normalization.append(normalized_item.value)
 
         for exp, pred in zip(expected_normalization, pred_normalization):
@@ -64,4 +76,8 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
 
 class1 = TestTemporalMentionNormalizingProcessor()
 class1.setUp()
+<<<<<<< HEAD
 class1.test_TemporalMentionNormalizingProcessor()
+=======
+class1.test_TemporalMentionNormalizingProcessor()
+>>>>>>> 1c3274e (Add new normalizer unit test)
