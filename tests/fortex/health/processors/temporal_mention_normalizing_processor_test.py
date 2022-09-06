@@ -21,10 +21,10 @@ from forte.data.data_pack import DataPack
 from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
-from ftx.medical.clinical_ontology import NormalizedTemporalForm, TemporalTag
+from ftx.medical.clinical_ontology import NormalizedTemporalForm
 
-import sys
-sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
+# import sys
+# sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
 
 from temporal_mention_normalizing_processor import (
     TemporalMentionNormalizingProcessor,
@@ -46,25 +46,22 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
     def test_TemporalMentionNormalizingProcessor(self):
         sentences = [
             "10.10.2010",
-            "2:00 pm",
             "10 days ago",
             "5 years later"
         ]
-        document = " ".join(sentences)
-        pack = self.nlp.process(document)
+        expected_normalization = [
+            "2010-10-10T00:00:00",
+            "P10D",
+            "P5Y",
+        ]
+        pred_normalization = []
 
-        # for pack in self.nlp.process_dataset(sentences):
-        #     print(pack)
-        #     print(pack.get(NormalizedTemporalForm))
+        for pack in self.nlp.process_dataset(sentences):
+            for idx, normalized_item in enumerate(pack.get(NormalizedTemporalForm)):
+                pred_normalization.append(normalized_item.value)
 
-        # expected_longform = [
-        #     "Spinal and bulbar muscular atrophy",
-        #     "androgen receptor",
-        #     "Spinal and bulbar muscular atrophy",
-        # ]
-
-        # for idx, abv_item in enumerate(pack.get(Abbreviation)):
-        #     self.assertEqual(abv_item.long_form.text, expected_longform[idx])
+        for exp, pred in zip(expected_normalization, pred_normalization):
+            self.assertEqual(exp, pred)
 
 
 class1 = TestTemporalMentionNormalizingProcessor()

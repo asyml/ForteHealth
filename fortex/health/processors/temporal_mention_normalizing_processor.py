@@ -16,6 +16,7 @@ SciSpacy Processor
 """
 from typing import Dict, Set
 import importlib
+import re
 
 import spacy
 from timexy import Timexy
@@ -67,9 +68,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         mod = importlib.import_module(path_str)
         entry = getattr(mod, module_str)
         for entry_specified in input_pack.get(entry_type=entry):
-            print(entry_specified.text)
             doc = self.extractor(entry_specified.text)
-            #print(doc)
             normalized_text = []
             for e in doc.ents:
                 print(f"{e.text}\t{e.label_}\t{e.kb_id_}")
@@ -77,11 +76,14 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
                     pack=input_pack,
                     begin=0,
                     end=len(e.text)
-                )
-                tmp_txt.type = e.label_
-                tmp_txt.value = e.kb_id_
+                )      
+                m = re.findall(r'type="(.*?)"', e.kb_id_)
+                if m:
+                    tmp_txt.type = m[0]
+                m = re.findall(r'value="(.*?)"', e.kb_id_)
+                if m:
+                    tmp_txt.value = m[0]
                 normalized_text.append(tmp_txt)
-            print(len(normalized_text))
 
     @classmethod
     def default_configs(cls):
