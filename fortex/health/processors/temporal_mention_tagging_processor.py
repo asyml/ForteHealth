@@ -134,6 +134,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
                             result[i]["end"],
                         ]
                     )
+<<<<<<< HEAD
             # print(words)
             # temporal_mention = result[0]["word"]
 =======
@@ -160,6 +161,10 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
 >>>>>>> 5be02e5 (Add tagging processor)
 =======
 >>>>>>> f91bc46 (Changes in code, comments and tests based on new ontology definition and Nikhil's changes.)
+=======
+            #print(words)
+            #temporal_mention = result[0]["word"]
+>>>>>>> 0533542 (Fix pylint issue)
             temporal_mentions = []
             for word, begin, end in words:
                 temporal_context = TemporalTag(
