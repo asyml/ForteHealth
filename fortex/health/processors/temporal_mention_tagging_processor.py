@@ -86,8 +86,8 @@ class TemporalMentionTaggingProcessor(PackProcessor):
                             result[i]["end"],
                         ]
                     )
-            #print(words)
-            #temporal_mention = result[0]["word"]
+            # print(words)
+            # temporal_mention = result[0]["word"]
             temporal_mentions = []
             for word, begin, end in words:
                 temporal_context = TemporalTag(
