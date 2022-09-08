@@ -31,6 +31,7 @@ __all__ = [
     "TemporalMentionNormalizingProcessor",
 ]
 
+
 class TemporalMentionNormalizingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionNormalizingProcessor has
@@ -73,10 +74,8 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
             for e in doc.ents:
                 print(f"{e.text}\t{e.label_}\t{e.kb_id_}")
                 tmp_txt = NormalizedTemporalForm(
-                    pack=input_pack,
-                    begin=0,
-                    end=len(e.text)
-                )      
+                    pack=input_pack, begin=0, end=len(e.text)
+                )
                 m = re.findall(r'type="(.*?)"', e.kb_id_)
                 if m:
                     tmp_txt.type = m[0]
@@ -139,5 +138,5 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         """
         record_meta["ftx.medical.clinical_ontology.NormalizedTemporalForm"] = {
             "type",
-            "value"
+            "value",
         }
