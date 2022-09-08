@@ -135,6 +135,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
                         ]
                     )
 <<<<<<< HEAD
+<<<<<<< HEAD
             # print(words)
             # temporal_mention = result[0]["word"]
 =======
@@ -165,6 +166,10 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             #print(words)
             #temporal_mention = result[0]["word"]
 >>>>>>> 0533542 (Fix pylint issue)
+=======
+            # print(words)
+            # temporal_mention = result[0]["word"]
+>>>>>>> 13204e9 (Fix black issue)
             temporal_mentions = []
             for word, begin, end in words:
                 temporal_context = TemporalTag(
