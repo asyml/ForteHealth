@@ -54,6 +54,7 @@ __all__ = [
 ]
 
 
+<<<<<<< HEAD
 class TemporalMentionNormalizingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionNormalizingProcessor has
@@ -73,6 +74,8 @@ __all__ = [
     "TemporalMentionNormalizingProcessor",
 ]
 
+=======
+>>>>>>> 0e12bc2 (Fix black format issue)
 class TemporalMentionNormalizingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionNormalizingProcessor has
@@ -146,6 +149,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
                 tmp_txt = NormalizedTemporalForm(
                     pack=input_pack, begin=0, end=len(e.text)
                 )
+<<<<<<< HEAD
                 m = re.findall(r'type="(.*?)"', e.kb_id_)
                 if m:
                     tmp_txt.type = m[0]
@@ -233,6 +237,8 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
                     begin=0,
                     end=len(e.text)
                 )      
+=======
+>>>>>>> 0e12bc2 (Fix black format issue)
                 m = re.findall(r'type="(.*?)"', e.kb_id_)
                 if m:
                     tmp_txt.type = m[0]
@@ -372,6 +378,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         }
         record_meta["ftx.medical.clinical_ontology.NormalizedTemporalForm"] = {
             "type",
+<<<<<<< HEAD
             "value"
 >>>>>>> 5be02e5 (Add tagging processor)
         }
@@ -381,3 +388,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
             "value"
         }
 >>>>>>> 8caff18 (add test)
+=======
+            "value",
+        }
+>>>>>>> 0e12bc2 (Fix black format issue)
