@@ -13,22 +13,47 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ 3.6, 3.7 ]
-        torch-version: [ 1.5.0, 1.6.0 ]
-        tensorflow-version: [ 1.15.0 ]
-        include:
-          - python-version: 3.8
+        python-version: [ 3.6, 3.7, 3.8, 3.9 ]
+        torch-version: [ 1.5.0, 1.6.0, 1.7.1, 1.8.1 ]
+        tensorflow-version: [ 1.15.0, 2.2.0, 2.5.0 ]
+        test-details:
+          - { dep: forte-wrapper, testfile: tests/fortex/health/processors/icd_coding_processor_test.py }
+          - { dep: forte-wrapper, testfile: tests/fortex/health/processors/negation_context_analysis_test.py }
+          - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
+          - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
+        exclude:
+          - python-version: 3.6
             torch-version: 1.7.1
-            tensorflow-version: 2.2.0
-          - python-version: 3.8
+          - python-version: 3.6
             torch-version: 1.8.1
+          - python-version: 3.6
             tensorflow-version: 2.2.0
-          - python-version: 3.9
+          - python-version: 3.6
+            tensorflow-version: 2.5.0
+          - python-version: 3.7
             torch-version: 1.7.1
+          - python-version: 3.7
+            torch-version: 1.8.1
+          - python-version: 3.7
+            tensorflow-version: 2.2.0
+          - python-version: 3.7
+            tensorflow-version: 2.5.0
+          - python-version: 3.8
+            torch-version: 1.5.0
+          - python-version: 3.8
+            torch-version: 1.6.0
+          - python-version: 3.8 
+            tensorflow-version: 1.15.0
+          - python-version: 3.8
             tensorflow-version: 2.5.0
           - python-version: 3.9
-            torch-version: 1.8.1
-            tensorflow-version: 2.5.0
+            torch-version: 1.5.0
+          - python-version: 3.9
+            torch-version: 1.6.0
+          - python-version: 3.9 
+            tensorflow-version: 1.15.0
+          - python-version: 3.9
+            tensorflow-version: 2.2.0
     steps:
     - uses: actions/checkout@v2
 
@@ -36,7 +61,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-
+    
     - name: Cache pip
       uses: actions/cache@v2
       with:
@@ -84,16 +109,24 @@ jobs:
         pip install --use-feature=2020-resolver --progress-bar off .[test]
 
     - name: Install Forte-wrappers-spacy
+      if: ${{ matrix.test-details.dep == 'forte-wrapper' ||
+              contains(matrix.test-details.dep, 'forte-wrapper') }}
       run: |        
         git clone https://github.com/asyml/forte-wrappers.git
         cd forte-wrappers
         pip install src/spacy
 
+    - name: Install scispacy
+      if: ${{ matrix.test-details.dep == 'scispacy' ||
+              contains(matrix.test-details.dep, 'scispacy') }}
+      run: |        
+        pip install --use-feature=2020-resolver --progress-bar off .[scispacy_processor]
+
     - name: Test with pytest and run coverage
       run: |
-        coverage run -m pytest tests/
+        coverage run -m pytest ${{ matrix.test-details.testfile}}
 #        coverage run --append -m pytest --doctest-modules fortex/
-
+    
     - uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
