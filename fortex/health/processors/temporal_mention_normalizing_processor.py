@@ -21,6 +21,7 @@ import importlib
 import re
 
 import spacy
+# pylint: disable=unused-import
 from timexy import Timexy
 <<<<<<< HEAD
 =======
@@ -58,7 +59,8 @@ __all__ = [
 class TemporalMentionNormalizingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionNormalizingProcessor has
-    been based on Timexy rule based model (based on spacy),  A rendition of it that exists on github has been referred
+    been based on Timexy rule based model (based on spacy), A
+    rendition of it that exists on github has been referred
     to as well.
 
     Referred repository link:
