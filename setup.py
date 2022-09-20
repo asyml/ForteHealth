@@ -36,7 +36,7 @@ setuptools.setup(
         "scispacy_processor": [
             "scispacy==0.5.0",
             "en-core-sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz",
-            "timexy"
+            "timexy==0.1.3"
         ],
     },
     include_package_data=True,
