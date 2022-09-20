@@ -26,7 +26,7 @@ from ftx.medical.clinical_ontology import NormalizedTemporalForm
 # import sys
 # sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
 
-from temporal_mention_normalizing_processor import (
+from fortex.health.processors.temporal_mention_normalizing_processor import (
     TemporalMentionNormalizingProcessor,
 )
 
