@@ -132,6 +132,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         r"""
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8caff18 (add test)
         ScispaCyProcessor is done on the basis of
@@ -139,6 +140,11 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         trained model for Hyponym, Abbreviation
 
 <<<<<<< HEAD
+=======
+        TemporalMentionNormalizingProcessor is done on the basis
+        of using spacy, timexy and the corresponding trained model
+        for en_web_sm
+>>>>>>> 320a9c9 (change process documentation)
         """
         path_str, module_str = self.configs.entry_type.rsplit(".", 1)
         mod = importlib.import_module(path_str)
