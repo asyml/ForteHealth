@@ -11,30 +11,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""This class is designed to read the discharge notes from MIMIC3 dataset
-    as plain text packs.
+"""This class is designed to read Xray images from given image path.
 
     For more information for the dataset, visit:
-      https://mimic.physionet.org/
+      https://data.mendeley.com/datasets/jctsfj2sfn/1
     """
 
 from typing import Any, Iterator
 from forte.data.data_pack import DataPack
-#from forte.data.data_utils_io import dataset_path_iterator
 from forte.data.base_reader import PackReader
 import numpy as np
+from PIL import Image
 
 class XrayImageReader(PackReader):
     r""":class:`ImageReader` is designed to read in an image file."""
 
     def __init__(self):
         super().__init__()
-        try:
-            from PIL import Image  # pylint: disable=import-outside-toplevel
-        except ModuleNotFoundError as e:
-            raise ModuleNotFoundError(
-                "ImageReader requires 'PIL' package to be installed."
-            ) from e
         self.Image = Image
 
     def _collect(self, image_path) -> Iterator[Any]:  # type: ignore
@@ -55,6 +48,7 @@ class XrayImageReader(PackReader):
         # Read in image data and store in DataPack
         img = self.Image.open(
             file_path)
+        # coverts the image into RBG if we receive a grayscale image
         if img.mode == 'L':
             img = img.convert('RGB')
         pack.add_image(image=np.array(img))
