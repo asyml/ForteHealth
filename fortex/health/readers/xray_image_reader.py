@@ -23,6 +23,7 @@ from forte.data.base_reader import PackReader
 import numpy as np
 from PIL import Image
 
+
 class XrayImageReader(PackReader):
     r""":class:`ImageReader` is designed to read in an image file."""
 
@@ -31,7 +32,7 @@ class XrayImageReader(PackReader):
         self.Image = Image
 
     def _collect(self, image_path) -> Iterator[Any]:  # type: ignore
-        r"""Should be called with param ``image_path`` which is a path to 
+        r"""Should be called with param ``image_path`` which is a path to
         the Image file.
 
         Args:
@@ -41,16 +42,14 @@ class XrayImageReader(PackReader):
         """
         return image_path
 
-
     def _parse_pack(self, file_path: str) -> Iterator[DataPack]:
         pack: DataPack = DataPack()
 
         # Read in image data and store in DataPack
-        img = self.Image.open(
-            file_path)
+        img = self.Image.open(file_path)
         # coverts the image into RBG if we receive a grayscale image
-        if img.mode == 'L':
-            img = img.convert('RGB')
+        if img.mode == "L":
+            img = img.convert("RGB")
         pack.add_image(image=np.array(img))
         pack.pack_name = file_path
 
