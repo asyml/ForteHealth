@@ -15,6 +15,7 @@
 Unit tests for XrayImageReader
 """
 import sys
+
 sys.path.insert(0, "../../../../")
 
 import os
@@ -28,12 +29,17 @@ from fortex.health.readers.xray_image_reader import XrayImageReader
 import numpy as np
 from PIL import Image
 
+
 @ddt
 class XrayImageReaderPipelineTest(unittest.TestCase):
     def setUp(self):
         test_dir = tempfile.mkdtemp()
-        self.orig_image_pth = "../../../../examples/xray/sample_data/normal_xray_image.jpeg"
-        self.expected_image = np.array(Image.open(self.orig_image_pth).convert("RGB"))
+        self.orig_image_pth = (
+            "../../../../examples/xray/sample_data/normal_xray_image.jpeg"
+        )
+        self.expected_image = np.array(
+            Image.open(self.orig_image_pth).convert("RGB")
+        )
 
         self.reader = XrayImageReader()
         self.pl = Pipeline[DataPack]()
