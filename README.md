@@ -57,6 +57,11 @@ Install ScispaCyProcessor:
 pip install 'forte.health[scispacy_processor]'
 ```
 
+Install TemporalNormalizingProcessor:
+```bash
+pip install 'forte.health[normalizer_processor]'
+```
+
 ## Quick Start Guide
 Writing biomedical NLP pipelines with ForteHealth is easy. The following example creates a simple pipeline that analyzes the sentences, tokens, and medical named entities from a discharge note.
 
