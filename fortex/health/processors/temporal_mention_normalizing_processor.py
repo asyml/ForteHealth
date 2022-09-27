@@ -266,20 +266,20 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         r"""
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         This defines a basic config structure for `ScispaCyProcessor`.
+=======
+        This defines a basic config structure for `TemporalMentionNormalizingProcessor`.
+>>>>>>> 1f77111 (add documentation)
 
         Following are the keys for this dictionary:
          - `entry_type`: should be ft.onto.base_ontology.Document
-         - `model_name`: the scispaCy model name to be
+         - `model_name`: the spaCy model name to be
                          used for classification, please refer to :
-                         https://pythonlang.dev/repo/allenai-scispacy/
-                         "Available models" sections for detail
+                         https://spacy.io/usage/models
          - `pipe_name`: the Spacy model pipe name for
-                         classification, only 2 options here:
-                         abbreviation_detector or hyponym_detector
-         - `prefer_gpu`: the flag if prefer using gpu
-         - `require_gpu`: the flag if require using gpu
-         - `gpu_id`: the id of gpu
+                         normalization, here:
+                         timexy
 
 =======
         This defines a basic config structure for `ICDCodingProcessor`.
@@ -311,6 +311,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
             "entry_type": "ft.onto.base_ontology.Document",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8caff18 (add test)
             "model_name": "en_core_sci_sm",
@@ -327,6 +328,10 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
 >>>>>>> 5be02e5 (Add tagging processor)
 =======
 >>>>>>> 8caff18 (add test)
+=======
+            "model_name": "en_core_web_sm",
+            "pipe_name": "timexy",
+>>>>>>> 1f77111 (add documentation)
         }
 
     def expected_types_and_attributes(self):
@@ -354,6 +359,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         r"""
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         Method to add output type record of `ScispaCyProcessor` which
         is `"ftx.medical.clinical_ontology.hyponym"` with attributes:
          `hyponym_link`
@@ -372,6 +378,12 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         to :attr:`forte.data.data_pack.Meta.record`.
 
 >>>>>>> 8caff18 (add test)
+=======
+        Method to add output type record of `TemporalMentionNormalizingProcessor` which
+        is `"ftx.medical.clinical_ontology.NormalizedTemporalForm"` with attributes:
+         `entity`
+        to :attr:`forte.data.data_pack.Meta.record`.
+>>>>>>> 1f77111 (add documentation)
         Args:
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.

@@ -22,10 +22,6 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import NormalizedTemporalForm
-
-# import sys
-# sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
-
 from fortex.health.processors.temporal_mention_normalizing_processor import (
     TemporalMentionNormalizingProcessor,
 )

@@ -67,7 +67,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
         super().__init__()
         self.extractor = None
 
-    def set_up(self):  # , configs: Config
+    def set_up(self):
         device_num = self.configs["cuda_devices"]
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -136,6 +136,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
                     )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             # print(words)
             # temporal_mention = result[0]["word"]
 =======
@@ -170,6 +171,8 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
             # print(words)
             # temporal_mention = result[0]["word"]
 >>>>>>> 13204e9 (Fix black issue)
+=======
+>>>>>>> 1f77111 (add documentation)
             temporal_mentions = []
             for word, begin, end in words:
                 temporal_context = TemporalTag(
@@ -181,6 +184,7 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
                 temporal_mentions.append(temporal_context)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             # print(len(temporal_mentions))
 =======
             print(len(temporal_mentions))
@@ -188,6 +192,8 @@ class TemporalMentionTaggingAndNormalizingProcessor(PackProcessor):
 =======
             # print(len(temporal_mentions))
 >>>>>>> f91bc46 (Changes in code, comments and tests based on new ontology definition and Nikhil's changes.)
+=======
+>>>>>>> 1f77111 (add documentation)
 
     @classmethod
     def default_configs(cls):

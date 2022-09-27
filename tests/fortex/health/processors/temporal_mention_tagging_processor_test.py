@@ -22,10 +22,6 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import TemporalTag
-
-# import sys
-# sys.path.insert(0, "/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors/")
-
 from fortex.health.processors.temporal_mention_tagging_processor import (
     TemporalMentionTaggingProcessor,
 )
@@ -33,7 +29,7 @@ from fortex.health.processors.temporal_mention_tagging_processor import (
 
 class TestTemporalMentionTaggingProcessor(unittest.TestCase):
     def setUp(self):
-        self.nlp = Pipeline[DataPack](enforce_consistency=False)  # False
+        self.nlp = Pipeline[DataPack](enforce_consistency=False)
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
@@ -52,10 +48,8 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
         sentences = [
             "Due to lockdown restrictions, 2020 might go down as the worst economic year in over a decade.",
             "Is the the final year of the man behind the tomorrows killing at 2 pm in morning"
-            # "Other related medical statements.",  # if this line is added the classification changed to T34.99
         ]
         document = "".join(sentences)
-        # print(document)
         pack = self.nlp.process(document)
 
         expected_mention = [
@@ -67,5 +61,4 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
         ]
 
         for idx, tag in enumerate(pack.get(TemporalTag)):
-            # print(tag.entity, idx)
             self.assertEqual(tag.entity, expected_mention[idx])
