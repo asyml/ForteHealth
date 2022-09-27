@@ -21,7 +21,7 @@ jobs:
           - { dep: forte-wrapper, testfile: tests/fortex/health/processors/negation_context_analysis_test.py }
           - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
           - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
-          - { dep: scispacy, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
+          - { dep: normalizer, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
           - { dep: forte-wrapper, testfile: tests/fortex/health/processors/temporal_mention_tagging_processor_test.py } 
         exclude:
           - python-version: 3.6
@@ -57,7 +57,7 @@ jobs:
           - python-version: 3.9
             tensorflow-version: 2.2.0
           - python-version: 3.6
-            test-details: { dep: scispacy, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
+            test-details: { dep: normalizer, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
 
     steps:
     - uses: actions/checkout@v2
@@ -125,7 +125,7 @@ jobs:
       if: ${{ matrix.test-details.dep == 'scispacy' ||
               contains(matrix.test-details.dep, 'scispacy') }}
       run: |        
-        pip install --progress-bar off .[scispacy_processor]
+        pip install --use-feature=2020-resolver --progress-bar off .[scispacy_processor]
 
     - name: Test with pytest and run coverage
       run: |
