@@ -57,7 +57,7 @@ jobs:
           - python-version: 3.9
             tensorflow-version: 2.2.0
           - python-version: 3.6
-            testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py
+            test-details: { dep: scispacy, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
 
     steps:
     - uses: actions/checkout@v2
