@@ -18,8 +18,6 @@ import sys
 
 sys.path.insert(0, "../../../../")
 
-import os
-import tempfile
 import unittest
 from ddt import ddt, data
 
@@ -30,10 +28,8 @@ import numpy as np
 from PIL import Image
 
 
-@ddt
 class XrayImageReaderPipelineTest(unittest.TestCase):
     def setUp(self):
-        test_dir = tempfile.mkdtemp()
         self.orig_image_pth = (
             "../../../../examples/xray/sample_data/normal_xray_image.jpeg"
         )
