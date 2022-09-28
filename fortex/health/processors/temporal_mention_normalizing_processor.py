@@ -331,7 +331,13 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
 =======
             "model_name": "en_core_web_sm",
             "pipe_name": "timexy",
+<<<<<<< HEAD
 >>>>>>> 1f77111 (add documentation)
+=======
+            "prefer_gpu": True,
+            "require_gpu": False,
+            "gpu_id": 0,
+>>>>>>> 6cc79e1 (add gpu default config)
         }
 
     def expected_types_and_attributes(self):
