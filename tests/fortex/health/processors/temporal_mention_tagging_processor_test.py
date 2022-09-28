@@ -47,7 +47,7 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
     def test_huggingface_TemporalMentionTaggingProcessor(self):
         sentences = [
             "Due to lockdown restrictions, 2020 might go down as the worst economic year in over a decade.",
-            "Is the the final year of the man behind the tomorrows killing at 2 pm in morning"
+            "Is the the final year of the man behind the tomorrows killing at 2 pm in morning",
         ]
         document = "".join(sentences)
         pack = self.nlp.process(document)
