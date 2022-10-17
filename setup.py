@@ -30,7 +30,6 @@ setuptools.setup(
             "testfixtures",
             "transformers==4.2.2",
             "protobuf==3.19.4",
-            'importlib-metadata==4.13.0',
         ],
         "scispacy_processor": [
             "scispacy==0.5.0",
