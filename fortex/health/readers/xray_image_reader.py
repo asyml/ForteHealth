@@ -55,8 +55,8 @@ class XrayImageReader(PackReader):
         pack.pack_name = file_path
 
         yield pack
-        
-           
+
+
 class XrayImageReaderDir(PackReader):
     r""":class:`ImageReader` is designed to read image files from a given folder."""
 
@@ -82,9 +82,7 @@ class XrayImageReaderDir(PackReader):
         pack: DataPack = DataPack()
 
         # Read in image data and store in DataPack
-        img = self.Image.open(
-            file_path, **(self.configs.read_kwargs or {})
-        )
+        img = self.Image.open(file_path, **(self.configs.read_kwargs or {}))
         if img.mode == "L":
             img = img.convert("RGB")
         pack.add_image(image=np.array(img))
