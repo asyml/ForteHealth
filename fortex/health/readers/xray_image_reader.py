@@ -16,7 +16,7 @@
     For more information for the dataset, visit:
       https://data.mendeley.com/datasets/jctsfj2sfn/1
     """
-
+import os
 from typing import Any, Iterator
 from forte.data.data_pack import DataPack
 from forte.data.base_reader import PackReader
