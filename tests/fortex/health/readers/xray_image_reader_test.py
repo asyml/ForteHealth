@@ -33,9 +33,7 @@ class XrayImageReaderPipelineTest(unittest.TestCase):
         self.orig_image_pth = (
             "../../../../examples/xray/sample_data/normal_xray_image.jpeg"
         )
-        self.expected_image = np.array(
-            Image.open(self.orig_image_pth).convert("RGB")
-        )
+        self.expected_image = np.array(Image.open(self.orig_image_pth).convert("RGB"))
 
         self.reader = XrayImageReader()
         self.pl = Pipeline[DataPack]()
