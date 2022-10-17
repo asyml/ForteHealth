@@ -23,6 +23,7 @@ setuptools.setup(
     namespace_packages=["fortex"],
     install_requires=[
         'forte~=0.2.0',
+        'importlib-metadata==4.13.0',
     ],
     extras_require={
         "test": [
@@ -38,5 +39,4 @@ setuptools.setup(
     },
     include_package_data=True,
     python_requires='>=3.6',
-    importlib-metadata='==4.13.0'
 )
