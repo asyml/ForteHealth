@@ -38,5 +38,5 @@ setuptools.setup(
     },
     include_package_data=True,
     python_requires='>=3.6',
-    importlib-metadata='<5.0'
+    importlib-metadata='==4.13.0'
 )
