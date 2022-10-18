@@ -120,7 +120,7 @@ jobs:
       if: ${{ matrix.test-details.dep == 'scispacy' ||
               contains(matrix.test-details.dep, 'scispacy') }}
       run: |        
-        pip install --use-feature=2020-resolver --progress-bar off .[scispacy_processor]
+        pip install --progress-bar off .[scispacy_processor]
 
     - name: Test with pytest and run coverage
       run: |
