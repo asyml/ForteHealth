@@ -24,6 +24,7 @@ from forte.data.data_utils_io import dataset_path_iterator
 import numpy as np
 from PIL import Image
 
+
 class XrayImageReaderDir(PackReader):
     r""":class:`ImageReader` is designed to read image files from a given folder."""
 
