@@ -25,7 +25,7 @@ import numpy as np
 from PIL import Image
 
 
-class XrayImageReaderDir(PackReader):
+class XrayImageReader(PackReader):
     r""":class:`ImageReader` is designed to read image files from a given folder."""
 
     def __init__(self):

@@ -23,7 +23,7 @@ from ddt import ddt, data
 
 from forte.pipeline import Pipeline
 from forte.data.data_pack import DataPack
-from fortex.health.readers.xray_image_reader import XrayImageReaderDir
+from fortex.health.readers.xray_image_reader import XrayImageReader
 import numpy as np
 from PIL import Image
 
@@ -33,7 +33,7 @@ class XrayImageReaderDirPipelineTest(unittest.TestCase):
         self.orig_image_pth = "../../../../examples/xray/sample_data/"
         self.expected_image_path = os.listdir(self.orig_image_pth)
 
-        self.reader = XrayImageReaderDir()
+        self.reader = XrayImageReader()
         self.pl = Pipeline[DataPack]()
         self.pl.set_reader(self.reader)
         self.pl.initialize()
