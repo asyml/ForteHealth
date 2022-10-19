@@ -64,7 +64,7 @@ class XrayImageReaderDir(PackReader):
         super().__init__()
         self.Image = Image
 
-    def _collect(self, image_directory) -> Iterator[Any]:  # type: ignore
+    def _collect(self, image_directory) -> Iterator[Any]:
         r"""Should be called with param ``image_directory`` which is a path to a
         folder containing image files.
 
