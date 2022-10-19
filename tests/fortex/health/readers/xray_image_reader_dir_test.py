@@ -40,7 +40,7 @@ class XrayImageReaderDirPipelineTest(unittest.TestCase):
 
     def test_reader(self):
         for pack in self.pl.process_dataset(self.orig_image_pth):
-            self.assertTrue(pack.pack_name in self.expected_image)
+            self.assertTrue(pack.pack_name.split('/')[-1] in self.expected_image_path)
 
 
 if __name__ == "__main__":
