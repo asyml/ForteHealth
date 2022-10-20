@@ -35,7 +35,7 @@ class XrayImageReaderDirPipelineTest(unittest.TestCase):
                 os.pardir,
                 os.pardir,
                 os.pardir,
-                "examples/xray/sample_data/"
+                "examples/xray/sample_data/",
             )
         )
 
