@@ -14,9 +14,7 @@
 """
 Unit tests for XrayImageReader
 """
-import sys
 
-sys.path.insert(0, "../../../../")
 import os
 import unittest
 from ddt import ddt, data
@@ -30,7 +28,17 @@ from PIL import Image
 
 class XrayImageReaderDirPipelineTest(unittest.TestCase):
     def setUp(self):
-        self.orig_image_pth = "../../../../examples/xray/sample_data/"
+        self.orig_image_pth: str = os.path.abspath(
+            os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                os.pardir,
+                os.pardir,
+                os.pardir,
+                os.pardir,
+                "examples/xray/sample_data/"
+            )
+        )
+
         self.expected_image_path = os.listdir(self.orig_image_pth)
 
         self.reader = XrayImageReader()
