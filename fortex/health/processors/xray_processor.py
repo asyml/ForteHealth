@@ -35,7 +35,6 @@ class XRAY_Processor(PackProcessor):
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
-
         self.extractor = AutoFeatureExtractor.from_pretrained(
             "nickmuchi/vit-finetuned-chest-xray-pneumonia"
         )
