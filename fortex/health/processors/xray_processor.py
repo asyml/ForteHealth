@@ -27,6 +27,7 @@ __all__ = [
     "XRAY_Processor",
 ]
 
+
 class XRAY_Processor(PackProcessor):
     """
     An image processor for classification.
@@ -35,23 +36,25 @@ class XRAY_Processor(PackProcessor):
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
 
-        self.extractor = AutoFeatureExtractor.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
-        self.model = AutoModelForImageClassification.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
+        self.extractor = AutoFeatureExtractor.from_pretrained(
+            "nickmuchi/vit-finetuned-chest-xray-pneumonia"
+        )
+        self.model = AutoModelForImageClassification.from_pretrained(
+            "nickmuchi/vit-finetuned-chest-xray-pneumonia"
+        )
 
     def _process(self, input_pack: DataPack):
 
         image_data = input_pack.image
 
-        extract=self.extractor(image_data, return_tensors="pt")
+        extract = self.extractor(image_data, return_tensors="pt")
 
         with torch.no_grad():
             logits = self.model(**extract).logits
-            prob=torch.nn.functional.softmax(logits, dim=1)
+            prob = torch.nn.functional.softmax(logits, dim=1)
         predicted_label = logits.argmax(-1).item()
 
         output = self.model.config.id2label[predicted_label]
-        prob_cls=prob[0].numpy()[predicted_label]
-        class_labels: Classification = Classification(
-                pack=input_pack
-            )
-        class_labels.classification_result = {output:prob_cls}
+        prob_cls = prob[0].numpy()[predicted_label]
+        class_labels: Classification = Classification(pack=input_pack)
+        class_labels.classification_result = {output: prob_cls}
