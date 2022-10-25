@@ -14,7 +14,7 @@
 """
 XRAY_Processor Processor
 """
-from typing import Dict
+from typing import Dict, List
 import PIL
 from transformers import pipeline
 from forte.data.data_pack import DataPack
@@ -110,7 +110,7 @@ class XRAY_Processor(PackProcessor):
             "ft.onto.base_ontology.ImagePayload": [],
         }
 
-    def record(self, record_meta: [Dict[str, str]]):
+    def record(self, record_meta: List[Dict[str, str]]):
         r"""
         Method to add output type record of `XRAY_Processor` which
         is `ft.onto.base_ontology.Classification` with attribute `classification_result`
