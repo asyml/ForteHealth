@@ -110,7 +110,7 @@ class XRAY_Processor(PackProcessor):
             "ft.onto.base_ontology.ImagePayload": [],
         }
 
-    def record(self, record_meta: Dict[str, float]):
+    def record(self, record_meta: List[Dict[str, str]]):
         r"""
         Method to add output type record of `XRAY_Processor` which
         is `ft.onto.base_ontology.Classification` with attribute `classification_result`
