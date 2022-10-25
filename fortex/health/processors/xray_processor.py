@@ -50,7 +50,7 @@ class XRAY_Processor(PackProcessor):
         self.extractor = None
 
     def set_up(self):
-        
+
         device_num = self.configs["cuda_devices"]
         self.extractor = pipeline(
             "image-classification",
