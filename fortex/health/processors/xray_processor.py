@@ -14,17 +14,14 @@
 """
 XRAY_Processor Processor
 """
-from typing import Dict, Set
-from forte.data.data_pack import DataPack
+from typing import Dict
 import PIL
 from transformers import pipeline
+from forte.data.data_pack import DataPack
 from forte.common.resources import Resources
 from forte.common.configuration import Config
 from forte.processors.base import PackProcessor
-from transformers import AutoFeatureExtractor, AutoModelForImageClassification
 from ft.onto.base_ontology import Classification
-
-import torch
 
 
 __all__ = [
