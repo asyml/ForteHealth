@@ -120,9 +120,6 @@ class XRAY_Processor(PackProcessor):
             record_meta: the field in the datapack for type record that need to
                 fill in for consistency checking.
         """
-        record_meta["ft.onto.base_ontology.Classification"] = 
-            {
-                "classification_result",
-                
-            }
-        
+        record_meta["ft.onto.base_ontology.Classification"] = {
+            "classification_result",
+        }
