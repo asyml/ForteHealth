@@ -32,9 +32,9 @@ __all__ = [
 class XRAY_Processor(PackProcessor):
     r"""
     Implementation of this XRAY_Processor has been based on the fine-tuned
-    version of google/vit-base-patch16-224-in21k 
+    version of google/vit-base-patch16-224-in21k
     on the chest-xray-pneumonia dataset.
-    
+
     The finetuned model nickmuchi/vit-finetuned-chest-xray-pneumonia (of huggingface transformers)
     achieves the following results on the evaluation set:
 
@@ -49,9 +49,9 @@ class XRAY_Processor(PackProcessor):
         super().__init__()
         self.extractor = None
 
-    def set_up(self, configs: Config):  
+    def set_up(self, configs: Config):
         device_num = self.configs["cuda_devices"]
-        self.extractor = pipeline(  
+        self.extractor = pipeline(
             "image-classification",
             model=self.configs.model_name,
             feature_extractor=self.configs.model_name,
@@ -71,17 +71,13 @@ class XRAY_Processor(PackProcessor):
 
         """
         image_data = input_pack.image
-        pil_img=PIL.Image.fromarray(image_data)
+        pil_img = PIL.Image.fromarray(image_data)
         out = self.extractor(pil_img)
-        out_dict={}
+        out_dict = {}
         for i in out:
-            out_dict[i['label']]=i['score']
-        class_labels: Classification = Classification(
-                pack=input_pack
-            )
+            out_dict[i["label"]] = i["score"]
+        class_labels: Classification = Classification(pack=input_pack)
         class_labels.classification_result = out_dict
-
-        
 
     @classmethod
     def default_configs(cls):
@@ -98,8 +94,9 @@ class XRAY_Processor(PackProcessor):
         """
         return {
             "model_name": "nickmuchi/vit-finetuned-chest-xray-pneumonia",
-            "cuda_devices": -1
+            "cuda_devices": -1,
         }
+
     def expected_types_and_attributes(self):
         r"""
         Method to add user specified expected type which would be checked
@@ -123,10 +120,10 @@ class XRAY_Processor(PackProcessor):
                 fill in for consistency checking.
         """
         record_meta["ft.onto.base_ontology.Classification"] = [
-        {
-          "name": "classification_result",
-          "type": "Dict",
-          "key_type": "str",
-          "value_type": "float"
-        }
-      ]
+            {
+                "name": "classification_result",
+                "type": "Dict",
+                "key_type": "str",
+                "value_type": "float",
+            }
+        ]
