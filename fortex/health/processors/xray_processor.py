@@ -14,6 +14,8 @@
 """
 XRAY_Processor Processor
 """
+from forte.data.data_pack import DataPack
+import PIL
 from transformers import pipeline
 from forte.common.resources import Resources
 from forte.common.configuration import Config
