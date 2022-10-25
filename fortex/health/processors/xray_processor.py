@@ -62,7 +62,7 @@ class XRAY_Processor(PackProcessor):
 
     def initialize(self, resources: Resources, configs: Config):
         super().initialize(resources, configs)
-        self.set_up(configs)
+        self.set_up()
 
     def _process(self, input_pack: DataPack):
         r"""
