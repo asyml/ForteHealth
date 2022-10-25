@@ -106,7 +106,7 @@ class XRAY_Processor(PackProcessor):
         the pipeline.
         """
         return {
-            "from forte.data.ontology.top.Payload": DataPack,
+            "ft.onto.base_ontology.ImagePayload": [],
         }
 
     def record(self, record_meta: Dict[str, float]):
