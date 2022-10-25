@@ -14,6 +14,7 @@
 """
 XRAY_Processor Processor
 """
+from typing import Dict, Set
 from forte.data.data_pack import DataPack
 import PIL
 from transformers import pipeline
