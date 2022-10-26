@@ -30,7 +30,7 @@ from fortex.health.processors.icd_coding_processor import (
 
 class TestICDCodeProcessor(unittest.TestCase):
     def setUp(self):
-        self.nlp = Pipeline[DataPack](enforce_consistency=True)  # False
+        self.nlp = Pipeline[DataPack](enforce_consistency=True)
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
@@ -40,7 +40,7 @@ class TestICDCodeProcessor(unittest.TestCase):
             "cuda_devices": -1,
         }
 
-        self.nlp.add(ICDCodingProcessor(), config=config)  # , config=config
+        self.nlp.add(ICDCodingProcessor(), config=config)
         self.nlp.initialize()
 
     def test_huggingface_ICDCode_processor(self):
