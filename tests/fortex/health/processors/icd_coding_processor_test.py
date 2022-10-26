@@ -55,5 +55,4 @@ class TestICDCodeProcessor(unittest.TestCase):
         expected_code = "H59.11"
 
         for idx, icd_coding_item in enumerate(pack.get(MedicalArticle)):
-            # print(icd_coding_item.icd_code, idx)
             self.assertEqual(icd_coding_item.icd_code, expected_code)
