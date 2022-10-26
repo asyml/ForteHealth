@@ -48,6 +48,7 @@ class XrayImageProcessor(PackProcessor):
     def __init__(self):
         super().__init__()
         self.extractor = None
+
     def set_up(self):
 
         device_num = self.configs["cuda_devices"]

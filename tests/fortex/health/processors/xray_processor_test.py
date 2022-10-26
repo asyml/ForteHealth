@@ -52,9 +52,7 @@ class XrayImageProcessorPipelineTest(unittest.TestCase):
         for pack in self.pl.process_dataset(self.orig_image_pth):
             for output in pack.get(Classification):
                 if "pneumonia" in pack.pack_name:
-                    self.assertTrue(
-                        output.classification_result["PNEUMONIA"] >= 0.5
-                    )
+                    self.assertTrue(output.classification_result["PNEUMONIA"] >= 0.5)
                 elif "normal" in pack.pack_name:
                     self.assertTrue(output.classification_result["NORMAL"] >= 0.5)
                 else:
