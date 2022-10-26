@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Unit tests for XrayImageReader
+Unit tests for XrayImageProcessor
 """
 
 import os
@@ -22,7 +22,7 @@ from ddt import ddt, data
 from forte.pipeline import Pipeline
 from forte.data.data_pack import DataPack
 from fortex.health.readers.xray_image_reader import XrayImageReader
-from fortex.health.processors.xray_processor import XRAY_Processor
+from fortex.health.processors.xray_image_processor import XrayImageProcessor
 from ft.onto.base_ontology import Classification
 
 import numpy as np
@@ -45,18 +45,18 @@ class XrayImageProcessorPipelineTest(unittest.TestCase):
         self.reader = XrayImageReader()
         self.pl = Pipeline[DataPack]()
         self.pl.set_reader(self.reader)
-        self.pl.add(XRAY_Processor())
+        self.pl.add(XrayImageProcessor())
         self.pl.initialize()
 
     def test_processor(self):
         for pack in self.pl.process_dataset(self.orig_image_pth):
-            for out in pack.get(Classification):
+            for output in pack.get(Classification):
                 if "pneumonia" in pack.pack_name:
                     self.assertTrue(
-                        out.classification_result["PNEUMONIA"] >= 0.5
+                        output.classification_result["PNEUMONIA"] >= 0.5
                     )
                 elif "normal" in pack.pack_name:
-                    self.assertTrue(out.classification_result["NORMAL"] >= 0.5)
+                    self.assertTrue(output.classification_result["NORMAL"] >= 0.5)
                 else:
                     pass
 

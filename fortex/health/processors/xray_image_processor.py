@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-XRAY_Processor Processor
+XrayImageProcessor
 """
 from typing import Dict, Set
 import PIL
@@ -25,11 +25,11 @@ from ft.onto.base_ontology import Classification
 
 
 __all__ = [
-    "XRAY_Processor",
+    "XrayImageProcessor",
 ]
 
 
-class XRAY_Processor(PackProcessor):
+class XrayImageProcessor(PackProcessor):
     r"""
     Implementation of this XRAY_Processor has been based on the fine-tuned
     version of google/vit-base-patch16-224-in21k
@@ -73,12 +73,12 @@ class XRAY_Processor(PackProcessor):
         """
         image_data = input_pack.image
         pil_img = PIL.Image.fromarray(image_data)
-        out = self.extractor(pil_img)
-        out_dict = {}
-        for i in out:
-            out_dict[i["label"]] = i["score"]
+        vit_result = self.extractor(pil_img)
+        result_dict = {}
+        for i in vit_result:
+            result_dict[i["label"]] = i["score"]
         class_labels: Classification = Classification(pack=input_pack)
-        class_labels.classification_result = out_dict
+        class_labels.classification_result = result_dict
 
     @classmethod
     def default_configs(cls):
