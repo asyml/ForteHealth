@@ -59,9 +59,6 @@ class XrayImageProcessorPipelineTest(unittest.TestCase):
                     self.assertTrue(
                         output.classification_result["NORMAL"] >= 0.5
                     )
-                else:
-                    pass
-
 
 if __name__ == "__main__":
     unittest.main()
