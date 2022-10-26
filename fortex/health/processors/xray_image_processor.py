@@ -31,7 +31,7 @@ __all__ = [
 
 class XrayImageProcessor(PackProcessor):
     r"""
-    Implementation of this XRAY_Processor has been based on the fine-tuned
+    Implementation of this XrayImageProcessor has been based on the fine-tuned
     version of google/vit-base-patch16-224-in21k
     on the chest-xray-pneumonia dataset.
 
@@ -83,7 +83,7 @@ class XrayImageProcessor(PackProcessor):
     @classmethod
     def default_configs(cls):
         r"""
-        This defines a basic config structure for `XRAY_Processor`.
+        This defines a basic config structure for `XrayImageProcessor`.
 
         Following are the keys for this dictionary:
          - `model_name`: the higgingface transformer model name to be
@@ -112,7 +112,7 @@ class XrayImageProcessor(PackProcessor):
 
     def record(self, record_meta: Dict[str, Set[str]]):
         r"""
-        Method to add output type record of `XRAY_Processor` which
+        Method to add output type record of `XrayImageProcessor` which
         is `ft.onto.base_ontology.Classification` with attribute `classification_result`
         to :attr:`forte.data.data_pack.Meta.record`.
 
