@@ -31,7 +31,7 @@ setuptools.setup(
             "transformers==4.2.2",
             "protobuf==3.19.4",
             "Pillow==8.4.0",
-            "transformers==4.23.0"
+            "transformers"
         ],
         "scispacy_processor": [
             "scispacy==0.5.0",
