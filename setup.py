@@ -28,10 +28,9 @@ setuptools.setup(
         "test": [
             "ddt",
             "testfixtures",
-            "transformers==4.2.2",
+            "transformers==4.18.0",
             "protobuf==3.19.4",
             "Pillow==8.4.0",
-            "transformers"
         ],
         "scispacy_processor": [
             "scispacy==0.5.0",
