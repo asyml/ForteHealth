@@ -30,7 +30,7 @@ setuptools.setup(
             "testfixtures",
             "transformers==4.2.2",
             "protobuf==3.19.4",
-            "Pillow==9.2.0"
+            "Pillow==8.4.0"
         ],
         "scispacy_processor": [
             "scispacy==0.5.0",
