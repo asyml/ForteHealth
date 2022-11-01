@@ -22,16 +22,16 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import NormalizedTemporalForm
-# from fortex.health.processors.temporal_mention_normalizing_processor import (
-#     TemporalMentionNormalizingProcessor,
-# )
-
-
-import sys
-sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
-from temporal_mention_normalizing_processor import (
+from fortex.health.processors.temporal_mention_normalizing_processor import (
     TemporalMentionNormalizingProcessor,
 )
+
+
+# import sys
+# sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
+# from temporal_mention_normalizing_processor import (
+#     TemporalMentionNormalizingProcessor,
+# )
 
 class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
     def setUp(self):
@@ -66,7 +66,3 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         for exp, pred in zip(expected_normalization, pred_normalization):
             self.assertEqual(exp, pred)
 
-
-# class1 = TestTemporalMentionNormalizingProcessor()
-# class1.setUp()
-# class1.test_TemporalMentionNormalizingProcessor()

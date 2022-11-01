@@ -22,15 +22,15 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import TemporalTag
-# from fortex.health.processors.temporal_mention_tagging_processor import (
-#     TemporalMentionTaggingProcessor,
-# )
-
-import sys
-sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
-from temporal_mention_tagging_processor import (
+from fortex.health.processors.temporal_mention_tagging_processor import (
     TemporalMentionTaggingProcessor,
 )
+
+# import sys
+# sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
+# from temporal_mention_tagging_processor import (
+#     TemporalMentionTaggingProcessor,
+# )
 
 
 class TestTemporalMentionTaggingProcessor(unittest.TestCase):
