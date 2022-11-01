@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Temporal Mention Tagger and Normalizer
+Temporal Mention Tagger
 """
 from typing import Dict, Set
 import importlib
@@ -91,7 +91,6 @@ class TemporalMentionTaggingProcessor(PackProcessor):
                 )
                 temporal_context.entity = word
                 temporal_mentions.append(temporal_context)
-            print(temporal_mentions)
 
     @classmethod
     def default_configs(cls):

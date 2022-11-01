@@ -22,10 +22,16 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import NormalizedTemporalForm
-from fortex.health.processors.temporal_mention_normalizing_processor import (
+# from fortex.health.processors.temporal_mention_normalizing_processor import (
+#     TemporalMentionNormalizingProcessor,
+# )
+
+
+import sys
+sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
+from temporal_mention_normalizing_processor import (
     TemporalMentionNormalizingProcessor,
 )
-
 
 class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
     def setUp(self):
@@ -40,19 +46,12 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         self.nlp.initialize()
 
     def test_TemporalMentionNormalizingProcessor(self):
-<<<<<<< HEAD
-<<<<<<< HEAD
-        sentences = ["10.10.2010", "10 days ago", "5 years later"]
-=======
         sentences = [
             "10.10.2010",
             "10 days ago",
             "5 years later"
         ]
->>>>>>> 1c3274e (Add new normalizer unit test)
-=======
-        sentences = ["10.10.2010", "10 days ago", "5 years later"]
->>>>>>> 0e12bc2 (Fix black format issue)
+
         expected_normalization = [
             "2010-10-10T00:00:00",
             "P10D",
@@ -61,33 +60,13 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         pred_normalization = []
 
         for pack in self.nlp.process_dataset(sentences):
-<<<<<<< HEAD
-<<<<<<< HEAD
-            for idx, normalized_item in enumerate(
-                pack.get(NormalizedTemporalForm)
-            ):
-=======
             for idx, normalized_item in enumerate(pack.get(NormalizedTemporalForm)):
->>>>>>> 1c3274e (Add new normalizer unit test)
-=======
-            for idx, normalized_item in enumerate(
-                pack.get(NormalizedTemporalForm)
-            ):
->>>>>>> 0e12bc2 (Fix black format issue)
                 pred_normalization.append(normalized_item.value)
 
         for exp, pred in zip(expected_normalization, pred_normalization):
             self.assertEqual(exp, pred)
 
 
-class1 = TestTemporalMentionNormalizingProcessor()
-class1.setUp()
-<<<<<<< HEAD
-<<<<<<< HEAD
-class1.test_TemporalMentionNormalizingProcessor()
-=======
-class1.test_TemporalMentionNormalizingProcessor()
->>>>>>> 1c3274e (Add new normalizer unit test)
-=======
-class1.test_TemporalMentionNormalizingProcessor()
->>>>>>> 0e12bc2 (Fix black format issue)
+# class1 = TestTemporalMentionNormalizingProcessor()
+# class1.setUp()
+# class1.test_TemporalMentionNormalizingProcessor()
