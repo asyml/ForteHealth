@@ -22,7 +22,13 @@ from forte.data.readers import StringReader
 from forte.pipeline import Pipeline
 
 from ftx.medical.clinical_ontology import TemporalTag
-from fortex.health.processors.temporal_mention_tagging_processor import (
+# from fortex.health.processors.temporal_mention_tagging_processor import (
+#     TemporalMentionTaggingProcessor,
+# )
+
+import sys
+sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
+from temporal_mention_tagging_processor import (
     TemporalMentionTaggingProcessor,
 )
 
@@ -33,15 +39,13 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
         self.nlp.set_reader(StringReader())
         config = {
             "entry_type": "ft.onto.base_ontology.Document",
-            "attribute_name": "classification",
-            "multi_class": True,
             "model_name": "satyaalmasian/temporal_tagger_BERT_tokenclassifier",
             "cuda_devices": -1,
         }
 
         self.nlp.add(
             TemporalMentionTaggingProcessor(), config=config
-        )  # , config=config
+        ) 
         self.nlp.initialize()
 
     def test_huggingface_TemporalMentionTaggingProcessor(self):
@@ -62,3 +66,7 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
 
         for idx, tag in enumerate(pack.get(TemporalTag)):
             self.assertEqual(tag.entity, expected_mention[idx])
+
+# a = TestTemporalMentionTaggingProcessor()
+# a.setUp()
+# a.test_huggingface_TemporalMentionTaggingProcessor()
