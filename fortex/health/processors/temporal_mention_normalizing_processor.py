@@ -22,8 +22,6 @@ import spacy
 
 # pylint: disable=unused-import
 from timexy import Timexy
-from typing import Dict, Set
-import importlib
 
 from forte.common import Resources
 from forte.common.configuration import Config
