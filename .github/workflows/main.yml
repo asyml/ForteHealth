@@ -127,6 +127,12 @@ jobs:
       run: |        
         pip install --use-feature=2020-resolver --progress-bar off .[scispacy_processor]
 
+    - name: Install temporal processor dependencies
+      if: ${{ matrix.test-details.dep == 'normalizer' ||
+              contains(matrix.test-details.dep, 'normalizer') }}
+      run: |        
+        pip install --use-feature=2020-resolver --progress-bar off .[normalizer_processor]
+
     - name: Test with pytest and run coverage
       run: |
         coverage run -m pytest ${{ matrix.test-details.testfile}}
