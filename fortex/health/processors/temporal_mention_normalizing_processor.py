@@ -36,6 +36,7 @@ __all__ = [
     "TemporalMentionNormalizingProcessor",
 ]
 
+
 class TemporalMentionNormalizingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionNormalizingProcessor has

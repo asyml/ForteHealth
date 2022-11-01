@@ -43,9 +43,7 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
             "cuda_devices": -1,
         }
 
-        self.nlp.add(
-            TemporalMentionTaggingProcessor(), config=config
-        ) 
+        self.nlp.add(TemporalMentionTaggingProcessor(), config=config)
         self.nlp.initialize()
 
     def test_huggingface_TemporalMentionTaggingProcessor(self):
@@ -66,6 +64,7 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
 
         for idx, tag in enumerate(pack.get(TemporalTag)):
             self.assertEqual(tag.entity, expected_mention[idx])
+
 
 # a = TestTemporalMentionTaggingProcessor()
 # a.setUp()

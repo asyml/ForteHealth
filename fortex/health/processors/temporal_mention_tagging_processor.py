@@ -30,6 +30,7 @@ __all__ = [
     "TemporalMentionTaggingProcessor",
 ]
 
+
 class TemporalMentionTaggingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionTaggingProcessor has
@@ -44,8 +45,8 @@ class TemporalMentionTaggingProcessor(PackProcessor):
 
     def set_up(self):
         device_num = self.configs["cuda_devices"]
-        self.extractor = pipeline( 
-            "ner", 
+        self.extractor = pipeline(
+            "ner",
             model=self.configs.model_name,
             tokenizer=self.configs.model_name,
             framework="pt",

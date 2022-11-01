@@ -33,6 +33,7 @@ from fortex.health.processors.temporal_mention_normalizing_processor import (
 #     TemporalMentionNormalizingProcessor,
 # )
 
+
 class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
     def setUp(self):
         self.nlp = Pipeline[DataPack](enforce_consistency=True)
@@ -46,11 +47,7 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         self.nlp.initialize()
 
     def test_TemporalMentionNormalizingProcessor(self):
-        sentences = [
-            "10.10.2010",
-            "10 days ago",
-            "5 years later"
-        ]
+        sentences = ["10.10.2010", "10 days ago", "5 years later"]
 
         expected_normalization = [
             "2010-10-10T00:00:00",
@@ -60,9 +57,10 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         pred_normalization = []
 
         for pack in self.nlp.process_dataset(sentences):
-            for idx, normalized_item in enumerate(pack.get(NormalizedTemporalForm)):
+            for idx, normalized_item in enumerate(
+                pack.get(NormalizedTemporalForm)
+            ):
                 pred_normalization.append(normalized_item.value)
 
         for exp, pred in zip(expected_normalization, pred_normalization):
             self.assertEqual(exp, pred)
-
