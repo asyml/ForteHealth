@@ -26,12 +26,6 @@ from fortex.health.processors.temporal_mention_tagging_processor import (
     TemporalMentionTaggingProcessor,
 )
 
-# import sys
-# sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
-# from temporal_mention_tagging_processor import (
-#     TemporalMentionTaggingProcessor,
-# )
-
 
 class TestTemporalMentionTaggingProcessor(unittest.TestCase):
     def setUp(self):
@@ -64,8 +58,3 @@ class TestTemporalMentionTaggingProcessor(unittest.TestCase):
 
         for idx, tag in enumerate(pack.get(TemporalTag)):
             self.assertEqual(tag.entity, expected_mention[idx])
-
-
-# a = TestTemporalMentionTaggingProcessor()
-# a.setUp()
-# a.test_huggingface_TemporalMentionTaggingProcessor()

@@ -27,13 +27,6 @@ from fortex.health.processors.temporal_mention_normalizing_processor import (
 )
 
 
-# import sys
-# sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
-# from temporal_mention_normalizing_processor import (
-#     TemporalMentionNormalizingProcessor,
-# )
-
-
 class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
     def setUp(self):
         self.nlp = Pipeline[DataPack](enforce_consistency=True)
