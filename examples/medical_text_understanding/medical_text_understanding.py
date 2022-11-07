@@ -9,57 +9,58 @@ from forte.processors.writers import PackIdJsonPackWriter
 from ft.onto.base_ontology import (
     Token,
 )
-from fortex.spacy import SpacyProcessor
 
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation, Phrase
-from fortex.health.processors.scispacy_processor import (
+# from fortex.health.processors.scispacy_processor import (
+#     ScispaCyProcessor,
+# )
+
+import sys
+sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
+from scispacy_processor import (
     ScispaCyProcessor,
 )
-
 
 def main(
     input_path: str,  # Path to mimic3 data if use_mimic3_reader=True else path to notes directory
     output_path: str,  # Path to output directory
-    max_packs: int = -1,  # Max number of notes to read from mimic3 dataset. Set to -1 to read all.
-    use_mimic3_reader: bool = True,  # Read from mimic3 dataset or plain text
 ):
     pl = Pipeline[DataPack]()
+    pl.set_reader(PlainTextReader())
 
-    if use_mimic3_reader is False:
-        pl.set_reader(PlainTextReader())
-    else:
-        pl.set_reader(Mimic3DischargeNoteReader(), config={"max_num_notes": max_packs})
-
+    # pl.add(
+    #     SpacyProcessor(),
+    #     {"processors": ["sentence"], "lang": "en_core_sci_sm"},
+    # )
     pl.add(
-        SpacyProcessor(),
-        {"processors": ["sentence"], "lang": "en_ner_bionlp13cg_md"},
-    )
-    pl.add(
-        ICDCodingProcessor(),
+        ScispaCyProcessor(),
         {
             "entry_type": "ft.onto.base_ontology.Document",
-            "attribute_name": "classification",
-            "multi_class": True,
-            "model_name": "AkshatSurolia/ICD-10-Code-Prediction",  # You can use other ICD predictors here.
-            "cuda_devices": -1,
+            "model_name": "en_core_sci_sm",
+            "pipe_name": "abbreviation_detector",
+            "prefer_gpu": True,
+            "require_gpu": False,
+            "gpu_id": 0,
         },
     )
-    pl.add(
-        PackIdJsonPackWriter(),
-        {
-            "output_dir": output_path,
-            "indent": 2,
-            "overwrite": True,
-            "drop_record": True,
-            "zip_pack": True,
-        },
-    )
+    # pl.add(
+    #     PackIdJsonPackWriter(),
+    #     {
+    #         "output_dir": output_path,
+    #         "indent": 2,
+    #         "overwrite": True,
+    #         "drop_record": True,
+    #         "zip_pack": True,
+    #     },
+    # )
 
     pl.initialize()
 
     packs = pl.process_dataset(input_path)
+
     for pack in packs:
-        show_data(pack)
+        for idx, abv_item in enumerate(pack.get(Abbreviation)):
+            print(abv_item.long_form.text)
 
 
 def show_data(pack: DataPack):
@@ -87,5 +88,6 @@ def show_data(pack: DataPack):
 # python icd_coding.py /path/to/mimiciii/1.4/NOTEEVENTS.csv.gz /path_to_sample_output 1000 True
 #
 # Read from sample_data:
-# python icd_coding.py sample_data/ /path_to_sample_output 1000 False
-main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4].lower() == "true")
+# python medical_text_understanding.py sample_data/ /path_to_sample_output 1000 False
+# python medical_text_understanding.py sample_data/ .
+main(sys.argv[1], sys.argv[2])
