@@ -22,7 +22,7 @@ setuptools.setup(
     ),
     namespace_packages=["fortex"],
     install_requires=[
-        'forte~=0.2.0',
+        'forte==0.3.0.dev3',
     ],
     extras_require={
         "test": [
