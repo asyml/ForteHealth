@@ -110,11 +110,14 @@ class ScispaCyProcessor(PackProcessor):
                     ) = self.find_index(
                         input_pack.text, item[2].start, item[2].end
                     )
+                    print(general_concept.text)
+                    print(item[2])
                     specific_concept = Phrase(
                         pack=input_pack,
                         begin=specific_concept_start,
                         end=specific_concept_end,
                     )
+                    #print(specific_concept.text)
                     hlink = Hyponym(
                         pack=input_pack,
                         parent=general_concept,
