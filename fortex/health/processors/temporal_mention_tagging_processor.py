@@ -35,9 +35,8 @@ class TemporalMentionTaggingProcessor(PackProcessor):
     r"""
     Implementation of this TemporalMentionTaggingProcessor has
     been based on Temporal Mention Tagger pretained model
-    (of huggingface transformers), A rendition of it that
-    exists on github has been referred to as well.
-    Referred repository link:
+    (of huggingface transformers)
+    Reference:
     https://huggingface.co/models?sort=downloads&search=temporal
     """
 

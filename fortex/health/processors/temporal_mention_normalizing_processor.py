@@ -74,17 +74,18 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
         for entry_specified in input_pack.get(entry_type=entry):
             doc = self.extractor(entry_specified.text)
             normalized_text = []
-            for e in doc.ents:
-                print(f"{e.text}\t{e.label_}\t{e.kb_id_}")
+            for entities in doc.ents:
                 tmp_txt = NormalizedTemporalForm(
-                    pack=input_pack, begin=0, end=len(e.text)
+                    pack=input_pack, 
+                    begin=0, 
+                    end=len(entities.text)
                 )
-                m = re.findall(r'type="(.*?)"', e.kb_id_)
-                if m:
-                    tmp_txt.type = m[0]
-                m = re.findall(r'value="(.*?)"', e.kb_id_)
-                if m:
-                    tmp_txt.value = m[0]
+                matches = re.findall(r'type="(.*?)"', entities.kb_id_)
+                if matches:
+                    tmp_txt.type = matches[0]
+                matches = re.findall(r'value="(.*?)"', entities.kb_id_)
+                if matches:
+                    tmp_txt.value = matches[0]
                 normalized_text.append(tmp_txt)
 
     @classmethod
