@@ -72,7 +72,9 @@ class ICDCodingProcessor(PackProcessor):
                 print("Found an entry greater than 512 in length, skipping..")
                 continue
 
-            encoded_input = self.tokenizer(entry_specified.text, return_tensors="pt")
+            encoded_input = self.tokenizer(
+                entry_specified.text, return_tensors="pt"
+            )
             output = self.model(**encoded_input)
             result = output.logits.detach().cpu().numpy()[0].argsort()[::-1][:5]
 
@@ -134,6 +136,8 @@ class ICDCodingProcessor(PackProcessor):
             "icd_code",
         }
         if self.configs.entry_type in record_meta:
-            record_meta[self.configs.entry_type].add(self.configs.attribute_name)
+            record_meta[self.configs.entry_type].add(
+                self.configs.attribute_name
+            )
         else:
             record_meta[self.configs.entry_type] = {self.configs.attribute_name}
