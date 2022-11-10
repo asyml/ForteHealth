@@ -17,12 +17,12 @@ ICD Coding Processor
 from typing import Dict, Set
 import importlib
 
-from transformers import pipeline
 from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
-from transformers import AutoTokenizer, BertForSequenceClassification
+from transformers import AutoTokenizer
+from transformers import BertForSequenceClassification
 from ftx.medical.clinical_ontology import MedicalArticle
 
 
@@ -43,7 +43,8 @@ class ICDCodingProcessor(PackProcessor):
 
     def __init__(self):
         super().__init__()
-        self.extractor = None
+        self.tokenizer = None
+        self.model = None
 
     def set_up(self):  # , configs: Config
         self.tokenizer = AutoTokenizer.from_pretrained(self.configs.model_name)
