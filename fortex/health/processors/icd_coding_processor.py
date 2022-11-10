@@ -17,12 +17,12 @@ ICD Coding Processor
 from typing import Dict, Set
 import importlib
 
-from transformers import pipeline
 from forte.common import Resources
 from forte.common.configuration import Config
 from forte.data.data_pack import DataPack
 from forte.processors.base import PackProcessor
-
+from transformers import AutoTokenizer
+from transformers import BertForSequenceClassification
 from ftx.medical.clinical_ontology import MedicalArticle
 
 
@@ -43,16 +43,13 @@ class ICDCodingProcessor(PackProcessor):
 
     def __init__(self):
         super().__init__()
-        self.extractor = None
+        self.tokenizer = None
+        self.model = None
 
     def set_up(self):  # , configs: Config
-        device_num = self.configs["cuda_devices"]
-        self.extractor = pipeline(  # using Bert for SequenceClassification
-            "sentiment-analysis",  # this is the actual pipeline name for Sequence-Classification
-            model=self.configs.model_name,
-            tokenizer=self.configs.model_name,
-            framework="pt",
-            device=device_num,
+        self.tokenizer = AutoTokenizer.from_pretrained(self.configs.model_name)
+        self.model = BertForSequenceClassification.from_pretrained(
+            self.configs.model_name
         )
 
     def initialize(self, resources: Resources, configs: Config):
@@ -76,9 +73,13 @@ class ICDCodingProcessor(PackProcessor):
                 print("Found an entry greater than 512 in length, skipping..")
                 continue
 
-            result = self.extractor(inputs=entry_specified.text)
+            encoded_input = self.tokenizer(
+                entry_specified.text, return_tensors="pt"
+            )
+            output = self.model(**encoded_input)
+            result = output.logits.detach().cpu().numpy()[0].argsort()[::-1][:5]
 
-            icd_code = result[0]["label"]
+            icd_code = self.model.config.id2label[result[0]]
             article = MedicalArticle(
                 pack=input_pack,
                 begin=entry_specified.span.begin,

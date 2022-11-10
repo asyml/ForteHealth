@@ -22,14 +22,16 @@ setuptools.setup(
     ),
     namespace_packages=["fortex"],
     install_requires=[
-        'forte~=0.2.0',
+        'forte==0.3.0.dev3',
     ],
     extras_require={
         "test": [
             "ddt",
             "testfixtures",
-            "transformers==4.2.2",
+            "transformers==4.18.0",
             "protobuf==3.19.4",
+            "Pillow==8.4.0",
+            'forte @ git+https://github.com/asyml/forte',
         ],
         "scispacy_processor": [
             "scispacy==0.5.0",
