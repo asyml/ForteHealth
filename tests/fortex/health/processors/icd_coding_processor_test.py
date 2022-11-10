@@ -14,7 +14,6 @@
 """
 Unit tests for ICDCodingProcessor
 """
-
 import unittest
 
 from forte.data.data_pack import DataPack
@@ -44,16 +43,16 @@ class TestICDCodeProcessor(unittest.TestCase):
         self.nlp.initialize()
 
     def test_huggingface_ICDCode_processor(self):
-        sentences = [
-            "subarachnoid hemorrhage scalp laceration service: surgery major surgical or invasive.",
-            # "Other related medical statements.",  # if this line is added the classification changed to T34.99
-        ]
-        document = "".join(sentences)
+
+        document = "subarachnoid hemorrhage scalp laceration service: surgery major surgical or invasive"
         print(document)
         pack = self.nlp.process(document)
 
         expected_code = "H59.11"
 
         for idx, icd_coding_item in enumerate(pack.get(MedicalArticle)):
-            # print(icd_coding_item.icd_code, idx)
             self.assertEqual(icd_coding_item.icd_code, expected_code)
+
+
+if __name__ == "__main__":
+    unittest.main()
