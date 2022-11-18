@@ -22,9 +22,8 @@ The meaning of arguments:
 
 - `input_path`: the path of the input folder containing the xray images.
 
-# the output will be the image file name followed by the probablity score of each class
+# the output will be the image file name followed by the probablity score of each class, displayed below.
 
-i.e,
 
 sample_data/pneumonia_xray_image.jpeg
 {'PNEUMONIA': 0.9714267253875732, 'NORMAL': 0.02857324108481407}

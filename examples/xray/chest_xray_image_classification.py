@@ -14,6 +14,7 @@ img_folder = "sample_data"
 
 
 def main(image_pth):
+    # pipeline initialization 
     pipeline = Pipeline[DataPack]()
     pipeline.set_reader(XrayImageReader())
     pipeline.add(XrayImageProcessor())
@@ -29,6 +30,8 @@ def main(image_pth):
 
 if __name__ == "__main__":
     if sys.argv[0]:
+        # takes folder path containing the xray images
         main(sys.argv[0])
     else:
+        # uses default folder if not args passed.
         main(img_folder)
