@@ -1,5 +1,5 @@
 import os
-
+import sys
 from forte.data.data_pack import DataPack
 from fortex.health.readers.xray_image_reader import XrayImageReader
 from fortex.health.processors.xray_image_processor import XrayImageProcessor
