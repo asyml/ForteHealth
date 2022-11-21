@@ -29,9 +29,9 @@ def main(image_pth):
 
 
 if __name__ == "__main__":
-    if sys.argv[0]:
+    if len(sys.argv)==2 :
         # takes folder path containing the xray images
-        main(sys.argv[0])
+        main(sys.argv[1])
     else:
         # uses default folder if not args passed.
         main(img_folder)

@@ -1,6 +1,6 @@
 ## Chest Xray image Pneumonia prediction Example
 
-This example shows how we can build pipeline to predict Pneumonia disease form chest Xray image.
+This example shows how we can build pipeline to predict Pneumonia disease from chest Xray image.
 
 We use a VIT based image classification model for inference. 
 
