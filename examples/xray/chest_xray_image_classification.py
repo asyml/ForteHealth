@@ -1,5 +1,6 @@
 import os
 import sys
+
 from forte.data.data_pack import DataPack
 from fortex.health.readers.xray_image_reader import XrayImageReader
 from fortex.health.processors.xray_image_processor import XrayImageProcessor
@@ -14,13 +15,13 @@ img_folder = "sample_data"
 
 
 def main(image_pth):
-    # pipeline initialization 
+    # pipeline initialization
     pipeline = Pipeline[DataPack]()
     pipeline.set_reader(XrayImageReader())
     pipeline.add(XrayImageProcessor())
     pipeline.initialize()
 
-    for datapack in pipeline.process_dataset(img_folder):
+    for datapack in pipeline.process_dataset(image_pth):
         for j in datapack.get(Classification):
             # printing the file name
             print(datapack.pack_name)
@@ -29,7 +30,8 @@ def main(image_pth):
 
 
 if __name__ == "__main__":
-    if len(sys.argv)==2 :
+
+    if len(sys.argv) == 2:
         # takes folder path containing the xray images
         main(sys.argv[1])
     else:
