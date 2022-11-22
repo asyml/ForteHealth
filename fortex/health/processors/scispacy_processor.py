@@ -16,6 +16,7 @@ SciSpacy Processor
 """
 from typing import Dict, Set
 import importlib
+import re
 
 import spacy
 from forte.common import Resources
@@ -91,6 +92,15 @@ class ScispaCyProcessor(PackProcessor):
 
             else:
                 for item in doc._.hearst_patterns:
+                    print("1:", item[1])
+                    print("2:", item[1].start)
+                    print("3:", item[1].end)
+                    print("4:", doc.text)
+                    match = re.match(item[1].text, doc.text)
+                    print("5:", match.end())
+
+                    #first research to find char level spacy
+                    #calculate index ourself instead of using spacy span indexing
                     general_concept: Phrase = Phrase(
                         pack=input_pack, begin=item[1].start, end=item[1].end
                     )

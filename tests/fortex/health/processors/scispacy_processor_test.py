@@ -80,10 +80,14 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         ]
         document = "".join(sentences)
         pack = self.nlp.process(document)
-
+        print("Here")
         expected_value = [
             "such_as",
         ]
 
         for idx, detected in enumerate(pack.get(Hyponym)):
             self.assertEqual(detected.hyponym_link, expected_value[idx])
+
+obj = TestScispaCyHyponymProcessor()
+obj.setUp()
+obj.test_ScispaCy_Hypomym_processor()
