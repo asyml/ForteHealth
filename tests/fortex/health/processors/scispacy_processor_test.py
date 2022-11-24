@@ -80,16 +80,15 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         ]
         document = "".join(sentences)
         pack = self.nlp.process(document)
-        print("Here")
-        expected_value = [
-            "such_as",
-        ]
+        expected_value = {
+            "hyponym_link": "such_as",
+            "general": "Keystone plant species",
+            "specific": "fig trees",
+        }
 
         for idx, detected in enumerate(pack.get(Hyponym)):
-            self.assertEqual(detected.hyponym_link, expected_value[idx])
-            # print(detected.parent)
-            # print(detected.child)
-
-obj = TestScispaCyHyponymProcessor()
-obj.setUp()
-obj.test_ScispaCy_Hypomym_processor()
+            self.assertEqual(
+                detected.hyponym_link, expected_value["hyponym_link"]
+            )
+            self.assertEqual(detected.general, expected_value["general"])
+            self.assertEqual(detected.specific, expected_value["specific"])

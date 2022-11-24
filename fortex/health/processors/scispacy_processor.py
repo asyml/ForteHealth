@@ -91,22 +91,37 @@ class ScispaCyProcessor(PackProcessor):
 
             else:
                 for item in doc._.hearst_patterns:
-                    
-                    general_concept_start, general_concept_end = self.find_index(input_pack.text, item[1].start, item[1].end)
-                    general_concept: Phrase = Phrase(
-                        pack=input_pack, begin=general_concept_start, end=general_concept_end
+
+                    (
+                        general_concept_start,
+                        general_concept_end,
+                    ) = self.find_index(
+                        input_pack.text, item[1].start, item[1].end
                     )
-                    specific_concept_start, specific_concept_end = self.find_index(input_pack.text, item[2].start, item[2].end)
+                    general_concept: Phrase = Phrase(
+                        pack=input_pack,
+                        begin=general_concept_start,
+                        end=general_concept_end,
+                    )
+                    (
+                        specific_concept_start,
+                        specific_concept_end,
+                    ) = self.find_index(
+                        input_pack.text, item[2].start, item[2].end
+                    )
                     specific_concept = Phrase(
-                        pack=input_pack, begin=specific_concept_start, end=specific_concept_end
+                        pack=input_pack,
+                        begin=specific_concept_start,
+                        end=specific_concept_end,
                     )
                     hlink = Hyponym(
                         pack=input_pack,
                         parent=general_concept,
                         child=specific_concept,
                     )
-                    print(1, hlink.child)
                     hlink.hyponym_link = item[0]
+                    hlink.general = item[1].text
+                    hlink.specific = item[2].text
 
     @classmethod
     def default_configs(cls):
@@ -178,19 +193,18 @@ class ScispaCyProcessor(PackProcessor):
 
         Args:
             sentence: raw text to be processed
-            start: start index of token 
+            start: start index of token
             end: end index of token
-        Returns: A tuple with start and end char index for sentence   
+        Returns: A tuple with start and end char index for sentence
         """
         text = text.split(" ")
         char_start, char_end = 0, 0
         count = 0
-        while (count < start):
+        while count < start:
             char_start += len(text[count]) + 1
             count += 1
         char_end = char_start
-        while (count < end):
+        while count < end:
             char_end += len(text[count]) + 1
             count += 1
         return (char_start, char_end)
-
