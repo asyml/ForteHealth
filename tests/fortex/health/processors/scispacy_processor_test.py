@@ -87,6 +87,8 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
 
         for idx, detected in enumerate(pack.get(Hyponym)):
             self.assertEqual(detected.hyponym_link, expected_value[idx])
+            # print(detected.parent)
+            # print(detected.child)
 
 obj = TestScispaCyHyponymProcessor()
 obj.setUp()
