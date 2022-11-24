@@ -484,9 +484,13 @@ class Hyponym(Link):
     A `Link` type entry which represent a hyponym pair.
     Attributes:
         hyponym_link (Optional[str]):	The hyponym link.
+        general (Optional[str]):	Hypernym
+        specific (Optional[str]):	Hyponym
     """
 
     hyponym_link: Optional[str]
+    general: Optional[str]
+    specific: Optional[str]
 
     ParentType = Phrase
     ChildType = Phrase
@@ -494,6 +498,8 @@ class Hyponym(Link):
     def __init__(self, pack: DataPack, parent: Optional[Entry] = None, child: Optional[Entry] = None):
         super().__init__(pack, parent, child)
         self.hyponym_link: Optional[str] = None
+        self.general: Optional[str] = None
+        self.specific: Optional[str] = None
 
 
 @dataclass
