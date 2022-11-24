@@ -393,12 +393,12 @@
               "name": "icd_version",
               "type": "int",
               "description": "The version of ICD-Coding being used."
-            },
+          },
           {
               "name": "icd_code",
               "type": "str",
               "description": "The ICD code assigned to current medical article."
-            }
+          }
         ]
       },
       {
@@ -421,6 +421,16 @@
           "name": "hyponym_link",
           "type": "str",
           "description": "The hyponym link."
+        },
+        {
+          "name": "general",
+          "type": "str",
+          "description": "Hypernym"
+        },
+        {
+          "name": "specific",
+          "type": "str",
+          "description": "Hyponym"
         }
       ],
       "parent_type": "ft.onto.base_ontology.Phrase",
