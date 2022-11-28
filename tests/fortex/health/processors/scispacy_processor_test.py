@@ -87,8 +87,6 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         }
 
         for idx, detected in enumerate(pack.get(Hyponym)):
-            self.assertEqual(
-                detected.hyponym_link, expected_value["hyponym_link"]
-            )
+            self.assertEqual(detected.hyponym_link, expected_value["hyponym_link"])
             self.assertEqual(detected.general, expected_value["general"])
             self.assertEqual(detected.specific, expected_value["specific"])
