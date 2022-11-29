@@ -91,11 +91,28 @@ class ScispaCyProcessor(PackProcessor):
 
             else:
                 for item in doc._.hearst_patterns:
+
+                    (
+                        general_concept_start,
+                        general_concept_end,
+                    ) = self.find_index(
+                        input_pack.text, item[1].start, item[1].end
+                    )
                     general_concept: Phrase = Phrase(
-                        pack=input_pack, begin=item[1].start, end=item[1].end
+                        pack=input_pack,
+                        begin=general_concept_start,
+                        end=general_concept_end,
+                    )
+                    (
+                        specific_concept_start,
+                        specific_concept_end,
+                    ) = self.find_index(
+                        input_pack.text, item[2].start, item[2].end
                     )
                     specific_concept = Phrase(
-                        pack=input_pack, begin=item[2].start, end=item[2].end
+                        pack=input_pack,
+                        begin=specific_concept_start,
+                        end=specific_concept_end,
                     )
                     hlink = Hyponym(
                         pack=input_pack,
@@ -103,6 +120,8 @@ class ScispaCyProcessor(PackProcessor):
                         child=specific_concept,
                     )
                     hlink.hyponym_link = item[0]
+                    hlink.general = item[1].text
+                    hlink.specific = item[2].text
 
     @classmethod
     def default_configs(cls):
@@ -167,3 +186,25 @@ class ScispaCyProcessor(PackProcessor):
                 "child",
             }
             record_meta["ft.onto.base_ontology.Phrase"] = {}  # type: ignore
+
+    def find_index(self, text, start, end):
+        r"""
+        Helper function to find char index from token span that spacy processor is generating
+
+        Args:
+            sentence: raw text to be processed
+            start: start index of token
+            end: end index of token
+        Returns: A tuple with start and end char index for sentence
+        """
+        text = text.split(" ")
+        char_start, char_end = 0, 0
+        count = 0
+        while count < start:
+            char_start += len(text[count]) + 1
+            count += 1
+        char_end = char_start
+        while count < end:
+            char_end += len(text[count]) + 1
+            count += 1
+        return (char_start, char_end)
