@@ -43,9 +43,9 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         sentences = ["10.10.2010", "10 days ago", "5 years later"]
 
         expected_normalization = [
-            "2010-10-10T00:00:00",
-            "P10D",
-            "P5Y",
+            ("2010-10-10T00:00:00", "DATE"),
+            ("P10D", "DURATION"),
+            ("P5Y", "DURATION"),
         ]
         pred_normalization = []
 
@@ -53,7 +53,9 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
             for idx, normalized_item in enumerate(
                 pack.get(NormalizedTemporalForm)
             ):
-                pred_normalization.append(normalized_item.value)
+                pred_normalization.append(
+                    (normalized_item.value, normalized_item.type)
+                )
 
         for exp, pred in zip(expected_normalization, pred_normalization):
             self.assertEqual(exp, pred)

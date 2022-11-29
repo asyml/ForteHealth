@@ -76,9 +76,7 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
             normalized_text = []
             for entities in doc.ents:
                 tmp_txt = NormalizedTemporalForm(
-                    pack=input_pack, 
-                    begin=0, 
-                    end=len(entities.text)
+                    pack=input_pack, begin=0, end=len(entities.text)
                 )
                 matches = re.findall(r'type="(.*?)"', entities.kb_id_)
                 if matches:
@@ -86,6 +84,8 @@ class TemporalMentionNormalizingProcessor(PackProcessor):
                 matches = re.findall(r'value="(.*?)"', entities.kb_id_)
                 if matches:
                     tmp_txt.value = matches[0]
+                print(1, tmp_txt.text)
+                print(3, tmp_txt.value, tmp_txt.type)
                 normalized_text.append(tmp_txt)
 
     @classmethod
