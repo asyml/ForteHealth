@@ -83,7 +83,9 @@ class ScispaCyProcessor(PackProcessor):
                 list_of_abrvs = []
                 for abrv in doc._.abbreviations:
                     tmp_abrv = Abbreviation(
-                        pack=input_pack, begin=abrv.start_char, end=abrv.end_char
+                        pack=input_pack,
+                        begin=abrv.start_char,
+                        end=abrv.end_char,
                     )
                     tmp_abrv.long_form = abrv._.long_form
                     list_of_abrvs.append(tmp_abrv)
