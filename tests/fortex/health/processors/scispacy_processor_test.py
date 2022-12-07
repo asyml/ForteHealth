@@ -50,14 +50,15 @@ class TestScispaCyAbvProcessor(unittest.TestCase):
         document = "".join(sentences)
         pack = self.nlp.process(document)
 
-        expected_longform = [
-            "Spinal and bulbar muscular atrophy",
-            "androgen receptor",
-            "Spinal and bulbar muscular atrophy",
+        expected_result = [
+            ("SBMA", "Spinal and bulbar muscular atrophy"),
+            ("AR", "androgen receptor"),
+            ("SBMA", "Spinal and bulbar muscular atrophy"),
         ]
 
         for idx, abv_item in enumerate(pack.get(Abbreviation)):
-            self.assertEqual(abv_item.long_form.text, expected_longform[idx])
+            pipeline_output = (abv_item.text, abv_item.long_form.text)
+            self.assertEqual(pipeline_output, expected_result[idx])
 
 
 class TestScispaCyHyponymProcessor(unittest.TestCase):

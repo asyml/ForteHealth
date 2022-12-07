@@ -79,12 +79,13 @@ class ScispaCyProcessor(PackProcessor):
         for entry_specified in input_pack.get(entry_type=entry):
 
             doc = self.extractor(entry_specified.text)
-
             if self.configs.pipe_name == "abbreviation_detector":
                 list_of_abrvs = []
                 for abrv in doc._.abbreviations:
                     tmp_abrv = Abbreviation(
-                        pack=input_pack, begin=abrv.start, end=abrv.end
+                        pack=input_pack,
+                        begin=abrv.start_char,
+                        end=abrv.end_char,
                     )
                     tmp_abrv.long_form = abrv._.long_form
                     list_of_abrvs.append(tmp_abrv)
