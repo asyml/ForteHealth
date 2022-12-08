@@ -60,7 +60,8 @@ def main(
     for pack in packs:
         if process == "abb":
             for idx, abv_item in enumerate(pack.get(Abbreviation)):
-                print(colored("Long form text:", "red"), colored( abv_item.long_form.text, "blue"), "\n")
+                print(colored("Abbreviation:", "blue"), colored( abv_item.text, "green"), "\n")
+                print(colored("Long form text:", "blue"), colored( abv_item.long_form.text, "green"), "\n")
 
         elif process == "hyp":
             for idx, detected in enumerate(pack.get(Hyponym)):
