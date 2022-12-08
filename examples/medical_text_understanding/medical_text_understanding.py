@@ -11,14 +11,7 @@ from ft.onto.base_ontology import (
 )
 
 from ftx.medical.clinical_ontology import Hyponym, Abbreviation
-
-# from fortex.health.processors.scispacy_processor import (
-#     ScispaCyProcessor,
-# )
-
-import sys
-sys.path.append("/Users/nikhil.ranjan/Desktop/ForteHealth/fortex/health/processors")
-from scispacy_processor import (
+from fortex.health.processors.scispacy_processor import (
     ScispaCyProcessor,
 )
 
@@ -59,22 +52,23 @@ def main(
 
     for pack in packs:
         if process == "abb":
+            print(colored("Input Sentence:", "blue"), colored( pack.text, "red"))
             for idx, abv_item in enumerate(pack.get(Abbreviation)):
-                print(colored("Abbreviation:", "blue"), colored( abv_item.text, "green"), "\n")
+                print(colored("Abbreviation:", "blue"), colored( abv_item.text, "green"))
                 print(colored("Long form text:", "blue"), colored( abv_item.long_form.text, "green"), "\n")
 
         elif process == "hyp":
+            print(colored("Input Sentence:", "blue"), colored( pack.text, "red"))
             for idx, detected in enumerate(pack.get(Hyponym)):
-                print("hyponym_link:", detected.hyponym_link)
-                print("hyponym_parent:", detected.parent)
-                print("hyponym_child:", detected.child)
-             
+                print(colored("hyponym_link:", "blue"), colored(detected.hyponym_link, "green"))
+                print(colored("hypernym:", "blue"), colored(detected.general, "green"))
+                print(colored("hyponym:", "blue"), colored(detected.specific, "green"))
 # Examples:
 '''
 Read from sample_data:
 Abbreviation:
-    python medical_text_understanding.py sample_data/ abb
+    python medical_text_understanding.py sample_data_abb/ abb
 Hyponym detection:
-    python medical_text_understanding.py sample_data/ hyp
+    python medical_text_understanding.py sample_data_hyp/ hyp
 '''
 main(sys.argv[1], sys.argv[2])
