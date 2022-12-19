@@ -26,7 +26,7 @@ from PIL import Image
 
 
 class XrayImageReader(PackReader):
-    r""":class:`ImageReader` is designed to read image files from a given folder."""
+    r""":class:`XrayImageReader` is designed to read image files from a given folder."""
 
     def __init__(self):
         super().__init__()
