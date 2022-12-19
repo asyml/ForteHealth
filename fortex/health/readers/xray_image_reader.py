@@ -64,7 +64,7 @@ class XrayImageReader(PackReader):
 
         Here:
 
-          - file_ext (str): The file extension to find the target audio files
+          - file_ext (str): The file extension to find the target files
              under a specific directory path. Default value is ".jpeg".
 
           - read_kwargs (dict): A dictionary containing all the keyword
