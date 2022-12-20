@@ -37,7 +37,7 @@ setuptools.setup(
             "scispacy==0.5.0",
             "en-core-sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz"
         ],
-        "normalizer_processor": [
+        "tagger_normalizer_processor": [
             "timexy==0.1.3",
             "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0.tar.gz"
         ],
