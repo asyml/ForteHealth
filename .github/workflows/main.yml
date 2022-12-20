@@ -23,7 +23,7 @@ jobs:
           - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
           - { testfile: tests/fortex/health/readers/xray_image_reader_test.py }
           - { testfile: tests/fortex/health/processors/xray_processor_test.py }
-          - { dep: [ forte-wrapper, tagger_normalizer ], testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
+          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
           - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_tagging_processor_test.py } 
         exclude:
           - python-version: 3.6
@@ -59,7 +59,7 @@ jobs:
           - python-version: 3.9
             tensorflow-version: 2.2.0
           - python-version: 3.6
-            test-details: { dep: [ forte-wrapper, tagger_normalizer ], testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
+            test-details: { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
 
     steps:
     - uses: actions/checkout@v2
@@ -133,9 +133,6 @@ jobs:
       if: ${{ matrix.test-details.dep == 'tagger_normalizer' ||
               contains(matrix.test-details.dep, 'tagger_normalizer') }}
       run: |
-        git clone https://github.com/asyml/forte-wrappers.git
-        cd forte-wrappers
-        pip install src/spacy        
         pip install --progress-bar off .[tagger_normalizer_processor]
 
     - name: Test with pytest and run coverage
