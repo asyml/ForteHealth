@@ -26,7 +26,7 @@ from PIL import Image
 
 
 class XrayImageReader(PackReader):
-    r""":class:`ImageReader` is designed to read image files from a given folder."""
+    r""":class:`XrayImageReader` is designed to read image files from a given folder."""
 
     def __init__(self):
         super().__init__()
@@ -64,7 +64,7 @@ class XrayImageReader(PackReader):
 
         Here:
 
-          - file_ext (str): The file extension to find the target audio files
+          - file_ext (str): The file extension to find the target files
              under a specific directory path. Default value is ".jpeg".
 
           - read_kwargs (dict): A dictionary containing all the keyword

@@ -28,14 +28,18 @@ setuptools.setup(
         "test": [
             "ddt",
             "testfixtures",
-            "transformers==4.18.0",
+            "transformers==4.2.2",
             "protobuf==3.19.4",
-            "Pillow==8.4.0",
+            "numpy==1.21.6",
             'forte @ git+https://github.com/asyml/forte',
         ],
         "scispacy_processor": [
             "scispacy==0.5.0",
             "en-core-sci-sm @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz"
+        ],
+        "xray_image_processor": [
+            "Pillow==8.4.0",
+            "transformers==4.18.0",
         ],
     },
     include_package_data=True,
