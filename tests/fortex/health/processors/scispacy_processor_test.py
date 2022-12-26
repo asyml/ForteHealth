@@ -83,8 +83,8 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
         pack = self.nlp.process(document)
         expected_value = {
             "hyponym_link": "such_as",
-            "general": "Keystone plant species",
-            "specific": "fig trees",
+            "specific": "Keystone plant species",
+            "general": "fig trees",
         }
 
         for idx, detected in enumerate(pack.get(Hyponym)):
