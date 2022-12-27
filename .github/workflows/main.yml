@@ -24,14 +24,6 @@ jobs:
           - { dep: xray_image_processor,testfile: tests/fortex/health/readers/xray_image_reader_test.py }
           - { dep: xray_image_processor,testfile: tests/fortex/health/processors/xray_processor_test.py }
         exclude:
-          - python-version: 3.6
-            torch-version: 1.7.1
-          - python-version: 3.6
-            torch-version: 1.8.1
-          - python-version: 3.6
-            tensorflow-version: 2.2.0
-          - python-version: 3.6
-            tensorflow-version: 2.5.0
           - python-version: 3.7
             torch-version: 1.7.1
           - python-version: 3.7
