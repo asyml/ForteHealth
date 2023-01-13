@@ -90,7 +90,7 @@ class ScispaCyProcessor(PackProcessor):
                     tmp_abrv.long_form = abrv._.long_form
                     list_of_abrvs.append(tmp_abrv)
 
-            else:
+            elif self.configs.pipe_name == "hyponym_detector":
                 for item in doc._.hearst_patterns:
 
                     general_concept: Phrase = Phrase(
