@@ -143,5 +143,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
 
             assert negation_contexts == check
 
+
 if __name__ == "__main__":
     unittest.main()
