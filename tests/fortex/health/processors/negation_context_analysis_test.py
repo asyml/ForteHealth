@@ -142,3 +142,6 @@ class TestNegationContextAnalyzer(unittest.TestCase):
             check = [("lesions", False), ("sacrum", True)]
 
             assert negation_contexts == check
+
+if __name__ == "__main__":
+    unittest.main()

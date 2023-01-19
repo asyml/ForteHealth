@@ -93,3 +93,6 @@ class TestScispaCyHyponymProcessor(unittest.TestCase):
             )
             self.assertEqual(detected.general, expected_value["general"])
             self.assertEqual(detected.specific, expected_value["specific"])
+
+if __name__ == "__main__":
+    unittest.main()
