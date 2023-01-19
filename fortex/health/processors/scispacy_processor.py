@@ -109,8 +109,8 @@ class ScispaCyProcessor(PackProcessor):
                         child=specific_concept,
                     )
                     hlink.hyponym_link = item[0]
-                    hlink.specific = item[1].text
-                    hlink.general = item[2].text
+                    hlink.general = item[1].text
+                    hlink.specific = item[2].text
 
     @classmethod
     def default_configs(cls):
