@@ -90,30 +90,18 @@ class ScispaCyProcessor(PackProcessor):
                     tmp_abrv.long_form = abrv._.long_form
                     list_of_abrvs.append(tmp_abrv)
 
-            else:
+            elif self.configs.pipe_name == "hyponym_detector":
                 for item in doc._.hearst_patterns:
 
-                    (
-                        general_concept_start,
-                        general_concept_end,
-                    ) = self.find_index(
-                        input_pack.text, item[1].start, item[1].end
-                    )
                     general_concept: Phrase = Phrase(
                         pack=input_pack,
-                        begin=general_concept_start,
-                        end=general_concept_end,
-                    )
-                    (
-                        specific_concept_start,
-                        specific_concept_end,
-                    ) = self.find_index(
-                        input_pack.text, item[2].start, item[2].end
+                        begin=item[2].start_char,
+                        end=item[2].end_char,
                     )
                     specific_concept = Phrase(
                         pack=input_pack,
-                        begin=specific_concept_start,
-                        end=specific_concept_end,
+                        begin=item[1].start_char,
+                        end=item[1].end_char,
                     )
                     hlink = Hyponym(
                         pack=input_pack,
@@ -187,25 +175,3 @@ class ScispaCyProcessor(PackProcessor):
                 "child",
             }
             record_meta["ft.onto.base_ontology.Phrase"] = {}  # type: ignore
-
-    def find_index(self, text, start, end):
-        r"""
-        Helper function to find char index from token span that spacy processor is generating
-
-        Args:
-            sentence: raw text to be processed
-            start: start index of token
-            end: end index of token
-        Returns: A tuple with start and end char index for sentence
-        """
-        text = text.split(" ")
-        char_start, char_end = 0, 0
-        count = 0
-        while count < start:
-            char_start += len(text[count]) + 1
-            count += 1
-        char_end = char_start
-        while count < end:
-            char_end += len(text[count]) + 1
-            count += 1
-        return (char_start, char_end)
