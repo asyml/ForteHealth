@@ -41,6 +41,11 @@ setuptools.setup(
             "Pillow==8.4.0",
             "transformers==4.18.0",
         ],
+        "tagger_normalizer_processor": [
+            "spacy==3.2.4",
+            "timexy==0.1.3",
+            "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0.tar.gz"
+        ],
     },
     include_package_data=True,
     python_requires='>=3.6',
