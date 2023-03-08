@@ -21,10 +21,11 @@ jobs:
           - { dep: forte-wrapper, testfile: tests/fortex/health/processors/negation_context_analysis_test.py }
           - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
           - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
-          - { dep: xray_image_processor,testfile: tests/fortex/health/readers/xray_image_reader_test.py }
-          - { dep: xray_image_processor,testfile: tests/fortex/health/processors/xray_processor_test.py }
+          - { dep: xray_image_processor, testfile: tests/fortex/health/readers/xray_image_reader_test.py }
+          - { dep: xray_image_processor, testfile: tests/fortex/health/processors/xray_processor_test.py }
           - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
-          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_tagging_processor_test.py } 
+          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_tagging_processor_test.py }
+          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_processor_test.py } 
         exclude:
           - python-version: 3.7
             torch-version: 1.7.1

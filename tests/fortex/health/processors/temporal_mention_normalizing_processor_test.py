@@ -40,22 +40,22 @@ class TestTemporalMentionNormalizingProcessor(unittest.TestCase):
         self.nlp.initialize()
 
     def test_TemporalMentionNormalizingProcessor(self):
-        sentences = ["10.10.2010", "10 days ago", "5 years later"]
+        sentences = ["10 days ago", "5 years later", "10.10.2010"]
+        document = " ".join(sentences)
 
         expected_normalization = [
-            ("2010-10-10T00:00:00", "DATE"),
             ("P10D", "DURATION"),
             ("P5Y", "DURATION"),
+            ("2010-10-10T00:00:00", "DATE"),
         ]
         pred_normalization = []
 
-        for pack in self.nlp.process_dataset(sentences):
+        for pack in self.nlp.process_dataset(document):
             for idx, normalized_item in enumerate(
                 pack.get(NormalizedTemporalForm)
             ):
                 pred_normalization.append(
                     (normalized_item.value, normalized_item.type)
                 )
-
         for exp, pred in zip(expected_normalization, pred_normalization):
             self.assertEqual(exp, pred)
