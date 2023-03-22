@@ -21,17 +21,12 @@ jobs:
           - { dep: forte-wrapper, testfile: tests/fortex/health/processors/negation_context_analysis_test.py }
           - { dep: scispacy, testfile: tests/fortex/health/processors/scispacy_processor_test.py }
           - { testfile: tests/fortex/health/readers/mimic3_note_reader_test.py }
-          - { dep: xray_image_processor,testfile: tests/fortex/health/readers/xray_image_reader_test.py }
-          - { dep: xray_image_processor,testfile: tests/fortex/health/processors/xray_processor_test.py }
+          - { dep: xray_image_processor, testfile: tests/fortex/health/readers/xray_image_reader_test.py }
+          - { dep: xray_image_processor, testfile: tests/fortex/health/processors/xray_processor_test.py }
+          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_normalizing_processor_test.py }
+          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_tagging_processor_test.py }
+          - { dep: tagger_normalizer, testfile: tests/fortex/health/processors/temporal_mention_processor_test.py } 
         exclude:
-          - python-version: 3.6
-            torch-version: 1.7.1
-          - python-version: 3.6
-            torch-version: 1.8.1
-          - python-version: 3.6
-            tensorflow-version: 2.2.0
-          - python-version: 3.6
-            tensorflow-version: 2.5.0
           - python-version: 3.7
             torch-version: 1.7.1
           - python-version: 3.7
@@ -120,6 +115,12 @@ jobs:
               contains(matrix.test-details.dep, 'xray_image_processor') }}
       run: |        
         pip install --progress-bar off .[xray_image_processor]
+    
+    - name: Install temporal processor dependencies
+      if: ${{ matrix.test-details.dep == 'tagger_normalizer' ||
+              contains(matrix.test-details.dep, 'tagger_normalizer') }}
+      run: |
+        pip install --progress-bar off .[tagger_normalizer_processor]
     
     - name: Test with pytest and run coverage
       run: |
